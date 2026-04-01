@@ -1371,7 +1371,7 @@ function showQuestion() {
   // Training/Retry: free hint. Exam/Blitz: no hint.
   const isPractice = quizMode === 'training' || quizMode === 'retry';
   document.getElementById('hintArea').innerHTML = isPractice
-    ? `<button class="hint-btn" onclick="showHint()">💡 Підказка (безкоштовно)</button>`
+    ? `<button class="hint-btn" onclick="showHint()">💡 Підказка</button>`
     : '';
   hintUsed = false;
 
