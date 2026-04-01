@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Рейтинг — Алгебра</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      min-height: 100vh;
+      color: #e0e0e0;
+    }
+    .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+
+    .header { text-align: center; padding: 30px 0 20px; }
+    .header h1 {
+      font-size: 2em;
+      background: linear-gradient(90deg, #f093fb, #f5576c, #fda085);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    .header p { color: #a0a0c0; }
+
+    .back-link { color: #818cf8; text-decoration: none; font-size: 0.95em; }
+    .back-link:hover { text-decoration: underline; }
+
+    .card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px; padding: 25px; margin-bottom: 20px;
+    }
+
+    /* Podium */
+    .podium {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 12px;
+      margin: 30px 0;
+      min-height: 200px;
+    }
+
+    .podium-place {
+      text-align: center;
+      border-radius: 14px 14px 0 0;
+      padding: 20px 15px 15px;
+      min-width: 120px;
+      position: relative;
+    }
+
+    .podium-place.first {
+      background: linear-gradient(180deg, rgba(251,191,36,0.2), rgba(251,191,36,0.05));
+      border: 1px solid rgba(251,191,36,0.3);
+      min-height: 180px;
+      order: 2;
+    }
+    .podium-place.second {
+      background: linear-gradient(180deg, rgba(192,192,192,0.15), rgba(192,192,192,0.03));
+      border: 1px solid rgba(192,192,192,0.2);
+      min-height: 140px;
+      order: 1;
+    }
+    .podium-place.third {
+      background: linear-gradient(180deg, rgba(205,127,50,0.15), rgba(205,127,50,0.03));
+      border: 1px solid rgba(205,127,50,0.2);
+      min-height: 110px;
+      order: 3;
+    }
+
+    .podium-medal { font-size: 2em; margin-bottom: 8px; }
+    .podium-avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      margin: 0 auto 8px; display: block;
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+    .podium-name { color: #fff; font-weight: 700; font-size: 0.95em; }
+    .podium-score { color: #a0a0c0; font-size: 0.85em; margin-top: 4px; }
+
+    /* Table */
+    .leader-row {
+      display: flex; align-items: center; gap: 15px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .leader-row:last-child { border-bottom: none; }
+
+    .leader-rank {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.9em; color: #888;
+      flex-shrink: 0;
+    }
+    .leader-rank.top1 { background: rgba(251,191,36,0.2); color: #fbbf24; }
+    .leader-rank.top2 { background: rgba(192,192,192,0.15); color: #c0c0c0; }
+    .leader-rank.top3 { background: rgba(205,127,50,0.15); color: #cd7f32; }
+
+    .leader-avatar {
+      width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+    }
+    .leader-info { flex: 1; }
+    .leader-name { color: #fff; font-weight: 600; font-size: 0.95em; }
+    .leader-meta { color: #888; font-size: 0.8em; margin-top: 2px; }
+
+    .leader-score {
+      text-align: right;
+    }
+    .leader-avg {
+      font-size: 1.3em; font-weight: 700; color: #fff;
+    }
+    .leader-label { font-size: 0.75em; color: #888; }
+
+    .leader-highlight {
+      background: rgba(129,140,248,0.08);
+      border-radius: 10px;
+      padding: 14px 12px;
+      margin: 0 -12px;
+    }
+
+    .empty { text-align: center; padding: 40px; color: #888; }
+
+    @media (max-width: 600px) {
+      .podium-place { min-width: 90px; padding: 15px 10px; }
+      .podium-place.first { min-height: 140px; }
+      .podium-place.second { min-height: 110px; }
+      .podium-place.third { min-height: 90px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="./" class="back-link">← Всі квізи</a>
+    <div class="header">
+      <h1>Рейтинг учнів</h1>
+      <p>Хто найкращий у математиці?</p>
+    </div>
+    <div id="content"><p style="text-align:center; color:#888;">Завантаження...</p></div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/achievements.js"></script>
+  <script>
+  window.addEventListener('load', async () => {
+    const content = document.getElementById('content');
+    const currentUser = Auth.getUser();
+
+    const allResults = await API.getResults();
+    const leaderboard = buildLeaderboard(allResults);
+
+    if (leaderboard.length === 0) {
+      content.innerHTML = '<div class="empty"><h3>Поки немає результатів</h3><p>Рейтинг з\'явиться після проходження квізів</p></div>';
+      return;
+    }
+
+    let html = '';
+
+    // Podium for top 3
+    if (leaderboard.length >= 1) {
+      const medals = ['🥇', '🥈', '🥉'];
+      const classes = ['first', 'second', 'third'];
+      const top3 = leaderboard.slice(0, 3);
+
+      html += '<div class="podium">';
+      // Show in order: 2nd, 1st, 3rd
+      const podiumOrder = top3.length >= 3 ? [1, 0, 2] : top3.length >= 2 ? [1, 0] : [0];
+      podiumOrder.forEach(i => {
+        if (top3[i]) {
+          const s = top3[i];
+          html += `
+            <div class="podium-place ${classes[i]}">
+              <div class="podium-medal">${medals[i]}</div>
+              ${s.picture ? `<img src="${s.picture}" class="podium-avatar" referrerpolicy="no-referrer" onerror="this.style.display='none'">` : ''}
+              <div class="podium-name">${s.name}</div>
+              <div class="podium-score">${s.avgScore}% середній</div>
+              <div class="podium-score">${s.quizCount} квізів</div>
+            </div>`;
+        }
+      });
+      html += '</div>';
+    }
+
+    // Full list
+    html += '<div class="card">';
+    leaderboard.forEach((s, i) => {
+      const rankClass = i === 0 ? 'top1' : i === 1 ? 'top2' : i === 2 ? 'top3' : '';
+      const isMe = currentUser && currentUser.email && s.email.toLowerCase() === currentUser.email.toLowerCase();
+
+      html += `
+        <div class="leader-row ${isMe ? 'leader-highlight' : ''}">
+          <div class="leader-rank ${rankClass}">${i + 1}</div>
+          ${s.picture ? `<img src="${s.picture}" class="leader-avatar" referrerpolicy="no-referrer" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22><rect fill=%22%23334%22 width=%2240%22 height=%2240%22/><text x=%2220%22 y=%2225%22 text-anchor=%22middle%22 fill=%22%23888%22 font-size=%2216%22>${s.name[0]}</text></svg>'">` : `<div class="leader-avatar" style="background:#334;display:flex;align-items:center;justify-content:center;color:#888;font-weight:700;">${s.name[0]}</div>`}
+          <div class="leader-info">
+            <div class="leader-name">${s.name}${isMe ? ' (ти)' : ''}</div>
+            <div class="leader-meta">${s.quizCount} квізів · ${s.totalAttempts} спроб · найкращий ${s.bestScore}%</div>
+          </div>
+          <div class="leader-score">
+            <div class="leader-avg">${s.avgScore}%</div>
+            <div class="leader-label">середній</div>
+          </div>
+        </div>`;
+    });
+    html += '</div>';
+
+    content.innerHTML = html;
+  });
+  </script>
+</body>
+</html>

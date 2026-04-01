@@ -179,7 +179,7 @@
 
     <div class="cat-welcome">
       <img src="https://cataas.com/cat?t=welcome" alt="Welcome cat" onerror="this.src='https://placekitten.com/160/160'">
-      <div class="cat-text">Мяу! Обирай тему та починай!</div>
+      <div class="cat-text">Мяу! Обирай тему та починай! · <a href="leaderboard.html" style="color:#818cf8;text-decoration:none;">🏆 Рейтинг</a></div>
     </div>
 
     <div id="catalog"></div>
@@ -196,7 +196,8 @@
       const authArea = document.getElementById('authArea');
       if (user) {
         authArea.innerHTML = Auth.profileBadgeHTML(user) +
-          '<br><a href="my-results.html" class="my-results-link">📊 Мої результати</a>';
+          '<br><a href="my-results.html" class="my-results-link">📊 Мої результати</a>' +
+          ' · <a href="leaderboard.html" class="my-results-link">🏆 Рейтинг</a>';
       } else {
         authArea.innerHTML = '<div id="googleBtn"></div>';
         Auth.init(() => location.reload());
