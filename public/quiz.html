@@ -701,6 +701,24 @@
     .user-info-row img { width: 44px; height: 44px; border-radius: 50%; }
     .user-info-row span { color: #fff; font-size: 1.15em; font-weight: 600; }
 
+    /* New achievement popup */
+    .new-achievements {
+      margin: 20px 0;
+      padding: 15px 20px;
+      background: rgba(52,211,153,0.08);
+      border: 1px solid rgba(52,211,153,0.2);
+      border-radius: 14px;
+      animation: fadeIn 0.5s ease;
+    }
+    .new-achievements h4 { color: #34d399; margin-bottom: 10px; text-align: center; }
+    .new-ach-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 0;
+    }
+    .new-ach-item .ach-icon { font-size: 1.5em; }
+    .new-ach-item .ach-title { color: #fff; font-weight: 600; }
+    .new-ach-item .ach-desc { color: #a0a0c0; font-size: 0.85em; }
+
     /* KaTeX overrides for dark theme */
     .katex { color: #e0e0e0; }
     .option .katex { font-size: 1em; }
@@ -762,6 +780,7 @@
   <script src="js/quizzes-interactive.js"></script>
   <script src="js/api.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/achievements.js"></script>
   <script>
 // Cat messages
 const correctCatMessages = [
@@ -1511,9 +1530,17 @@ async function showResults() {
   resultsDiv.style.display = 'block';
   setTimeout(() => renderMath(resultsDiv), 10);
 
-  // Save to cloud storage
+  // Save to cloud storage and check achievements
   const user = Auth.getUser();
-  API.saveResult({
+
+  // Get achievements BEFORE saving (to detect new ones)
+  let oldAchievements = [];
+  if (user && user.email) {
+    const oldResults = await API.getResultsByEmail(user.email);
+    oldAchievements = getEarnedAchievements(oldResults, QUIZZES).map(a => a.id);
+  }
+
+  await API.saveResult({
     name: studentName,
     email: user ? user.email : '',
     picture: user ? user.picture : '',
@@ -1521,6 +1548,22 @@ async function showResults() {
     quizTitle: quizData.title,
     score, total, answers, timeSpent
   });
+
+  // Check for NEW achievements
+  if (user && user.email) {
+    const newResults = await API.getResultsByEmail(user.email);
+    const newAchievements = getEarnedAchievements(newResults, QUIZZES).filter(a => !oldAchievements.includes(a.id));
+
+    if (newAchievements.length > 0) {
+      const achHtml = newAchievements.map(a =>
+        `<div class="new-ach-item"><span class="ach-icon">${a.icon}</span><div><div class="ach-title">${a.title}</div><div class="ach-desc">${a.description}</div></div></div>`
+      ).join('');
+      const achBlock = document.createElement('div');
+      achBlock.className = 'new-achievements';
+      achBlock.innerHTML = `<h4>Нове досягнення!</h4>${achHtml}`;
+      resultsDiv.querySelector('.results-buttons').before(achBlock);
+    }
+  }
 }
 </script>
 </body>
