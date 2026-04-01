@@ -1,1 +1,85 @@
-[{"id":1,"name":"Тест API","score":8,"total":10,"percentage":80,"quizId":"test","quizTitle":"Тест","date":"2026-04-01T20:00:00Z"}]
+[
+  {
+    "id": 1,
+    "name": "Ð¢ÐµÑÑ API",
+    "score": 8,
+    "total": 10,
+    "percentage": 80,
+    "quizId": "test",
+    "quizTitle": "Ð¢ÐµÑÑ",
+    "date": "2026-04-01T20:00:00Z"
+  },
+  {
+    "id": 1775072656943,
+    "name": "Олена",
+    "score": 2,
+    "total": 10,
+    "percentage": 20,
+    "quizId": "2-2-roots",
+    "quizTitle": "Корінь n-го степеня",
+    "answers": [
+      {
+        "question": "Спростіть $\\dfrac{\\sqrt{50}}{\\sqrt{2}}$:",
+        "selected": "$\\sqrt{25}$",
+        "correct": "$5$",
+        "isCorrect": false
+      },
+      {
+        "question": "Спростіть $\\sqrt[3]{a^3}$:",
+        "selected": "$-a$",
+        "correct": "$a$",
+        "isCorrect": false
+      },
+      {
+        "question": "Чому дорівнює $\\sqrt{12} \\cdot \\sqrt{3}$?",
+        "selected": "34",
+        "correct": "6",
+        "isCorrect": false
+      },
+      {
+        "question": "Чому дорівнює $\\sqrt[3]{27}$?",
+        "selected": "45",
+        "correct": "3",
+        "isCorrect": false
+      },
+      {
+        "question": "Яка властивість коренів тут використана: $\\sqrt[n]{a \\cdot b} = \\sqrt[n]{a} \\cdot \\sqrt[n]{b}$?",
+        "selected": "Корінь частки = частка коренів",
+        "correct": "Корінь добутку = добуток коренів",
+        "isCorrect": false
+      },
+      {
+        "question": "$\\sqrt[3]{-8}$ існує і дорівнює $-2$.",
+        "selected": "Правильно",
+        "correct": "Правильно",
+        "isCorrect": true
+      },
+      {
+        "question": "Чому дорівнює $\\sqrt[6]{64}$?",
+        "selected": "$2$",
+        "correct": "$2$",
+        "isCorrect": true
+      },
+      {
+        "question": "Спростіть $\\sqrt{a^2}$ при $a \\geq 0$:",
+        "selected": "$-a$",
+        "correct": "$a$",
+        "isCorrect": false
+      },
+      {
+        "question": "Яка умова існування $\\sqrt[n]{a}$ при парному $n$?",
+        "selected": "$a$ — будь-яке",
+        "correct": "$a \\geq 0$",
+        "isCorrect": false
+      },
+      {
+        "question": "Чому дорівнює $\\sqrt[4]{16}$?",
+        "selected": "$4$",
+        "correct": "$2$",
+        "isCorrect": false
+      }
+    ],
+    "timeSpent": 39,
+    "date": "2026-04-01T19:44:16.943Z"
+  }
+]
