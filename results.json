@@ -146,5 +146,80 @@
     ],
     "timeSpent": 83,
     "date": "2026-04-01T21:24:38.772Z"
+  },
+  {
+    "id": 1775082566134,
+    "name": "Olena Pavliuk",
+    "email": "pavliuk.olenka@gmail.com",
+    "picture": "https://lh3.googleusercontent.com/a/ACg8ocJLtxl078ntga-LtkVZ7h6_HicSNMRuxq9bfrqi32Ag7JOQQ6mU=s96-c",
+    "score": 9,
+    "total": 10,
+    "percentage": 90,
+    "quizId": "2-2-roots",
+    "quizTitle": "Корінь n-го степеня",
+    "answers": [
+      {
+        "question": "Спростіть $\\sqrt[3]{a^3}$:",
+        "selected": "$a$",
+        "correct": "$a$",
+        "isCorrect": true
+      },
+      {
+        "question": "Чому дорівнює $\\sqrt[3]{27}$?",
+        "selected": "3",
+        "correct": "3",
+        "isCorrect": true
+      },
+      {
+        "question": "$\\sqrt[3]{-8}$ існує і дорівнює $-2$.",
+        "selected": "Правильно",
+        "correct": "Правильно",
+        "isCorrect": true
+      },
+      {
+        "question": "Чому дорівнює $\\sqrt{12} \\cdot \\sqrt{3}$?",
+        "selected": "6",
+        "correct": "6",
+        "isCorrect": true
+      },
+      {
+        "question": "Яка умова існування $\\sqrt[n]{a}$ при парному $n$?",
+        "selected": "$a \\geq 0$",
+        "correct": "$a \\geq 0$",
+        "isCorrect": true
+      },
+      {
+        "question": "Чому дорівнює $\\sqrt[6]{64}$?",
+        "selected": "$2$",
+        "correct": "$2$",
+        "isCorrect": true
+      },
+      {
+        "question": "Спростіть $\\dfrac{\\sqrt{50}}{\\sqrt{2}}$:",
+        "selected": "$5$",
+        "correct": "$5$",
+        "isCorrect": true
+      },
+      {
+        "question": "Спростіть $\\sqrt{a^2}$ при $a \\geq 0$:",
+        "selected": "$|a|$",
+        "correct": "$a$",
+        "isCorrect": false
+      },
+      {
+        "question": "Чому дорівнює $\\sqrt[4]{16}$?",
+        "selected": "$2$",
+        "correct": "$2$",
+        "isCorrect": true
+      },
+      {
+        "question": "Яка властивість коренів тут використана: $\\sqrt[n]{a \\cdot b} = \\sqrt[n]{a} \\cdot \\sqrt[n]{b}$?",
+        "selected": "Корінь добутку = добуток коренів",
+        "correct": "Корінь добутку = добуток коренів",
+        "isCorrect": true
+      }
+    ],
+    "timeSpent": 52,
+    "date": "2026-04-01T22:29:26.134Z"
   }
 ]
