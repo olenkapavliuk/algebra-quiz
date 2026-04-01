@@ -71,5 +71,80 @@
     ],
     "timeSpent": 39,
     "date": "2026-04-01T19:44:16.943Z"
+  },
+  {
+    "id": 1775078678772,
+    "name": "Olena Pavliuk",
+    "email": "pavliuk.olenka@gmail.com",
+    "picture": "https://lh3.googleusercontent.com/a/ACg8ocJLtxl078ntga-LtkVZ7h6_HicSNMRuxq9bfrqi32Ag7JOQQ6mU=s96-c",
+    "score": 8,
+    "total": 10,
+    "percentage": 80,
+    "quizId": "2-5-equations",
+    "quizTitle": "Рівняння та нерівності зі степенями",
+    "answers": [
+      {
+        "question": "При яких значеннях $x$ виконується нерівність $x^3 > 27$?",
+        "selected": "$x > 27$",
+        "correct": "$x > 3$",
+        "isCorrect": false
+      },
+      {
+        "question": "Розв'яжіть: $\\sqrt{x} = 5$",
+        "selected": "$x = 10$",
+        "correct": "$x = 25$",
+        "isCorrect": false
+      },
+      {
+        "question": "Розв'яжіть нерівність $x^2 \\leq 16$:",
+        "selected": "$-4 \\leq x \\leq 4$",
+        "correct": "$-4 \\leq x \\leq 4$",
+        "isCorrect": true
+      },
+      {
+        "question": "Розв'яжіть $x^3 = -27$. Запишіть відповідь.",
+        "selected": "-3",
+        "correct": "-3",
+        "isCorrect": true
+      },
+      {
+        "question": "Рівняння $x^4 = -1$ має:",
+        "selected": "Жодного кореня",
+        "correct": "Жодного кореня",
+        "isCorrect": true
+      },
+      {
+        "question": "Нерівність $x^2 > 0$ виконується для всіх дійсних $x$.",
+        "selected": "Неправильно",
+        "correct": "Неправильно",
+        "isCorrect": true
+      },
+      {
+        "question": "Рівняння $\\sqrt{x} = -3$ не має розв'язків.",
+        "selected": "Правильно",
+        "correct": "Правильно",
+        "isCorrect": true
+      },
+      {
+        "question": "Розв'яжіть рівняння $x^2 = 9$:",
+        "selected": "$x = \\pm 3$",
+        "correct": "$x = \\pm 3$",
+        "isCorrect": true
+      },
+      {
+        "question": "Розв'яжіть $x^2 = 49$. Запишіть більший корінь.",
+        "selected": "7",
+        "correct": "7",
+        "isCorrect": true
+      },
+      {
+        "question": "Скільки коренів має рівняння $x^3 = -8$?",
+        "selected": "Один",
+        "correct": "Один",
+        "isCorrect": true
+      }
+    ],
+    "timeSpent": 83,
+    "date": "2026-04-01T21:24:38.772Z"
   }
 ]
