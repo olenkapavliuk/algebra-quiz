@@ -10,6 +10,18 @@ const QUIZZES = [
     title: 'Радіанна міра кута',
     description: 'Переведення градусів у радіани та навпаки, дугова міра',
     icon: '📐',
+    blitzQuestions: [
+      { question: 'Скільки радіан у $180°$?', options: ['$\\pi$', '$2\\pi$', '$\\dfrac{\\pi}{2}$', '$\\dfrac{\\pi}{4}$'], correct: 0 },
+      { question: '$360°$ у радіанах — це:', options: ['$\\pi$', '$3\\pi$', '$2\\pi$', '$4\\pi$'], correct: 2 },
+      { question: '$\\dfrac{\\pi}{2}$ рад — це скільки градусів?', options: ['$45°$', '$60°$', '$120°$', '$90°$'], correct: 3 },
+      { question: '$\\dfrac{\\pi}{3}$ рад — це скільки градусів?', options: ['$30°$', '$45°$', '$60°$', '$90°$'], correct: 2 },
+      { question: '$\\dfrac{\\pi}{6}$ рад — це скільки градусів?', options: ['$15°$', '$30°$', '$45°$', '$60°$'], correct: 1 },
+      { question: '$\\dfrac{\\pi}{4}$ рад — це скільки градусів?', options: ['$30°$', '$60°$', '$90°$', '$45°$'], correct: 3 },
+      { question: 'Щоб перевести градуси в радіани, треба:', options: ['Помножити на $\\dfrac{180}{\\pi}$', 'Помножити на $\\dfrac{\\pi}{180}$', 'Поділити на $180$', 'Помножити на $\\pi$'], correct: 1 },
+      { question: '$1$ рад приблизно дорівнює:', options: ['$45°$', '$90°$', '$57.3°$', '$30°$'], correct: 2 },
+      { question: 'Довжина дуги: $l = R \\cdot \\alpha$, де $\\alpha$ — це:', options: ['Кут у градусах', 'Кут у радіанах', 'Радіус', 'Площа'], correct: 1 },
+      { question: '$\\dfrac{3\\pi}{2}$ рад — це скільки градусів?', options: ['$180°$', '$270°$', '$240°$', '$300°$'], correct: 1 },
+    ],
     questions: [
       {
         question: 'Скільки радіан містить кут $180°$?',
@@ -155,6 +167,18 @@ const QUIZZES = [
     title: 'Тригонометричне коло. Синус, косинус, тангенс',
     description: 'Означення тригонометричних функцій на одиничному колі',
     icon: '⭕',
+    blitzQuestions: [
+      { question: '$\\sin 0° =$', options: ['$1$', '$0$', '$-1$', '$\\dfrac{1}{2}$'], correct: 1 },
+      { question: '$\\cos 0° =$', options: ['$0$', '$-1$', '$1$', '$\\dfrac{1}{2}$'], correct: 2 },
+      { question: '$\\sin 90° =$', options: ['$0$', '$\\dfrac{1}{2}$', '$-1$', '$1$'], correct: 3 },
+      { question: '$\\cos 90° =$', options: ['$1$', '$0$', '$-1$', '$\\dfrac{1}{2}$'], correct: 1 },
+      { question: '$\\sin 30° =$', options: ['$\\dfrac{\\sqrt{3}}{2}$', '$1$', '$\\dfrac{1}{2}$', '$\\dfrac{\\sqrt{2}}{2}$'], correct: 2 },
+      { question: '$\\cos 60° =$', options: ['$\\dfrac{\\sqrt{3}}{2}$', '$\\dfrac{\\sqrt{2}}{2}$', '$0$', '$\\dfrac{1}{2}$'], correct: 3 },
+      { question: '$\\sin 45° =$', options: ['$\\dfrac{1}{2}$', '$\\dfrac{\\sqrt{2}}{2}$', '$\\dfrac{\\sqrt{3}}{2}$', '$1$'], correct: 1 },
+      { question: '$\\operatorname{tg} 45° =$', options: ['$0$', '$\\sqrt{3}$', '$1$', '$\\dfrac{1}{2}$'], correct: 2 },
+      { question: '$\\cos 180° =$', options: ['$0$', '$1$', '$-1$', '$\\dfrac{1}{2}$'], correct: 2 },
+      { question: 'Правда: $\\sin 60° = \\dfrac{\\sqrt{3}}{2}$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+    ],
     questions: [
       {
         question: 'Чому дорівнює $\\sin 0°$?',
@@ -300,6 +324,18 @@ const QUIZZES = [
     title: 'Знаки тригонометричних функцій. Властивості',
     description: 'Знаки за чвертями, парність, непарність, періодичність',
     icon: '±',
+    blitzQuestions: [
+      { question: 'У якій чверті $\\sin > 0$ і $\\cos > 0$?', options: ['II', 'III', 'IV', 'I'], correct: 3 },
+      { question: 'У якій чверті $\\sin < 0$ і $\\cos > 0$?', options: ['I', 'II', 'IV', 'III'], correct: 2 },
+      { question: 'У якій чверті обидва $\\sin$ і $\\cos$ від\'ємні?', options: ['I', 'II', 'III', 'IV'], correct: 2 },
+      { question: 'Чи є $\\sin x$ парною функцією?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 1 },
+      { question: '$\\cos(-x) =$', options: ['$-\\cos x$', '$\\cos x$', '$\\sin x$', '$-\\sin x$'], correct: 1 },
+      { question: 'Период функції $y = \\sin x$:', options: ['$\\pi$', '$2\\pi$', '$\\dfrac{\\pi}{2}$', '$4\\pi$'], correct: 1 },
+      { question: 'Период функції $y = \\cos x$:', options: ['$\\pi$', '$4\\pi$', '$2\\pi$', '$\\dfrac{\\pi}{2}$'], correct: 2 },
+      { question: 'Период функції $y = \\operatorname{tg} x$:', options: ['$2\\pi$', '$\\pi$', '$\\dfrac{\\pi}{2}$', '$4\\pi$'], correct: 1 },
+      { question: '$\\sin(-x) =$', options: ['$\\sin x$', '$\\cos x$', '$-\\cos x$', '$-\\sin x$'], correct: 3 },
+      { question: 'У якій чверті $\\operatorname{tg} < 0$ і $\\sin > 0$?', options: ['I', 'III', 'II', 'IV'], correct: 2 },
+    ],
     questions: [
       {
         question: 'В якій чверті $\\sin \\alpha > 0$ і $\\cos \\alpha > 0$?',
@@ -434,6 +470,18 @@ const QUIZZES = [
     title: 'Графіки тригонометричних функцій',
     description: 'Графіки y = sin x, y = cos x, y = tg x та їх перетворення',
     icon: '📈',
+    blitzQuestions: [
+      { question: 'Графік $y = \\sin x$ — це:', options: ['Парабола', 'Синусоїда', 'Косинусоїда', 'Пряма'], correct: 1 },
+      { question: 'Амплітуда $y = \\sin x$ дорівнює:', options: ['$2$', '$\\pi$', '$1$', '$\\dfrac{1}{2}$'], correct: 2 },
+      { question: 'Область значень $y = \\sin x$:', options: ['$(0; 1)$', '$[-1; 1]$', '$(-\\infty; +\\infty)$', '$[0; 2\\pi]$'], correct: 1 },
+      { question: 'При $y = A\\sin(\\omega x)$, як знайти период?', options: ['$T = A$', '$T = \\omega$', '$T = \\dfrac{2\\pi}{\\omega}$', '$T = \\dfrac{\\pi}{\\omega}$'], correct: 2 },
+      { question: 'Правда: $y = \\cos x$ — парна функція?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Де НЕ існує $y = \\operatorname{tg} x$?', options: ['$x = 0$', '$x = \\dfrac{\\pi}{2} + \\pi n$', '$x = \\pi n$', '$x = 2\\pi n$'], correct: 1 },
+      { question: 'Область значень $y = \\operatorname{tg} x$:', options: ['$[-1; 1]$', '$[0; +\\infty)$', '$(-\\infty; +\\infty)$', '$(-1; 1)$'], correct: 2 },
+      { question: 'Амплітуда $y = 3\\sin x$ дорівнює:', options: ['$1$', '$3\\pi$', '$3$', '$\\dfrac{1}{3}$'], correct: 2 },
+      { question: 'Графік $y = \\cos x$ — це зсунутий $y = \\sin x$ на:', options: ['$\\pi$ вправо', '$\\dfrac{\\pi}{2}$ вліво', '$\\dfrac{\\pi}{2}$ вправо', '$2\\pi$ вліво'], correct: 1 },
+      { question: 'Правда: период $y = \\operatorname{tg} x$ дорівнює $\\pi$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+    ],
     questions: [
       {
         question: 'Як називається графік функції $y = \\sin x$?',
@@ -572,6 +620,18 @@ const QUIZZES = [
     title: 'Основні тригонометричні тотожності',
     description: 'sin²α + cos²α = 1, зв\'язок між функціями',
     icon: '🔗',
+    blitzQuestions: [
+      { question: 'Основна тригонометрична тотожність:', options: ['$\\sin\\alpha + \\cos\\alpha = 1$', '$\\sin^2\\alpha + \\cos^2\\alpha = 1$', '$\\sin\\alpha \\cdot \\cos\\alpha = 1$', '$\\sin^2\\alpha - \\cos^2\\alpha = 1$'], correct: 1 },
+      { question: '$\\operatorname{tg}\\alpha =$', options: ['$\\dfrac{\\cos\\alpha}{\\sin\\alpha}$', '$\\sin\\alpha \\cdot \\cos\\alpha$', '$\\dfrac{\\sin\\alpha}{\\cos\\alpha}$', '$\\dfrac{1}{\\cos\\alpha}$'], correct: 2 },
+      { question: '$\\operatorname{ctg}\\alpha =$', options: ['$\\dfrac{\\sin\\alpha}{\\cos\\alpha}$', '$\\dfrac{\\cos\\alpha}{\\sin\\alpha}$', '$\\dfrac{1}{\\sin\\alpha}$', '$\\cos\\alpha \\cdot \\sin\\alpha$'], correct: 1 },
+      { question: '$1 + \\operatorname{tg}^2\\alpha =$', options: ['$\\cos^2\\alpha$', '$\\sin^2\\alpha$', '$\\dfrac{1}{\\cos^2\\alpha}$', '$\\dfrac{1}{\\sin^2\\alpha}$'], correct: 2 },
+      { question: '$1 + \\operatorname{ctg}^2\\alpha =$', options: ['$\\dfrac{1}{\\sin^2\\alpha}$', '$\\dfrac{1}{\\cos^2\\alpha}$', '$\\cos^2\\alpha$', '$\\sin^2\\alpha$'], correct: 0 },
+      { question: 'Правда: $\\sin^2\\alpha = 1 - \\cos^2\\alpha$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$\\cos^2\\alpha =$', options: ['$1 + \\sin^2\\alpha$', '$1 - \\sin^2\\alpha$', '$\\sin^2\\alpha - 1$', '$\\sin^2\\alpha$'], correct: 1 },
+      { question: 'Правда: $\\operatorname{tg}\\alpha \\cdot \\operatorname{ctg}\\alpha = 1$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$\\dfrac{1}{\\cos^2\\alpha} - \\operatorname{tg}^2\\alpha =$', options: ['$0$', '$\\cos^2\\alpha$', '$1$', '$\\sin^2\\alpha$'], correct: 2 },
+      { question: 'Якщо $\\sin\\alpha = 0.6$, то $\\cos^2\\alpha =$', options: ['$0.36$', '$0.64$', '$0.6$', '$0.4$'], correct: 1 },
+    ],
     questions: [
       {
         question: 'Яка основна тригонометрична тотожність?',
@@ -741,6 +801,18 @@ const QUIZZES = [
     title: 'Формули зведення',
     description: 'Зведення до гострого кута: sin(π−α), cos(π/2+α) тощо',
     icon: '🔄',
+    blitzQuestions: [
+      { question: '$\\sin(\\pi - \\alpha) =$', options: ['$-\\sin\\alpha$', '$\\cos\\alpha$', '$\\sin\\alpha$', '$-\\cos\\alpha$'], correct: 2 },
+      { question: '$\\cos(\\pi - \\alpha) =$', options: ['$\\cos\\alpha$', '$-\\cos\\alpha$', '$\\sin\\alpha$', '$-\\sin\\alpha$'], correct: 1 },
+      { question: '$\\sin(\\pi + \\alpha) =$', options: ['$\\sin\\alpha$', '$-\\cos\\alpha$', '$-\\sin\\alpha$', '$\\cos\\alpha$'], correct: 2 },
+      { question: '$\\cos(\\pi + \\alpha) =$', options: ['$\\cos\\alpha$', '$-\\sin\\alpha$', '$\\sin\\alpha$', '$-\\cos\\alpha$'], correct: 3 },
+      { question: '$\\sin\\left(\\dfrac{\\pi}{2} - \\alpha\\right) =$', options: ['$\\sin\\alpha$', '$-\\sin\\alpha$', '$\\cos\\alpha$', '$-\\cos\\alpha$'], correct: 2 },
+      { question: '$\\cos\\left(\\dfrac{\\pi}{2} - \\alpha\\right) =$', options: ['$\\cos\\alpha$', '$\\sin\\alpha$', '$-\\sin\\alpha$', '$-\\cos\\alpha$'], correct: 1 },
+      { question: '$\\sin\\left(\\dfrac{\\pi}{2} + \\alpha\\right) =$', options: ['$\\sin\\alpha$', '$-\\sin\\alpha$', '$-\\cos\\alpha$', '$\\cos\\alpha$'], correct: 3 },
+      { question: '$\\cos\\left(\\dfrac{\\pi}{2} + \\alpha\\right) =$', options: ['$\\cos\\alpha$', '$-\\cos\\alpha$', '$-\\sin\\alpha$', '$\\sin\\alpha$'], correct: 2 },
+      { question: 'Правда: $\\sin(2\\pi + \\alpha) = \\sin\\alpha$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$\\operatorname{tg}(\\pi + \\alpha) =$', options: ['$-\\operatorname{tg}\\alpha$', '$\\operatorname{ctg}\\alpha$', '$\\operatorname{tg}\\alpha$', '$-\\operatorname{ctg}\\alpha$'], correct: 2 },
+    ],
     questions: [
       {
         question: 'Чому дорівнює $\\sin(\\pi - \\alpha)$?',
@@ -875,6 +947,18 @@ const QUIZZES = [
     title: 'Формули додавання та пониження степеня',
     description: 'sin(α±β), cos(α±β), tg(α±β), sin²α, cos²α',
     icon: '➕',
+    blitzQuestions: [
+      { question: '$\\sin(\\alpha + \\beta) =$', options: ['$\\sin\\alpha + \\sin\\beta$', '$\\sin\\alpha\\cos\\beta - \\cos\\alpha\\sin\\beta$', '$\\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta$', '$\\cos\\alpha\\cos\\beta - \\sin\\alpha\\sin\\beta$'], correct: 2 },
+      { question: '$\\cos(\\alpha + \\beta) =$', options: ['$\\cos\\alpha\\cos\\beta + \\sin\\alpha\\sin\\beta$', '$\\cos\\alpha + \\cos\\beta$', '$\\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta$', '$\\cos\\alpha\\cos\\beta - \\sin\\alpha\\sin\\beta$'], correct: 3 },
+      { question: '$\\sin(\\alpha - \\beta) =$', options: ['$\\sin\\alpha\\cos\\beta + \\cos\\alpha\\sin\\beta$', '$\\cos\\alpha\\cos\\beta + \\sin\\alpha\\sin\\beta$', '$\\sin\\alpha\\cos\\beta - \\cos\\alpha\\sin\\beta$', '$\\sin\\alpha - \\sin\\beta$'], correct: 2 },
+      { question: '$\\cos(\\alpha - \\beta) =$', options: ['$\\cos\\alpha\\cos\\beta - \\sin\\alpha\\sin\\beta$', '$\\cos\\alpha\\cos\\beta + \\sin\\alpha\\sin\\beta$', '$\\cos\\alpha - \\cos\\beta$', '$\\sin\\alpha\\sin\\beta - \\cos\\alpha\\cos\\beta$'], correct: 1 },
+      { question: '$\\sin^2\\alpha =$', options: ['$\\dfrac{1 + \\cos 2\\alpha}{2}$', '$\\dfrac{1 - \\cos 2\\alpha}{2}$', '$1 - \\cos 2\\alpha$', '$\\cos 2\\alpha - 1$'], correct: 1 },
+      { question: '$\\cos^2\\alpha =$', options: ['$\\dfrac{1 - \\cos 2\\alpha}{2}$', '$1 - \\cos^2\\alpha$', '$\\dfrac{1 + \\cos 2\\alpha}{2}$', '$\\cos 2\\alpha$'], correct: 2 },
+      { question: 'Правда: $\\cos(\\alpha + \\beta) = \\cos\\alpha + \\cos\\beta$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 1 },
+      { question: '$\\operatorname{tg}(\\alpha + \\beta) =$', options: ['$\\dfrac{\\operatorname{tg}\\alpha + \\operatorname{tg}\\beta}{1 - \\operatorname{tg}\\alpha\\operatorname{tg}\\beta}$', '$\\operatorname{tg}\\alpha + \\operatorname{tg}\\beta$', '$\\dfrac{\\operatorname{tg}\\alpha - \\operatorname{tg}\\beta}{1 + \\operatorname{tg}\\alpha\\operatorname{tg}\\beta}$', '$\\dfrac{\\operatorname{tg}\\alpha + \\operatorname{tg}\\beta}{1 + \\operatorname{tg}\\alpha\\operatorname{tg}\\beta}$'], correct: 0 },
+      { question: 'Правда: $\\sin(\\alpha - \\beta) \\neq \\sin\\alpha - \\sin\\beta$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$\\cos^2\\alpha - \\sin^2\\alpha =$', options: ['$1$', '$\\sin 2\\alpha$', '$\\cos 2\\alpha$', '$0$'], correct: 2 },
+    ],
     questions: [
       {
         question: 'Яка формула $\\sin(\\alpha + \\beta)$?',
@@ -1115,6 +1199,18 @@ const QUIZZES = [
     title: 'Формули подвійного аргументу',
     description: 'sin 2α, cos 2α, tg 2α та їх застосування',
     icon: '✖️',
+    blitzQuestions: [
+      { question: '$\\sin 2\\alpha =$', options: ['$2\\sin\\alpha$', '$\\sin^2\\alpha + \\cos^2\\alpha$', '$2\\sin\\alpha\\cos\\alpha$', '$\\cos^2\\alpha - \\sin^2\\alpha$'], correct: 2 },
+      { question: '$\\cos 2\\alpha =$', options: ['$2\\cos\\alpha$', '$\\cos^2\\alpha - \\sin^2\\alpha$', '$2\\cos\\alpha\\sin\\alpha$', '$1 - \\cos^2\\alpha$'], correct: 1 },
+      { question: '$\\cos 2\\alpha$ через $\\cos\\alpha$:', options: ['$1 - 2\\cos^2\\alpha$', '$2\\cos\\alpha - 1$', '$2\\cos^2\\alpha - 1$', '$\\cos^2\\alpha$'], correct: 2 },
+      { question: '$\\cos 2\\alpha$ через $\\sin\\alpha$:', options: ['$1 - 2\\sin^2\\alpha$', '$2\\sin^2\\alpha - 1$', '$1 - \\sin^2\\alpha$', '$2\\sin\\alpha$'], correct: 0 },
+      { question: '$\\operatorname{tg} 2\\alpha =$', options: ['$2\\operatorname{tg}\\alpha$', '$\\dfrac{2\\operatorname{tg}\\alpha}{1 - \\operatorname{tg}^2\\alpha}$', '$\\dfrac{\\operatorname{tg}^2\\alpha}{2}$', '$\\dfrac{2\\operatorname{tg}\\alpha}{1 + \\operatorname{tg}^2\\alpha}$'], correct: 1 },
+      { question: 'Правда: $\\sin 2\\alpha = 2\\sin\\alpha\\cos\\alpha$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Правда: $\\cos 2\\alpha = 2\\cos\\alpha$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 1 },
+      { question: '$\\sin^2\\alpha = \\dfrac{1 - \\cos 2\\alpha}{2}$ — звідки ця формула?', options: ['З основної тотожності', 'З формули зведення', 'З $\\cos 2\\alpha = 1 - 2\\sin^2\\alpha$', 'З формули суми'], correct: 2 },
+      { question: 'Якщо $\\sin\\alpha = \\cos\\alpha$, то $\\sin 2\\alpha =$', options: ['$0$', '$2$', '$1$', '$-1$'], correct: 2 },
+      { question: '$2\\cos^2\\alpha - 1 =$', options: ['$\\sin 2\\alpha$', '$\\cos 2\\alpha$', '$\\cos\\alpha$', '$2\\cos\\alpha$'], correct: 1 },
+    ],
     questions: [
       {
         question: 'Яка формула $\\sin 2\\alpha$?',
@@ -1274,6 +1370,16 @@ const QUIZZES = [
     title: 'Формули суми та різниці тригонометричних функцій',
     description: 'sin α + sin β, cos α − cos β та інші',
     icon: '🔀',
+    blitzQuestions: [
+      { question: '$\\sin\\alpha + \\sin\\beta =$', options: ['$2\\sin\\dfrac{\\alpha+\\beta}{2}\\cos\\dfrac{\\alpha-\\beta}{2}$', '$2\\cos\\dfrac{\\alpha+\\beta}{2}\\sin\\dfrac{\\alpha-\\beta}{2}$', '$\\sin(\\alpha+\\beta)$', '$2\\sin\\dfrac{\\alpha-\\beta}{2}\\cos\\dfrac{\\alpha+\\beta}{2}$'], correct: 0 },
+      { question: '$\\sin\\alpha - \\sin\\beta =$', options: ['$2\\sin\\dfrac{\\alpha+\\beta}{2}\\cos\\dfrac{\\alpha-\\beta}{2}$', '$2\\cos\\dfrac{\\alpha+\\beta}{2}\\sin\\dfrac{\\alpha-\\beta}{2}$', '$\\sin(\\alpha-\\beta)$', '$2\\sin\\dfrac{\\alpha-\\beta}{2}$'], correct: 1 },
+      { question: '$\\cos\\alpha + \\cos\\beta =$', options: ['$2\\sin\\dfrac{\\alpha+\\beta}{2}\\sin\\dfrac{\\alpha-\\beta}{2}$', '$2\\cos\\dfrac{\\alpha+\\beta}{2}\\cos\\dfrac{\\alpha-\\beta}{2}$', '$\\cos(\\alpha+\\beta)$', '$2\\cos\\dfrac{\\alpha-\\beta}{2}$'], correct: 1 },
+      { question: '$\\cos\\alpha - \\cos\\beta =$', options: ['$2\\cos\\dfrac{\\alpha+\\beta}{2}\\cos\\dfrac{\\alpha-\\beta}{2}$', '$2\\sin\\dfrac{\\alpha+\\beta}{2}\\sin\\dfrac{\\alpha-\\beta}{2}$', '$-2\\sin\\dfrac{\\alpha+\\beta}{2}\\sin\\dfrac{\\alpha-\\beta}{2}$', '$\\cos(\\alpha-\\beta)$'], correct: 2 },
+      { question: 'Правда: $\\sin\\alpha + \\sin\\beta = \\sin(\\alpha+\\beta)$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 1 },
+      { question: 'Формули суми синусів/косинусів — це перетворення:', options: ['Добутку в суму', 'Суми в добуток', 'Зведення', 'Пониження степеня'], correct: 1 },
+      { question: 'Правда: $\\cos\\alpha - \\cos\\beta = -2\\sin\\dfrac{\\alpha+\\beta}{2}\\sin\\dfrac{\\alpha-\\beta}{2}$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'У формулі $\\sin\\alpha + \\sin\\beta = 2\\sin\\dfrac{\\alpha+\\beta}{2}\\cos\\dfrac{\\alpha-\\beta}{2}$, перший множник містить:', options: ['Суму $\\alpha+\\beta$', 'Різницю $\\alpha-\\beta$', 'Добуток $\\alpha\\beta$', 'Нічого з вищенаведеного'], correct: 0 },
+    ],
     questions: [
       {
         question: 'Яка формула $\\sin\\alpha + \\sin\\beta$?',
@@ -1457,6 +1563,16 @@ const QUIZZES = [
     title: 'Формули перетворення добутку в суму',
     description: 'sin α · cos β, cos α · cos β, sin α · sin β',
     icon: '🔃',
+    blitzQuestions: [
+      { question: '$\\sin\\alpha\\cos\\beta =$', options: ['$\\dfrac{1}{2}[\\sin(\\alpha+\\beta) + \\sin(\\alpha-\\beta)]$', '$\\dfrac{1}{2}[\\cos(\\alpha-\\beta) - \\cos(\\alpha+\\beta)]$', '$\\dfrac{1}{2}[\\cos(\\alpha+\\beta) + \\cos(\\alpha-\\beta)]$', '$\\sin(\\alpha+\\beta)$'], correct: 0 },
+      { question: '$\\cos\\alpha\\cos\\beta =$', options: ['$\\dfrac{1}{2}[\\sin(\\alpha+\\beta) + \\sin(\\alpha-\\beta)]$', '$\\dfrac{1}{2}[\\cos(\\alpha-\\beta) - \\cos(\\alpha+\\beta)]$', '$\\dfrac{1}{2}[\\cos(\\alpha-\\beta) + \\cos(\\alpha+\\beta)]$', '$\\cos(\\alpha+\\beta)$'], correct: 2 },
+      { question: '$\\sin\\alpha\\sin\\beta =$', options: ['$\\dfrac{1}{2}[\\cos(\\alpha-\\beta) - \\cos(\\alpha+\\beta)]$', '$\\dfrac{1}{2}[\\sin(\\alpha+\\beta) + \\sin(\\alpha-\\beta)]$', '$\\dfrac{1}{2}[\\cos(\\alpha+\\beta) + \\cos(\\alpha-\\beta)]$', '$\\sin(\\alpha-\\beta)$'], correct: 0 },
+      { question: 'Правда: $\\cos\\alpha\\cos\\beta = \\dfrac{1}{2}[\\cos(\\alpha+\\beta) + \\cos(\\alpha-\\beta)]$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Правда: $\\sin\\alpha\\sin\\beta = \\dfrac{1}{2}[\\cos(\\alpha-\\beta) + \\cos(\\alpha+\\beta)]$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 1 },
+      { question: 'Формули добутку в суму використовують для:', options: ['Знаходження кутів', 'Спрощення виразів і інтегрування', 'Побудови графіків', 'Розв\'язання рівнянь першого степеня'], correct: 1 },
+      { question: '$2\\sin\\alpha\\cos\\beta =$', options: ['$\\sin(\\alpha-\\beta)$', '$\\sin(\\alpha+\\beta) + \\sin(\\alpha-\\beta)$', '$\\cos(\\alpha-\\beta) - \\cos(\\alpha+\\beta)$', '$\\cos(\\alpha+\\beta) + \\cos(\\alpha-\\beta)$'], correct: 1 },
+      { question: 'Правда: $2\\sin\\alpha\\cos\\alpha = \\sin 2\\alpha$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+    ],
     questions: [
       {
         question: 'Яка формула $\\sin\\alpha\\cos\\beta$?',
@@ -1636,6 +1752,18 @@ const QUIZZES = [
     title: 'Функція. Область визначення та значень',
     description: 'Поняття функції, D(f), E(f), способи задання',
     icon: 'f(x)',
+    blitzQuestions: [
+      { question: 'Область визначення функції — це:', options: ['Множина значень $y$', 'Множина значень $x$', 'Графік функції', 'Рівняння функції'], correct: 1 },
+      { question: 'Область значень функції — це:', options: ['Множина значень $x$', 'Графік функції', 'Множина значень $y$', 'Похідна'], correct: 2 },
+      { question: 'Яке позначення для області визначення?', options: ['$E(f)$', '$R(f)$', '$D(f)$', '$A(f)$'], correct: 2 },
+      { question: 'Яке позначення для області значень?', options: ['$D(f)$', '$E(f)$', '$X(f)$', '$F(f)$'], correct: 1 },
+      { question: '$D(f)$ для $f(x) = \\sqrt{x}$:', options: ['$(-\\infty; +\\infty)$', '$(-\\infty; 0]$', '$[0; +\\infty)$', '$(0; +\\infty)$'], correct: 2 },
+      { question: 'Правда: кожному $x$ відповідає рівно одне значення $y$ в функції?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$D(f)$ для $f(x) = \\dfrac{1}{x}$:', options: ['$(-\\infty; +\\infty)$', '$\\mathbb{R} \\setminus \\{0\\}$', '$[0; +\\infty)$', '$(0; +\\infty)$'], correct: 1 },
+      { question: 'Правда: $f(x) = x^2$ — парна функція?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Нульова функція $f(x) = 0$ — це функція?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Функція зростає, якщо більшому $x$ відповідає:', options: ['Менше $y$', 'Те ж $y$', '$y = 0$', 'Більше $y$'], correct: 3 },
+    ],
     questions: [
       {
         question: 'Що таке область визначення функції $D(f)$?',
@@ -1790,6 +1918,18 @@ const QUIZZES = [
     title: 'Степінь з цілим показником та її властивості',
     description: 'Правила дій зі степенями, від\'ємні та нульові показники',
     icon: 'x^n',
+    blitzQuestions: [
+      { question: '$a^0 =$ (при $a \\neq 0$)', options: ['$0$', '$a$', '$1$', '$\\infty$'], correct: 2 },
+      { question: '$a^{-n} =$', options: ['$-a^n$', '$a^n$', '$\\dfrac{1}{a^n}$', '$\\dfrac{a}{n}$'], correct: 2 },
+      { question: '$a^m \\cdot a^n =$', options: ['$a^{mn}$', '$a^{m-n}$', '$a^{m+n}$', '$(2a)^{mn}$'], correct: 2 },
+      { question: '$\\dfrac{a^m}{a^n} =$', options: ['$a^{mn}$', '$a^{m+n}$', '$a^{m-n}$', '$a^{n-m}$'], correct: 2 },
+      { question: '$(a^m)^n =$', options: ['$a^{m+n}$', '$a^{m-n}$', '$a^{mn}$', '$na^m$'], correct: 2 },
+      { question: '$(ab)^n =$', options: ['$a^n + b^n$', '$a^n b^n$', '$a^{2n}b$', '$ab^n$'], correct: 1 },
+      { question: 'Правда: $(-1)^{100} = 1$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Правда: $(-1)^{101} = 1$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 1 },
+      { question: '$\\left(\\dfrac{a}{b}\\right)^n =$', options: ['$\\dfrac{a^n}{b}$', '$\\dfrac{a}{b^n}$', '$\\dfrac{a^n}{b^n}$', '$\\dfrac{a^{2n}}{b^{2n}}$'], correct: 2 },
+      { question: '$2^{10} =$', options: ['$512$', '$1000$', '$1024$', '$2048$'], correct: 2 },
+    ],
     questions: [
       {
         question: 'Чому дорівнює $a^0$ при $a \\neq 0$?',
@@ -1920,6 +2060,18 @@ const QUIZZES = [
     title: 'Похідна: геометричний і фізичний зміст',
     description: 'Поняття похідної, дотична, миттєва швидкість',
     icon: "f'",
+    blitzQuestions: [
+      { question: 'Геометричний зміст похідної $f\'(x_0)$:', options: ['Площа під графіком', 'Довжина дуги', 'Кутовий коефіцієнт дотичної', 'Значення функції'], correct: 2 },
+      { question: 'Фізичний зміст похідної шляху $s(t)$:', options: ['Прискорення', 'Миттєва швидкість', 'Час', 'Маса'], correct: 1 },
+      { question: '$(x^n)\' =$', options: ['$x^{n-1}$', '$nx^{n+1}$', '$nx^{n-1}$', '$\\dfrac{x^n}{n}$'], correct: 2 },
+      { question: '$(\\sin x)\' =$', options: ['$-\\sin x$', '$\\cos x$', '$-\\cos x$', '$\\sin x$'], correct: 1 },
+      { question: '$(\\cos x)\' =$', options: ['$\\sin x$', '$-\\sin x$', '$\\cos x$', '$-\\cos x$'], correct: 1 },
+      { question: '$(C)\' =$ де $C$ — стала:', options: ['$C$', '$1$', '$0$', '$x$'], correct: 2 },
+      { question: 'Правда: якщо $f\'(x_0) > 0$, то функція зростає в $x_0$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$(e^x)\' =$', options: ['$xe^{x-1}$', '$e^x$', '$e^{x+1}$', '$x \\cdot e^x$'], correct: 1 },
+      { question: 'Рівняння дотичної до $y = f(x)$ в точці $x_0$:', options: ['$y = f(x_0)$', '$y = f\'(x_0)$', '$y = f\'(x_0)(x - x_0) + f(x_0)$', '$y = f(x_0)(x - x_0)$'], correct: 2 },
+      { question: 'Правда: похідна константи дорівнює нулю?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+    ],
     questions: [
       {
         question: 'Що таке похідна функції в точці геометрично?',
@@ -2070,6 +2222,18 @@ const QUIZZES = [
     title: 'Обернені тригонометричні функції',
     description: 'arcsin, arccos, arctg, arcctg — означення та обчислення',
     icon: '🔄',
+    blitzQuestions: [
+      { question: '$\\arcsin\\dfrac{1}{2} =$', options: ['$\\dfrac{\\pi}{6}$', '$\\dfrac{\\pi}{3}$', '$\\dfrac{\\pi}{4}$', '$\\dfrac{\\pi}{2}$'], correct: 0 },
+      { question: '$\\arccos 1 =$', options: ['$\\dfrac{\\pi}{2}$', '$\\pi$', '$0$', '$\\dfrac{\\pi}{4}$'], correct: 2 },
+      { question: 'Область значень $\\arcsin x$:', options: ['$[0; \\pi]$', '$(-\\infty; +\\infty)$', '$\\left[-\\dfrac{\\pi}{2}; \\dfrac{\\pi}{2}\\right]$', '$\\left(-\\dfrac{\\pi}{2}; \\dfrac{\\pi}{2}\\right)$'], correct: 2 },
+      { question: 'Область значень $\\arccos x$:', options: ['$\\left[-\\dfrac{\\pi}{2}; \\dfrac{\\pi}{2}\\right]$', '$[0; \\pi]$', '$(-\\infty; +\\infty)$', '$[0; 2\\pi]$'], correct: 1 },
+      { question: 'Область визначення $\\arcsin x$ і $\\arccos x$:', options: ['$(0; 1)$', '$(-\\infty; +\\infty)$', '$[0; 1]$', '$[-1; 1]$'], correct: 3 },
+      { question: '$\\arcsin(-x) =$', options: ['$\\arcsin x$', '$\\pi - \\arcsin x$', '$-\\arcsin x$', '$\\arccos x$'], correct: 2 },
+      { question: '$\\arccos(-x) =$', options: ['$-\\arccos x$', '$\\pi + \\arccos x$', '$\\pi - \\arccos x$', '$\\arccos x$'], correct: 2 },
+      { question: 'Правда: $\\sin(\\arcsin x) = x$ для $x \\in [-1; 1]$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$\\operatorname{arctg} 0 =$', options: ['$\\dfrac{\\pi}{4}$', '$\\dfrac{\\pi}{2}$', '$0$', '$\\pi$'], correct: 2 },
+      { question: '$\\operatorname{arctg} 1 =$', options: ['$\\dfrac{\\pi}{6}$', '$\\dfrac{\\pi}{3}$', '$\\dfrac{\\pi}{2}$', '$\\dfrac{\\pi}{4}$'], correct: 3 },
+    ],
     questions: [
       {
         question: 'Чому дорівнює $\\arcsin \\dfrac{1}{2}$?',
@@ -2199,6 +2363,18 @@ const QUIZZES = [
     title: 'Найпростіші тригонометричні рівняння',
     description: 'Розв\'язання sin x = a, cos x = a, tg x = a — загальні формули',
     icon: '📝',
+    blitzQuestions: [
+      { question: 'Загальний розв\'язок $\\sin x = a$:', options: ['$x = \\arcsin a + 2\\pi n$', '$x = \\arccos a + \\pi n$', '$x = (-1)^n\\arcsin a + \\pi n$', '$x = \\arcsin a + \\pi n$'], correct: 2 },
+      { question: 'Загальний розв\'язок $\\cos x = a$:', options: ['$x = \\arccos a + \\pi n$', '$x = (-1)^n\\arccos a + \\pi n$', '$x = \\pm\\arccos a + 2\\pi n$', '$x = \\arccos a + 2\\pi n$'], correct: 2 },
+      { question: 'Загальний розв\'язок $\\operatorname{tg} x = a$:', options: ['$x = \\operatorname{arctg} a + 2\\pi n$', '$x = \\pm\\operatorname{arctg} a + \\pi n$', '$x = \\operatorname{arctg} a + \\pi n$', '$x = (-1)^n\\operatorname{arctg} a + \\pi n$'], correct: 2 },
+      { question: 'При яких $a$ рівняння $\\sin x = a$ має розв\'язки?', options: ['$a > 0$', '$|a| \\leq 1$', '$a \\in \\mathbb{R}$', '$|a| < 1$'], correct: 1 },
+      { question: 'При яких $a$ рівняння $\\cos x = a$ не має розв\'язків?', options: ['$a = 0$', '$|a| > 1$', '$a < 0$', '$a = 1$'], correct: 1 },
+      { question: '$\\sin x = 0$ — загальний розв\'язок:', options: ['$x = 2\\pi n$', '$x = \\dfrac{\\pi}{2} + \\pi n$', '$x = \\pi n$', '$x = \\pm\\dfrac{\\pi}{2} + 2\\pi n$'], correct: 2 },
+      { question: '$\\cos x = 0$ — загальний розв\'язок:', options: ['$x = \\pi n$', '$x = \\dfrac{\\pi}{2} + \\pi n$', '$x = 2\\pi n$', '$x = \\pm\\pi n$'], correct: 1 },
+      { question: '$\\cos x = 1$ — загальний розв\'язок:', options: ['$x = \\pi + 2\\pi n$', '$x = \\pm\\dfrac{\\pi}{2} + 2\\pi n$', '$x = 2\\pi n$', '$x = \\pi n$'], correct: 2 },
+      { question: 'Правда: $\\operatorname{tg} x = a$ має розв\'язки при будь-якому $a$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$\\sin x = 1$ — загальний розв\'язок:', options: ['$x = 2\\pi n$', '$x = \\pi + 2\\pi n$', '$x = \\dfrac{\\pi}{2} + 2\\pi n$', '$x = -\\dfrac{\\pi}{2} + 2\\pi n$'], correct: 2 },
+    ],
     questions: [
       {
         question: 'Яка загальна формула розв\'язків рівняння $\\sin x = a$, де $|a| \\le 1$?',
@@ -2353,6 +2529,16 @@ const QUIZZES = [
     title: 'Тригонометричні рівняння, що зводяться до квадратних',
     description: 'Заміна t = sin x або t = cos x, розв\'язання квадратних рівнянь',
     icon: '🔢',
+    blitzQuestions: [
+      { question: 'В рівнянні $2\\sin^2 x - 1 = 0$ яку заміну робимо?', options: ['$t = \\cos x$', '$t = \\sin^2 x$', '$t = \\sin x$', '$t = 2x$'], correct: 2 },
+      { question: 'Після заміни $t = \\sin x$, значення $t$ мають задовольняти:', options: ['$t \\geq 0$', '$t > 1$', '$|t| \\leq 1$', '$t \\in \\mathbb{R}$'], correct: 2 },
+      { question: 'Правда: $\\sin^2 x + \\cos^2 x = 1$ допомагає звести до однієї функції?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Якщо після заміни $t = \\cos x$ отримали $t = 2$, то:', options: ['$x = \\arccos 2$', '$x = 2 + 2\\pi n$', 'Рівняння не має розв\'язків', '$x = \\pm 2\\pi n$'], correct: 2 },
+      { question: 'В рівнянні $\\cos^2 x - \\cos x = 0$ треба:', options: ['Замінити $t = \\cos^2 x$', 'Поділити на $\\cos x$', 'Виносити $\\cos x$ за дужки', 'Скористатись формулою подвійного кута'], correct: 2 },
+      { question: 'Якщо квадратне рівняння дало $t_1 = 0.5$ і $t_2 = -2$ (де $t = \\sin x$), то:', options: ['Обидва значення підходять', 'Тільки $t_2$ підходить', 'Жодне не підходить', 'Тільки $t_1$ підходить'], correct: 3 },
+      { question: 'Правда: рівняння $\\sin^2 x = 1$ має розв\'язок?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Рівняння $\\cos^2 x = \\cos x$ можна записати як:', options: ['$\\cos^2 x + \\cos x = 0$', '$\\cos x(\\cos x - 1) = 0$', '$\\cos x = 1$', '$\\cos^2 x = 0$'], correct: 1 },
+    ],
     questions: [
       {
         question: 'Яку заміну потрібно зробити в рівнянні $2\\sin^2 x - 3\\sin x + 1 = 0$?',
@@ -2496,6 +2682,16 @@ const QUIZZES = [
     title: 'Однорідні тригонометричні рівняння',
     description: 'Однорідні рівняння, ділення на cos²x, універсальна підстановка',
     icon: '⚖️',
+    blitzQuestions: [
+      { question: 'Рівняння $a\\sin x + b\\cos x = 0$ — це рівняння:', options: ['Квадратне', 'Однорідне 1-го степеня', 'Лінійне', 'Показникове'], correct: 1 },
+      { question: 'Щоб розв\'язати $a\\sin x + b\\cos x = 0$, ділять на:', options: ['$\\sin x$', '$a$', '$\\cos x$', '$\\sin x \\cdot \\cos x$'], correct: 2 },
+      { question: 'Після ділення $a\\sin x + b\\cos x = 0$ на $\\cos x$ отримують:', options: ['$a\\sin x + b = 0$', '$a\\operatorname{tg} x + b = 0$', '$a + b\\operatorname{ctg} x = 0$', '$a\\operatorname{ctg} x + b = 0$'], correct: 1 },
+      { question: 'Рівняння $a\\sin^2 x + b\\sin x\\cos x + c\\cos^2 x = 0$ — це:', options: ['Однорідне 1-го степеня', 'Однорідне 2-го степеня', 'Квадратне', 'Лінійне'], correct: 1 },
+      { question: 'Для однорідного 2-го степеня ділять на $\\cos^2 x$, якщо $\\cos x \\neq 0$. Звідки перевіряємо $\\cos x = 0$?', options: ['Не перевіряємо', 'З умови задачі', 'Бо це може бути розв\'язком', 'Завжди підставляємо $x = 0$'], correct: 2 },
+      { question: 'Правда: $\\sin^2 x + \\sin x\\cos x = 0$ — однорідне рівняння?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$a\\sin^2 x + b\\sin x\\cos x + c\\cos^2 x = 0$ після ділення на $\\cos^2 x$:', options: ['$a\\operatorname{tg}^2 x + b + c = 0$', '$a\\operatorname{tg}^2 x + b\\operatorname{tg} x + c = 0$', '$a\\sin^2 x + b\\operatorname{tg} x + c = 0$', '$a + b\\operatorname{tg} x + c\\operatorname{ctg}^2 x = 0$'], correct: 1 },
+      { question: 'Правда: $3\\sin x + 5 = 0$ — однорідне рівняння?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 1 },
+    ],
     questions: [
       {
         question: 'Рівняння $a\\sin x + b\\cos x = 0$ називається однорідним тригонометричним рівнянням:',
@@ -2671,6 +2867,18 @@ const QUIZZES = [
     title: 'Найпростіші тригонометричні нерівності',
     description: 'Розв\'язання sin x > a, cos x ≤ a на одиничному колі',
     icon: '📊',
+    blitzQuestions: [
+      { question: '$\\sin x > 0$ — де це виконується?', options: ['$x \\in (\\pi; 2\\pi)$', '$x \\in (-\\pi; 0)$', '$x \\in (0; \\pi)$', '$x \\in (0; 2\\pi)$'], correct: 2 },
+      { question: '$\\cos x > 0$ — це виконується в чвертях:', options: ['I і II', 'II і III', 'I і IV', 'III і IV'], correct: 2 },
+      { question: 'Розв\'язання $\\sin x > a$ знаходять за допомогою:', options: ['Таблиці', 'Формули зведення', 'Одиничного кола', 'Похідної'], correct: 2 },
+      { question: 'Правда: $\\sin x \\geq 1$ має розв\'язки?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$\\sin x < 0$ — де це виконується?', options: ['$x \\in (0; \\pi) + 2\\pi n$', '$x \\in (-\\pi; 0) + 2\\pi n$', '$x \\in (\\pi; 2\\pi) + 2\\pi n$', '$x \\in (0; 2\\pi)$'], correct: 2 },
+      { question: 'Правда: $\\cos x > 2$ не має розв\'язків?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$\\operatorname{tg} x > 0$ — де це виконується?', options: ['I і III чверті', 'I і II чверті', 'II і IV чверті', 'III і IV чверті'], correct: 0 },
+      { question: 'При розв\'язанні $\\sin x > a$ на колі вибирають:', options: ['Тільки одну точку', 'Дугу де $\\sin$ більший за $a$', 'Весь верхній півкруг', 'Точки перетину'], correct: 1 },
+      { question: '$\\cos x \\leq -1$ — скільки розв\'язків на $[0; 2\\pi]$?', options: ['$0$', '$2$', '$1$', '$\\infty$'], correct: 2 },
+      { question: 'Правда: $\\sin x \\leq 0$ виконується для $x \\in [-\\pi; 0] + 2\\pi n$?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+    ],
     questions: [
       {
         question: 'Розв\'яжіть нерівність $\\sin x > 0$:',

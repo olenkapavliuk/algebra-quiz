@@ -10,6 +10,18 @@ const QUIZZES_EXTRA = [
     title: 'Множини та операції над ними',
     description: 'Множина, підмножина, об\'єднання, переріз, різниця',
     icon: '{ }',
+    blitzQuestions: [
+      { question: 'Який символ означає "належить множині"?', options: ['$\\subset$', '$\\cup$', '$\\in$', '$\\cap$'], correct: 2 },
+      { question: '$A \\cup B$ — це:', options: ['Переріз', 'Об\'єднання', 'Різниця', 'Доповнення'], correct: 1 },
+      { question: '$A \\cap B$ — це:', options: ['Об\'єднання', 'Різниця', 'Переріз', 'Підмножина'], correct: 2 },
+      { question: 'Порожня множина позначається:', options: ['$\\{0\\}$', '$\\emptyset$', '$O$', '$\\{\\}0$'], correct: 1 },
+      { question: '$A \\subset B$ означає, що:', options: ['$A$ і $B$ рівні', 'Кожен елемент $A$ є елементом $B$', '$B$ підмножина $A$', '$A$ і $B$ не перетинаються'], correct: 1 },
+      { question: '$A \\setminus B$ — елементи, що належать $A$, але не $B$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Скільки підмножин має множина з 3 елементів?', options: ['3', '6', '8', '9'], correct: 2 },
+      { question: '$\\emptyset \\subset A$ для будь-якої множини $A$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Символ $\\cup$ означає:', options: ['Переріз', 'Різниця', 'Об\'єднання', 'Доповнення'], correct: 2 },
+      { question: 'Якщо $|A|=4$, $|B|=3$, $|A \\cap B|=1$, то $|A \\cup B|=$', options: ['6', '7', '8', '5'], correct: 0 },
+    ],
     questions: [
       {
         question: 'Що таке множина?',
@@ -170,6 +182,18 @@ const QUIZZES_EXTRA = [
     title: 'Властивості функцій',
     description: 'Зростання, спадання, парність, непарність, нулі функції',
     icon: '📊',
+    blitzQuestions: [
+      { question: 'Парна функція: $f(-x) = $', options: ['$-f(x)$', '$f(x)$', '$0$', '$1$'], correct: 1 },
+      { question: 'Непарна функція: $f(-x) = $', options: ['$f(x)$', '$0$', '$-f(x)$', '$f(-x)$'], correct: 2 },
+      { question: 'Графік парної функції симетричний відносно:', options: ['Осі $Ox$', 'Осі $Oy$', 'Початку координат', 'Прямої $y=x$'], correct: 1 },
+      { question: 'Графік непарної функції симетричний відносно:', options: ['Осі $Oy$', 'Осі $Ox$', 'Початку координат', 'Прямої $y=x$'], correct: 2 },
+      { question: 'Нулі функції — це $x$, де $f(x) = $', options: ['$1$', '$-1$', '$\\infty$', '$0$'], correct: 3 },
+      { question: 'Функція зростає, якщо $x_1 < x_2 \\Rightarrow f(x_1)$...', options: ['$> f(x_2)$', '$= f(x_2)$', '$< f(x_2)$', '$\\geq f(x_2)$'], correct: 2 },
+      { question: '$f(x) = x^3$ — непарна функція.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$f(x) = x^2$ є парною функцією.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'На якому проміжку $f(x) = x^2$ спадає?', options: ['$(0; +\\infty)$', '$(-\\infty; 0)$', '$(-\\infty; +\\infty)$', '$(1; 2)$'], correct: 1 },
+      { question: 'Функція $f(x) = 2x+1$ є:', options: ['Парною', 'Непарною', 'Ні парною, ні непарною', 'Обмеженою'], correct: 2 },
+    ],
     questions: [
       {
         question: 'Функція зростає на проміжку, якщо:',
@@ -310,6 +334,17 @@ const QUIZZES_EXTRA = [
     title: 'Корінь n-го степеня',
     description: 'Арифметичний корінь, властивості коренів',
     icon: '√',
+    blitzQuestions: [
+      { question: '$\\sqrt[n]{a}$ при парному $n$ існує лише якщо:', options: ['$a > 0$', '$a \\geq 0$', '$a < 0$', '$a \\neq 0$'], correct: 1 },
+      { question: '$\\sqrt[3]{-8} = $', options: ['$2$', '$-2$', 'Не існує', '$-4$'], correct: 1 },
+      { question: '$\\sqrt{a^2}$ при $a \\geq 0$ дорівнює:', options: ['$a^2$', '$-a$', '$|a|$', '$a$'], correct: 3 },
+      { question: '$\\sqrt[3]{a^3} = $', options: ['$|a|$', '$a^2$', '$a$', '$-a$'], correct: 2 },
+      { question: '$\\sqrt{ab} = $', options: ['$\\sqrt{a} + \\sqrt{b}$', '$\\sqrt{a} \\cdot \\sqrt{b}$', '$\\dfrac{\\sqrt{a}}{\\sqrt{b}}$', '$a \\cdot b$'], correct: 1 },
+      { question: 'Корінь непарного степеня існує для від\'ємних чисел.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$\\sqrt[4]{16} = $', options: ['$4$', '$8$', '$3$', '$2$'], correct: 3 },
+      { question: '$\\sqrt[n]{a^n} = |a|$ лише при парному $n$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Що означає запис $\\sqrt[n]{a}$?', options: ['$a^n$', '$n^a$', 'Корінь $n$-го степеня з $a$', '$a \\cdot n$'], correct: 2 },
+    ],
     questions: [
       {
         question: 'Чому дорівнює $\\sqrt[3]{27}$?',
@@ -750,6 +785,18 @@ const QUIZZES_EXTRA = [
     title: 'Правила обчислення похідних',
     description: 'Похідна суми, добутку, частки, таблиця похідних',
     icon: "d/dx",
+    blitzQuestions: [
+      { question: '$(f + g)\' = $', options: ['$f\' \\cdot g\'$', '$f\' + g\'$', '$f \\cdot g\'$', '$f\' - g\'$'], correct: 1 },
+      { question: '$(C)\' = $ (де $C$ — стала)', options: ['$C$', '$1$', '$0$', '$-C$'], correct: 2 },
+      { question: '$(x^n)\' = $', options: ['$x^{n-1}$', '$nx^n$', '$nx^{n-1}$', '$n \\cdot x$'], correct: 2 },
+      { question: '$(e^x)\' = $', options: ['$e^{x-1}$', '$xe^x$', '$e^x$', '$e$'], correct: 2 },
+      { question: '$(\\ln x)\' = $', options: ['$\\ln x$', '$\\dfrac{1}{x}$', '$x$', '$e^x$'], correct: 1 },
+      { question: '$(\\sin x)\' = $', options: ['$-\\sin x$', '$\\cos x$', '$-\\cos x$', '$\\tan x$'], correct: 1 },
+      { question: '$(\\cos x)\' = $', options: ['$\\sin x$', '$\\cos x$', '$-\\sin x$', '$-\\cos x$'], correct: 2 },
+      { question: '$(C \\cdot f)\' = $', options: ['$C$', '$f\'$', '$C \\cdot f\'$', '$C + f\'$'], correct: 2 },
+      { question: '$(f \\cdot g)\' = f\' \\cdot g + f \\cdot g\'$ — це правило:', options: ['Ланцюжка', 'Лейбніца', 'Лопіталя', 'Коші'], correct: 1 },
+      { question: '$(f - g)\' = f\' - g\'$', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+    ],
     questions: [
       {
         question: 'Чому дорівнює $(f + g)\'$?',
@@ -905,6 +952,17 @@ const QUIZZES_EXTRA = [
     title: 'Зростання, спадання, екстремуми',
     description: 'Дослідження функції за допомогою похідної',
     icon: '⛰️',
+    blitzQuestions: [
+      { question: 'Функція зростає там, де:', options: ['$f\'(x) < 0$', '$f\'(x) = 0$', '$f\'(x) > 0$', '$f\'\'(x) > 0$'], correct: 2 },
+      { question: 'Функція спадає там, де:', options: ['$f\'(x) > 0$', '$f\'(x) < 0$', '$f\'(x) = 0$', '$f(x) < 0$'], correct: 1 },
+      { question: 'Критична точка — це точка, де $f\'(x) = $', options: ['$1$', '$-1$', '$\\infty$', '$0$'], correct: 3 },
+      { question: 'Максимум: похідна змінює знак з ... на ...', options: ['$-$ на $+$', '$+$ на $-$', '$0$ на $+$', '$+$ на $0$'], correct: 1 },
+      { question: 'Мінімум: похідна змінює знак з ... на ...', options: ['$+$ на $-$', '$-$ на $+$', '$0$ на $-$', '$-$ на $0$'], correct: 1 },
+      { question: 'Якщо $f\'(x_0) = 0$, то $x_0$ обов\'язково є екстремумом.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 1 },
+      { question: 'Точки, де $f\'(x) = 0$, називаються:', options: ['Точками розриву', 'Точками перегину', 'Критичними точками', 'Нулями функції'], correct: 2 },
+      { question: 'Функція $f(x) = x^2$ має мінімум при $x = $', options: ['$1$', '$-1$', '$2$', '$0$'], correct: 3 },
+      { question: 'Якщо $f\'(x) > 0$ на $(a;b)$, функція на цьому проміжку:', options: ['Спадає', 'Стала', 'Зростає', 'Має екстремум'], correct: 2 },
+    ],
     questions: [
       {
         question: 'Функція зростає на проміжку, де:',
@@ -1036,6 +1094,17 @@ const QUIZZES_EXTRA = [
     title: 'Числові множини: N, Z, Q, R',
     description: 'Натуральні, цілі, раціональні та дійсні числа',
     icon: 'ℕ',
+    blitzQuestions: [
+      { question: '$\\mathbb{N}$ — це множина:', options: ['Цілих чисел', 'Натуральних чисел', 'Раціональних чисел', 'Дійсних чисел'], correct: 1 },
+      { question: '$\\mathbb{Z}$ включає:', options: ['Тільки додатні числа', 'Всі цілі числа і нуль', 'Тільки дроби', 'Ірраціональні числа'], correct: 1 },
+      { question: 'Раціональне число — це число виду $\\dfrac{m}{n}$, де $m \\in \\mathbb{Z}$, $n \\in \\mathbb{N}$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$\\sqrt{2}$ — це число:', options: ['Натуральне', 'Ціле', 'Раціональне', 'Ірраціональне'], correct: 3 },
+      { question: 'Яке включення правильне?', options: ['$\\mathbb{R} \\subset \\mathbb{Q}$', '$\\mathbb{Q} \\subset \\mathbb{Z}$', '$\\mathbb{N} \\subset \\mathbb{Z}$', '$\\mathbb{Z} \\subset \\mathbb{N}$'], correct: 2 },
+      { question: '0 належить множині $\\mathbb{N}$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 1 },
+      { question: '$\\mathbb{R}$ — множина:', options: ['Раціональних чисел', 'Цілих чисел', 'Дійсних чисел', 'Натуральних чисел'], correct: 2 },
+      { question: 'Ціле число є раціональним?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Правильний ланцюжок включень:', options: ['$\\mathbb{Q}\\subset\\mathbb{Z}\\subset\\mathbb{N}\\subset\\mathbb{R}$', '$\\mathbb{N}\\subset\\mathbb{Z}\\subset\\mathbb{Q}\\subset\\mathbb{R}$', '$\\mathbb{R}\\subset\\mathbb{Q}\\subset\\mathbb{Z}$', '$\\mathbb{Z}\\subset\\mathbb{N}\\subset\\mathbb{Q}$'], correct: 1 },
+    ],
     questions: [
       {
         question: 'Яке з наступних чисел НЕ належить множині натуральних чисел $\\mathbb{N}$?',
@@ -1180,6 +1249,17 @@ const QUIZZES_EXTRA = [
     title: 'Способи задання функції. Графік функції',
     description: 'Аналітичний, табличний, графічний способи задання. Побудова графіків',
     icon: '📈',
+    blitzQuestions: [
+      { question: 'Формула $y = 2x + 3$ — це ... спосіб задання функції:', options: ['Табличний', 'Графічний', 'Словесний', 'Аналітичний'], correct: 3 },
+      { question: 'Графік $y = x^2$ — це:', options: ['Пряма', 'Гіпербола', 'Парабола', 'Коло'], correct: 2 },
+      { question: 'Область визначення функції — це множина допустимих значень:', options: ['$y$', '$x$', '$x$ і $y$', 'Тільки натуральних $x$'], correct: 1 },
+      { question: 'Область значень функції — це множина можливих значень $y$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'У $y = \\dfrac{1}{x}$ обмеження на ОДЗ: $x \\neq $', options: ['$1$', '$-1$', '$\\infty$', '$0$'], correct: 3 },
+      { question: 'Графік $y = \\dfrac{1}{x}$ — це:', options: ['Парабола', 'Гіпербола', 'Пряма', 'Еліпс'], correct: 1 },
+      { question: 'Зсув графіка $y=f(x)$ вгору на $k$ одиниць: $y = $', options: ['$f(x-k)$', '$f(x+k)$', '$f(x)+k$', '$f(x)-k$'], correct: 2 },
+      { question: 'Область значень $y = x^2$:', options: ['$(-\\infty;+\\infty)$', '$[0;+\\infty)$', '$(0;+\\infty)$', '$[-1;1]$'], correct: 1 },
+      { question: 'Скільки є основних способів задання функції?', options: ['2', '3', '4', '5'], correct: 1 },
+    ],
     questions: [
       {
         question: 'Який спосіб задання функції використовує формулу $y = 2x + 3$?',
@@ -1311,6 +1391,17 @@ const QUIZZES_EXTRA = [
     title: 'Степінь з раціональним показником',
     description: 'Означення та властивості степеня з дробовим показником',
     icon: '📐',
+    blitzQuestions: [
+      { question: '$a^{\\frac{m}{n}} = $', options: ['$\\sqrt[m]{a^n}$', '$\\sqrt[n]{a^m}$', '$\\dfrac{a^m}{n}$', '$a^{m-n}$'], correct: 1 },
+      { question: '$a^{\\frac{1}{2}} = $', options: ['$\\dfrac{a}{2}$', '$a^2$', '$\\sqrt{a}$', '$2a$'], correct: 2 },
+      { question: '$a^{-\\frac{1}{n}} = $', options: ['$-\\sqrt[n]{a}$', '$\\dfrac{1}{\\sqrt[n]{a}}$', '$\\sqrt[n]{-a}$', '$-a^{1/n}$'], correct: 1 },
+      { question: '$a^{\\frac{m}{n}} \\cdot a^{\\frac{k}{n}} = $', options: ['$a^{\\frac{m}{n} \\cdot \\frac{k}{n}}$', '$a^{\\frac{mk}{n^2}}$', '$a^{\\frac{m+k}{n}}$', '$a^{\\frac{m-k}{n}}$'], correct: 2 },
+      { question: '$8^{\\frac{1}{3}} = $', options: ['$3$', '$4$', '$2$', '$\\dfrac{8}{3}$'], correct: 2 },
+      { question: '$(a^{\\frac{1}{2}})^4 = a^2$ при $a > 0$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$4^{-\\frac{1}{2}} = $', options: ['$-2$', '$\\dfrac{1}{2}$', '$2$', '$\\dfrac{1}{4}$'], correct: 1 },
+      { question: '$27^{\\frac{2}{3}} = $', options: ['$3$', '$9$', '$18$', '$6$'], correct: 1 },
+      { question: 'Степінь з раціональним показником означена лише для $a > 0$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 1 },
+    ],
     questions: [
       {
         question: 'Чому дорівнює $8^{\\frac{1}{3}}$?',
@@ -1443,6 +1534,17 @@ const QUIZZES_EXTRA = [
     title: 'Рівняння та нерівності зі степенями',
     description: 'Розв\'язування степеневих рівнянь та нерівностей',
     icon: '⚖️',
+    blitzQuestions: [
+      { question: '$x^2 = 9$ має коренів:', options: ['0', '1', '2', '3'], correct: 2 },
+      { question: '$x^4 = -1$ має коренів:', options: ['0', '1', '2', '4'], correct: 0 },
+      { question: '$x^3 = -8 \\Rightarrow x = $', options: ['$2$', '$-2$', '$\\pm 2$', 'Немає коренів'], correct: 1 },
+      { question: '$x^2 \\leq 16 \\Leftrightarrow$', options: ['$x \\leq 4$', '$x \\geq -4$', '$-4 \\leq x \\leq 4$', '$|x| \\geq 4$'], correct: 2 },
+      { question: '$x^2 > 9 \\Leftrightarrow$', options: ['$x > 3$', '$x < -3$', '$-3 < x < 3$', '$x < -3$ або $x > 3$'], correct: 3 },
+      { question: '$\\sqrt{x} = -3$ — рівняння не має розв\'язків.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Рівняння $x^n = a$ при парному $n > 0$ і $a < 0$ має:', options: ['1 корінь', '2 корені', '0 коренів', '$n$ коренів'], correct: 2 },
+      { question: 'Функція $y = x^3$ є монотонно:', options: ['Зростаючою', 'Спадаючою', 'Ні зростаючою, ні спадаючою', 'Сталою'], correct: 0 },
+      { question: '$x^2 = a$ при $a > 0$ має рівно 2 дійсні корені.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+    ],
     questions: [
       {
         question: 'Розв\'яжіть рівняння $x^2 = 9$:',
@@ -1574,6 +1676,17 @@ const QUIZZES_EXTRA = [
     title: 'Похідна складеної функції. Таблиця похідних',
     description: 'Правило ланцюжка, похідні елементарних функцій',
     icon: '🔗',
+    blitzQuestions: [
+      { question: 'Правило ланцюжка: $(f(g(x)))\' = $', options: ['$f\'(x)\\cdot g\'(x)$', '$f\'(g(x))\\cdot g\'(x)$', '$f(g\'(x))$', '$f\'(g(x))$'], correct: 1 },
+      { question: '$(\\sin(2x))\' = $', options: ['$\\cos(2x)$', '$2\\cos(2x)$', '$-\\cos(2x)$', '$\\sin(2)$'], correct: 1 },
+      { question: '$(e^{3x})\' = $', options: ['$e^{3x}$', '$3e^{3x}$', '$3xe^{3x}$', '$e^3$'], correct: 1 },
+      { question: '$(\\cos(5x))\' = $', options: ['$-\\sin(5x)$', '$5\\sin(5x)$', '$-5\\sin(5x)$', '$\\cos(5)$'], correct: 2 },
+      { question: '$((2x+1)^3)\' = $', options: ['$3(2x+1)^2$', '$6(2x+1)^2$', '$(2x+1)^2$', '$2(2x+1)^3$'], correct: 1 },
+      { question: '$(\\ln(3x))\' = $', options: ['$\\dfrac{1}{3x}$', '$\\dfrac{3}{x}$', '$\\dfrac{1}{x}$', '$3\\ln x$'], correct: 2 },
+      { question: 'Похідна складеної функції = похідна зовнішньої $\\times$ похідна внутрішньої.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$(\\sqrt{x^2+1})\' = $', options: ['$\\dfrac{1}{2\\sqrt{x^2+1}}$', '$\\dfrac{x}{\\sqrt{x^2+1}}$', '$\\dfrac{2x}{\\sqrt{x^2+1}}$', '$\\sqrt{2x}$'], correct: 1 },
+      { question: '$(\\tan x)\' = $', options: ['$\\dfrac{1}{\\cos^2 x}$', '$-\\dfrac{1}{\\sin^2 x}$', '$\\cos^2 x$', '$\\sin x \\cdot \\cos x$'], correct: 0 },
+    ],
     questions: [
       {
         question: 'За правилом ланцюжка $(f(g(x)))\' = $',
@@ -1730,6 +1843,17 @@ const QUIZZES_EXTRA = [
     title: 'Рівняння дотичної до графіка функції',
     description: 'Геометричний зміст похідної, рівняння дотичної',
     icon: '📏',
+    blitzQuestions: [
+      { question: 'Геометричний зміст $f\'(a)$ — це:', options: ['Площа під графіком', 'Кутовий коефіцієнт дотичної', 'Значення функції в $a$', 'Відстань до осі'], correct: 1 },
+      { question: 'Рівняння дотичної в точці $x_0$:', options: ['$y=f\'(x_0)\\cdot x$', '$y=f(x_0)+f\'(x_0)(x-x_0)$', '$y=f\'(x_0)+f(x_0)$', '$y=f(x_0)\\cdot x$'], correct: 1 },
+      { question: 'Кутовий коефіцієнт дотичної до $y=x^2$ при $x_0=3$ дорівнює:', options: ['$3$', '$9$', '$6$', '$2$'], correct: 2 },
+      { question: 'Якщо $f\'(a) = 0$, дотична в точці $a$:', options: ['Вертикальна', 'Горизонтальна', 'Під кутом $45°$', 'Не існує'], correct: 1 },
+      { question: 'Для знаходження рівняння дотичної потрібно знати $f(x_0)$ і $f\'(x_0)$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Кутовий коефіцієнт дотичної до $y=x^3$ при $x_0=2$:', options: ['$8$', '$12$', '$6$', '$4$'], correct: 1 },
+      { question: 'Дотична паралельна осі $Ox$, якщо $f\'(x_0) = $', options: ['$1$', '$-1$', '$\\infty$', '$0$'], correct: 3 },
+      { question: 'Нормаль до графіка перпендикулярна дотичній.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Кутовий коефіцієнт дотичної до $y = 3x + 5$ в будь-якій точці дорівнює:', options: ['$5$', '$3$', '$0$', '$3x$'], correct: 1 },
+    ],
     questions: [
       {
         question: 'Геометричний зміст похідної $f\'(a)$ — це:',
@@ -1863,6 +1987,16 @@ const QUIZZES_EXTRA = [
     title: 'Найбільше і найменше значення функції на відрізку',
     description: 'Знаходження найбільшого і найменшого значень неперервної функції на замкненому відрізку',
     icon: '🏔️',
+    blitzQuestions: [
+      { question: 'Щоб знайти найбільше значення на $[a;b]$, треба перевірити:', options: ['Тільки критичні точки', 'Тільки кінці відрізка', 'Критичні точки і кінці відрізка', 'Тільки середину відрізка'], correct: 2 },
+      { question: 'Теорема Вейєрштрасса: неперервна функція на $[a;b]$ завжди досягає свого max і min.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Критичні точки в методі знаходження max/min — де $f\'(x) = $', options: ['$\\infty$', '$1$', '$0$', '$f(x)$'], correct: 2 },
+      { question: 'Найбільше значення обов\'язково досягається у критичній точці.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 1 },
+      { question: 'Для $f(x) = x$ на $[0;5]$ найбільше значення:', options: ['$0$', '$2.5$', '$5$', '$1$'], correct: 2 },
+      { question: 'Перший крок алгоритму знаходження max/min на відрізку:', options: ['Знайти $f\'\'(x)$', 'Знайти $f\'(x)=0$', 'Підставити кінці', 'Знайти $f(0)$'], correct: 1 },
+      { question: 'Для $f(x)=x^2-2x$ на $[0;3]$ критична точка $x=$', options: ['$0$', '$1$', '$2$', '$3$'], correct: 1 },
+      { question: 'На замкненому відрізку функція може досягати максимуму на кінці відрізка.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+    ],
     questions: [
       {
         question: 'Щоб знайти найбільше значення функції на відрізку $[a; b]$, потрібно:',
@@ -1994,6 +2128,16 @@ const QUIZZES_EXTRA = [
     title: 'Найбільше та найменше значення на проміжку',
     description: 'Знаходження максимуму та мінімуму функції на відрізку',
     icon: '📉',
+    blitzQuestions: [
+      { question: 'Вершина параболи $y = ax^2 + bx + c$ знаходиться при $x = $', options: ['$\\dfrac{b}{2a}$', '$-\\dfrac{b}{2a}$', '$\\dfrac{a}{2b}$', '$-\\dfrac{a}{b}$'], correct: 1 },
+      { question: 'Якщо $a > 0$, парабола $y=ax^2+bx+c$ має:', options: ['Мінімум', 'Максимум', 'Ні min ні max', 'Два мінімуми'], correct: 0 },
+      { question: 'Якщо $a < 0$, парабола $y=ax^2+bx+c$ має:', options: ['Мінімум', 'Максимум', 'Ні min ні max', 'Два максимуми'], correct: 1 },
+      { question: 'Для знаходження max/min на $[a;b]$ без похідної порівнюємо значення у вершині та на кінцях.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Найбільше значення $f(x) = -x^2$ на $[-2;2]$ дорівнює:', options: ['$-4$', '$0$', '$4$', '$-2$'], correct: 1 },
+      { question: 'Лінійна функція $f(x) = kx + b$ ($k>0$) на $[a;b]$ досягає максимуму при $x=$', options: ['$a$', '$\\dfrac{a+b}{2}$', '$b$', '$0$'], correct: 2 },
+      { question: 'Найменше значення $f(x)=x^2$ на $[-3;2]$ дорівнює:', options: ['$4$', '$0$', '$9$', '$-3$'], correct: 1 },
+      { question: 'Точка $x_0=-\\dfrac{b}{2a}$ лежить поза $[a;b]$: максимум досягається лише на кінцях.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+    ],
     questions: [
       {
         question: 'Яке найбільше значення має функція $f(x) = -x^2 + 4x$ на $[0; 3]$?',
@@ -2064,6 +2208,17 @@ const QUIZZES_EXTRA = [
     title: 'Обернена та складена функція',
     description: 'Побудова оберненої функції, складена функція f(g(x))',
     icon: '🔄',
+    blitzQuestions: [
+      { question: 'Графіки $f$ та $f^{-1}$ симетричні відносно:', options: ['Осі $Ox$', 'Осі $Oy$', 'Початку координат', 'Прямої $y=x$'], correct: 3 },
+      { question: 'Обернена функція існує, якщо $f$ є:', options: ['Парною', 'Непарною', 'Монотонною', 'Обмеженою'], correct: 2 },
+      { question: 'Якщо $f(x) = x^3$, то $f^{-1}(x) = $', options: ['$x^{-3}$', '$\\sqrt[3]{x}$', '$\\dfrac{1}{x^3}$', '$-x^3$'], correct: 1 },
+      { question: '$f(f^{-1}(x)) = $', options: ['$0$', '$f(x)$', '$x$', '$f^{-1}(x)$'], correct: 2 },
+      { question: 'Складена функція $f(g(x))$: спочатку застосовуємо $g$, потім $f$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'При $f(x)=2x$, $g(x)=x+1$: $f(g(0)) = $', options: ['$1$', '$2$', '$0$', '$3$'], correct: 1 },
+      { question: 'Щоб знайти $f^{-1}(x)$, треба виразити $x$ з рівняння $y=f(x)$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Область значень $f$ = область визначення $f^{-1}$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Якщо $f(x)=3x$, то $f^{-1}(x)=$', options: ['$3x$', '$-3x$', '$\\dfrac{x}{3}$', '$x^3$'], correct: 2 },
+    ],
     questions: [
       {
         question: 'Яка функція є оберненою до $f(x) = 2x + 6$?',
@@ -2152,6 +2307,17 @@ const QUIZZES_EXTRA = [
     title: 'Степенева функція: властивості та графік',
     description: 'Графіки y = xⁿ, властивості для парних та непарних показників',
     icon: '📐',
+    blitzQuestions: [
+      { question: '$y = x^n$ при парному $n$ є функцією:', options: ['Непарною', 'Парною', 'Монотонною', 'Ні парною, ні непарною'], correct: 1 },
+      { question: '$y = x^n$ при непарному $n$ є функцією:', options: ['Парною', 'Непарною', 'Ні парною, ні непарною', 'Сталою'], correct: 1 },
+      { question: 'Область значень $y = x^2$ — це:', options: ['$(-\\infty;+\\infty)$', '$[0;+\\infty)$', '$(0;+\\infty)$', '$\\mathbb{R}$'], correct: 1 },
+      { question: 'Область значень $y = x^3$ — це:', options: ['$[0;+\\infty)$', '$(0;+\\infty)$', '$(-\\infty;+\\infty)$', '$[-1;1]$'], correct: 2 },
+      { question: 'Всі графіки $y=x^n$ проходять через точку $(1;1)$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Графік $y = x^3$ симетричний відносно:', options: ['Осі $Oy$', 'Осі $Ox$', 'Початку координат', 'Прямої $y=x$'], correct: 2 },
+      { question: '$y = x^n$ при непарному $n > 0$ зростає на:', options: ['$(0;+\\infty)$', '$(-\\infty;0)$', '$(-\\infty;+\\infty)$', 'Ніде не зростає'], correct: 2 },
+      { question: '$y = x^2$ при $x = -3$: $y = $', options: ['$-9$', '$6$', '$9$', '$-6$'], correct: 2 },
+      { question: '$0{,}5^3 < 0{,}5^2$, оскільки множимо на $0{,}5 < 1$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+    ],
     questions: [
       {
         question: 'Функція $y = x^n$ при парному $n$ є:',
@@ -2245,6 +2411,17 @@ const QUIZZES_EXTRA = [
     title: 'Ірраціональні рівняння',
     description: 'Рівняння з коренями. Метод підведення до степеня та перевірка',
     icon: '√',
+    blitzQuestions: [
+      { question: 'При розв\'язанні ірраціональних рівнянь потрібна обов\'язкова:', options: ['Ітерація', 'Перевірка', 'Графік', 'Друга похідна'], correct: 1 },
+      { question: '$\\sqrt{f(x)} = g(x)$ вимагає: $g(x) \\geq 0$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'При зведенні в квадрат можуть з\'явитися:', options: ['Менше коренів', 'Сторонні корені', 'Комплексні корені', 'Нові нерівності'], correct: 1 },
+      { question: '$\\sqrt{x} = 5 \\Rightarrow x = $', options: ['$5$', '$\\sqrt{5}$', '$25$', '$10$'], correct: 2 },
+      { question: '$\\sqrt{x} = -2$ має рішення?', type: 'true_false', options: ['Так', 'Ні'], correct: 1 },
+      { question: 'ОДЗ рівняння $\\sqrt{x-3}$: $x \\geq $', options: ['$0$', '$3$', '$-3$', '$1$'], correct: 1 },
+      { question: 'Після зведення в квадрат $\\sqrt{x}=-2$ отримаємо $x=4$ — стороннє рішення?', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$\\sqrt{2x+1}=3 \\Rightarrow 2x+1=$', options: ['$6$', '$3$', '$9$', '$\\sqrt{9}$'], correct: 2 },
+      { question: 'Метод розв\'язання ірраціональних рівнянь: підведення обох частин до відповідного степеня.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+    ],
     questions: [
       {
         question: 'Розв\'яжіть рівняння $\\sqrt{x} = 5$:',
@@ -2333,6 +2510,17 @@ const QUIZZES_EXTRA = [
     title: 'Границя послідовності та функції',
     description: 'Поняття границі, основні границі, правила обчислення',
     icon: '∞',
+    blitzQuestions: [
+      { question: '$\\lim_{x \\to \\infty} \\dfrac{1}{x} = $', options: ['$1$', '$\\infty$', '$0$', '$-1$'], correct: 2 },
+      { question: 'Перша чудова границя: $\\lim_{x \\to 0} \\dfrac{\\sin x}{x} = $', options: ['$0$', '$\\infty$', '$\\sin 1$', '$1$'], correct: 3 },
+      { question: 'Друга чудова границя $\\lim_{n \\to \\infty}\\left(1+\\dfrac{1}{n}\\right)^n = $', options: ['$1$', '$2$', '$e$', '$\\pi$'], correct: 2 },
+      { question: '$\\lim_{x \\to 3}(2x-1) = $', options: ['$2$', '$5$', '$6$', '$3$'], correct: 1 },
+      { question: 'Границя описує поведінку функції ПОБЛИЗУ точки, а не В самій точці.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$\\lim_{x \\to \\infty} \\dfrac{3x^2}{x^2+1} = $', options: ['$0$', '$1$', '$3$', '$\\infty$'], correct: 2 },
+      { question: 'Число $e \\approx $', options: ['$1.5$', '$2.718$', '$3.14$', '$2.5$'], correct: 1 },
+      { question: '$\\lim_{x \\to 0} \\dfrac{\\tan x}{x} = $', options: ['$0$', '$\\tan 0$', '$1$', '$\\infty$'], correct: 2 },
+      { question: 'Для многочлена $P(x)$: $\\lim_{x \\to a} P(x) = P(a)$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+    ],
     questions: [
       {
         question: 'Що означає $\\lim_{x \\to a} f(x) = L$?',
@@ -2420,6 +2608,17 @@ const QUIZZES_EXTRA = [
     title: 'Неперервність функції',
     description: 'Означення неперервності, точки розриву, теорема Больцано-Коші',
     icon: '〰️',
+    blitzQuestions: [
+      { question: 'Функція неперервна в $a$, якщо $\\lim_{x \\to a}f(x) = $', options: ['$0$', '$1$', '$f(a)$', '$f\'(a)$'], correct: 2 },
+      { question: 'Всі многочлени є неперервними на $(-\\infty;+\\infty)$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$f(x)=\\dfrac{1}{x}$ має точку розриву при $x=$', options: ['$1$', '$-1$', '$\\infty$', '$0$'], correct: 3 },
+      { question: 'Теорема Больцано-Коші: якщо $f(a)\\cdot f(b) < 0$, то між $a$ і $b$ є корінь.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Якщо функція диференційовна в точці, вона також:', options: ['Нульова', 'Неперервна', 'Парна', 'Обмежена'], correct: 1 },
+      { question: 'Неперервна функція на $[a;b]$ — це функція, графік якої можна намалювати "не відриваючи олівця".', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: '$f(x)=\\dfrac{x^2-1}{x-1}$ при $x=1$ має:', options: ['Значення $2$', 'Розрив', 'Нуль', 'Мінімум'], correct: 1 },
+      { question: 'Синус і косинус є неперервними на $(-\\infty;+\\infty)$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Щоб довести, що рівняння має корінь, використовують теорему:', options: ['Лопіталя', 'Вейєрштрасса', 'Больцано-Коші', 'Ферма'], correct: 2 },
+    ],
     questions: [
       {
         question: 'Функція $f$ неперервна в точці $a$, якщо:',
@@ -2510,6 +2709,17 @@ const QUIZZES_EXTRA = [
     title: 'Побудова графіків за допомогою похідної',
     description: 'Аналіз функції: зростання/спадання, опуклість/вгнутість, точки перегину',
     icon: '📊',
+    blitzQuestions: [
+      { question: 'Функція зростає там, де $f\'(x) =$', options: ['$< 0$', '$= 0$', '$> 0$', '$\\infty$'], correct: 2 },
+      { question: 'Функція угнута (дугою вгору, ∪), якщо $f\'\'(x) =$', options: ['$< 0$', '$> 0$', '$= 0$', '$\\neq 0$'], correct: 1 },
+      { question: 'Функція опукла (дугою вниз, ∩), якщо $f\'\'(x) =$', options: ['$> 0$', '$= 0$', '$< 0$', '$\\infty$'], correct: 2 },
+      { question: 'Точка перегину — де $f\'\'$ змінює знак.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'В точці мінімуму $f\'\'(x_0) =$', options: ['$< 0$', '$= 0$', '$> 0$', '$\\infty$'], correct: 2 },
+      { question: 'В точці максимуму $f\'\'(x_0) =$', options: ['$< 0$', '$> 0$', '$= 0$', '$\\infty$'], correct: 0 },
+      { question: 'При $f\'\'(x_0)=0$ точка $x_0$ обов\'язково є точкою перегину.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 1 },
+      { question: 'Горизонтальна асимптота: $\\lim_{x\\to\\infty}f(x)=L$ означає пряму $y=$', options: ['$x$', '$L$', '$0$', '$\\infty$'], correct: 1 },
+      { question: 'Перша похідна допомагає знайти проміжки зростання, друга — опуклість.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+    ],
     questions: [
       {
         question: 'Функція $f$ зростає на проміжку, де:',
@@ -2613,6 +2823,17 @@ const QUIZZES_EXTRA = [
     title: 'Прикладні задачі на оптимізацію',
     description: 'Задачі на максимум і мінімум: геометрія, фізика, економіка',
     icon: '🎯',
+    blitzQuestions: [
+      { question: 'Перший крок в задачі на оптимізацію: скласти ... функцію.', options: ['Похідну', 'Цільову', 'Обернену', 'Складену'], correct: 1 },
+      { question: 'Прямокутник з найбільшою площею при фіксованому периметрі — це:', options: ['Прямокутник $1\\times 9$', 'Квадрат', 'Прямокутник $2\\times 8$', 'Прямокутник $3\\times 7$'], correct: 1 },
+      { question: 'Серед прямокутників з фіксованою площею найменший периметр має квадрат.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Критична точка цільової функції знаходиться з умови $f\'(x) = $', options: ['$1$', '$\\infty$', '$f(x)$', '$0$'], correct: 3 },
+      { question: 'Швидкість тіла: $v(t) = $', options: ['$\\int s(t)dt$', '$s\'(t)$', '$s(t)\\cdot t$', '$s\'\'(t)$'], correct: 1 },
+      { question: 'Щоб підтвердити, що критична точка — мінімум: $f\'\'(x_0) =$', options: ['$< 0$', '$= 0$', '$> 0$', '$\\infty$'], correct: 2 },
+      { question: 'Прискорення тіла: $a(t) = s\'\'(t)$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Об\'єм відкритої коробки з квадрата $a\\times a$ при висоті $x$: $V = x(a-2x)^2$.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+      { question: 'Після знаходження критичної точки треба перевірити, що це справді max або min.', type: 'true_false', options: ['Правильно', 'Неправильно'], correct: 0 },
+    ],
     questions: [
       {
         question: 'Яка з прямокутників з периметром 20 см має найбільшу площу?',
