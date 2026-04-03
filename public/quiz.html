@@ -302,13 +302,10 @@
       if (quizMode === 'training') preparedQuestions = buildPreparedQuestions(quizData.questions, null);
       else if (quizMode === 'exam') preparedQuestions = buildPreparedQuestions(quizData.examQuestions || quizData.questions, null);
       else if (quizMode === 'blitz') {
-        // Blitz: short theory questions only (choice + true_false, no typing/matching)
-        const blitzTypes = ['true_false', undefined, null]; // undefined = standard choice
-        const blitzPool = quizData.questions.filter(q =>
-          (!q.type || q.type === 'true_false') &&
-          q.question.length < 160
-        );
-        const pool = blitzPool.length >= 5 ? blitzPool : quizData.questions;
+        // Blitz: use dedicated blitzQuestions if available, otherwise fall back
+        const pool = (quizData.blitzQuestions && quizData.blitzQuestions.length >= 5)
+          ? quizData.blitzQuestions
+          : quizData.questions;
         preparedQuestions = buildPreparedQuestions(pool, 10);
       }
       else if (quizMode === 'retry') {
