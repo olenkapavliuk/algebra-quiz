@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Чернетка — Type Collage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Inter:wght@400;500;700;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f2ec;
+      --ink: #0f0e0d;
+      --red: #d4231a;
+      --muted: #8a8680;
+      --rule: rgba(15,14,13,0.12);
+      --paper: #ede9df;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 40px;
+      border-bottom: 2px solid var(--ink);
+    }
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8em; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ink);
+    }
+    .nav-links {
+      display: flex; gap: 32px;
+      font-size: 0.78em; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .nav-links a { color: var(--ink); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--red); }
+    .nav-user {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'DM Mono', monospace; font-size: 0.75em;
+    }
+    .nav-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1.5px solid var(--ink);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 2px solid var(--ink);
+      min-height: 420px;
+    }
+
+    .hero-left {
+      padding: 48px 40px;
+      border-right: 2px solid var(--ink);
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+
+    .issue-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72em; letter-spacing: 0.1em; color: var(--muted);
+      text-transform: uppercase; margin-bottom: 24px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .issue-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--rule);
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900; font-style: italic;
+      font-size: clamp(4em, 8vw, 7em);
+      line-height: 0.88;
+      letter-spacing: -0.02em;
+    }
+    .hero-title .outline {
+      -webkit-text-stroke: 2px var(--ink);
+      color: transparent;
+    }
+    .hero-title .red { color: var(--red); }
+    .hero-title .block {
+      display: inline-block;
+      background: var(--ink); color: var(--bg);
+      padding: 0 12px; margin-left: 4px;
+    }
+
+    .hero-bottom {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-top: 32px;
+    }
+    .hero-sub {
+      font-size: 0.9em; font-weight: 500; color: var(--muted);
+      max-width: 280px; line-height: 1.5;
+    }
+
+    .streak-badge {
+      background: var(--ink); color: var(--bg);
+      padding: 10px 20px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78em; letter-spacing: 0.05em;
+      text-align: center;
+    }
+    .streak-num {
+      display: block; font-size: 2.2em; font-weight: 500;
+      line-height: 1; margin-bottom: 2px;
+    }
+
+    /* Hero right — big number + stats */
+    .hero-right {
+      padding: 48px 40px;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg-num {
+      position: absolute; top: -20px; right: -20px;
+      font-family: 'Playfair Display', serif;
+      font-weight: 900; font-size: 22em;
+      color: var(--paper); line-height: 1;
+      user-select: none; pointer-events: none;
+      z-index: 0;
+    }
+    .hero-stats { position: relative; z-index: 1; }
+    .hero-stats-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7em; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted);
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 8px; margin-bottom: 20px;
+    }
+    .stat-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 12px 0; border-bottom: 1px solid var(--rule);
+    }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-name {
+      font-size: 0.82em; font-weight: 700; letter-spacing: 0.03em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .stat-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8em; font-weight: 900; line-height: 1;
+    }
+    .stat-val.red { color: var(--red); }
+
+    /* ── SECTION DIVIDER ── */
+    .section-divider {
+      display: flex; align-items: center; gap: 20px;
+      padding: 0 40px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .divider-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.78em; font-style: italic;
+      color: var(--muted); white-space: nowrap;
+      padding: 12px 0;
+    }
+    .divider-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65em; letter-spacing: 0.08em;
+      color: var(--muted); white-space: nowrap;
+    }
+    .divider-line { flex: 1; height: 1px; background: var(--rule); }
+
+    /* ── QUIZ GRID ── */
+    .quiz-section { padding: 0 40px 0; }
+
+    .section-head-typo {
+      padding: 32px 0 24px;
+      border-bottom: 2px solid var(--ink);
+      margin-bottom: 0;
+      display: flex; align-items: baseline; gap: 24px;
+    }
+    .section-head-typo .big {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900; font-style: italic;
+      font-size: 4.5em; line-height: 1;
+    }
+    .section-head-typo .sub {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72em; letter-spacing: 0.08em;
+      color: var(--muted); text-transform: uppercase;
+      align-self: flex-end; padding-bottom: 12px;
+    }
+
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 2px solid var(--ink);
+    }
+    .quiz-card {
+      padding: 28px 24px;
+      border-right: 1px solid var(--rule);
+      text-decoration: none; color: inherit;
+      display: block;
+      transition: background 0.2s;
+      position: relative;
+    }
+    .quiz-card:last-child { border-right: none; }
+    .quiz-card:hover { background: var(--paper); }
+    .quiz-card:hover .card-cta { color: var(--red); }
+
+    .card-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68em; letter-spacing: 0.08em;
+      color: var(--muted); margin-bottom: 16px;
+    }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05em; font-weight: 700; font-style: italic;
+      line-height: 1.25; margin-bottom: 20px;
+    }
+    .card-meta {
+      font-size: 0.72em; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 8px;
+    }
+    .card-progress-bar {
+      height: 2px; background: var(--rule); margin-bottom: 16px;
+    }
+    .card-progress-fill { height: 100%; background: var(--ink); }
+
+    .card-badge {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65em; letter-spacing: 0.06em;
+      padding: 3px 8px;
+      border: 1px solid;
+    }
+    .card-badge.done { border-color: var(--ink); color: var(--ink); }
+    .card-badge.new  { border-color: var(--red); color: var(--red); background: rgba(212,35,26,0.06); }
+
+    .card-cta {
+      position: absolute; bottom: 24px; right: 20px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4em; transition: color 0.2s;
+    }
+
+    /* ── BOTTOM ROW: CTA + ACH ── */
+    .bottom-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-bottom: 2px solid var(--ink);
+    }
+
+    /* CTA left */
+    .cta-section {
+      padding: 40px;
+      border-right: 2px solid var(--ink);
+    }
+    .cta-section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68em; letter-spacing: 0.1em;
+      color: var(--muted); text-transform: uppercase; margin-bottom: 24px;
+    }
+    .cta-big {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.2em; font-weight: 900; font-style: italic;
+      line-height: 1; margin-bottom: 8px;
+    }
+    .cta-big .outline {
+      -webkit-text-stroke: 1.5px var(--ink);
+      color: transparent;
+    }
+    .cta-desc {
+      font-size: 0.85em; color: var(--muted);
+      line-height: 1.5; margin-bottom: 24px; max-width: 300px;
+    }
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--ink); color: var(--bg);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78em; letter-spacing: 0.1em;
+      text-transform: uppercase; cursor: pointer;
+      border: none; font-weight: 500;
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+    .cta-btn:hover { background: var(--red); }
+    .cta-btn.outline-btn {
+      background: transparent; color: var(--ink);
+      border: 2px solid var(--ink);
+    }
+    .cta-btn.outline-btn:hover { background: var(--ink); color: var(--bg); }
+
+    /* Achievements right */
+    .ach-section {
+      padding: 40px;
+    }
+    .ach-section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68em; letter-spacing: 0.1em;
+      color: var(--muted); text-transform: uppercase; margin-bottom: 24px;
+    }
+    .ach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+    .ach-item {
+      background: var(--bg); padding: 16px;
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .ach-item.locked { opacity: 0.3; }
+    .ach-item:hover:not(.locked) { background: var(--paper); }
+    .ach-icon { font-size: 1.3em; flex-shrink: 0; }
+    .ach-title {
+      font-size: 0.78em; font-weight: 700;
+      letter-spacing: 0.03em; margin-bottom: 2px;
+    }
+    .ach-sub {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65em; color: var(--muted); letter-spacing: 0.04em;
+    }
+
+    /* ── FOOTER STRIP ── */
+    .footer-strip {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 40px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68em; color: var(--muted); letter-spacing: 0.06em;
+    }
+
+    /* Rotated column label */
+    .rotated-label {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65em; letter-spacing: 0.12em;
+      color: var(--muted); text-transform: uppercase;
+      position: absolute; left: -8px; top: 50%;
+      transform: rotate(180deg) translateX(50%);
+    }
+
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { border-right: none; border-bottom: 2px solid var(--ink); }
+      .quiz-grid { grid-template-columns: 1fr 1fr; }
+      .quiz-card { border-bottom: 1px solid var(--rule); }
+      .bottom-row { grid-template-columns: 1fr; }
+      .cta-section { border-right: none; border-bottom: 2px solid var(--ink); }
+      .nav { padding: 16px 20px; }
+      .hero-left, .hero-right, .quiz-section, .cta-section, .ach-section { padding: 28px 20px; }
+      .hero-title { font-size: 3.5em; }
+      .footer-strip { padding: 16px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-logo">Алгебра — 10 клас / Vol. VI</div>
+    <div class="nav-links">
+      <a href="#">Квізи</a>
+      <a href="#">Рейтинг</a>
+      <a href="#">Вчитель</a>
+    </div>
+    <div class="nav-user">
+      <img src="https://i.pravatar.cc/60?img=5" class="nav-avatar">
+      ОЛЕНА П.
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div>
+        <div class="issue-label">Математика · 10 клас · 30 тем</div>
+        <div class="hero-title">
+          <span class="outline">АЛ</span><span class="red">ГЕБ</span><br>
+          <span class="block">РА</span><br>
+          <span style="font-size:0.55em; font-style:normal; font-weight:700; letter-spacing:-0.01em; color:var(--ink);">Квізи та тести</span>
+        </div>
+      </div>
+      <div class="hero-bottom">
+        <p class="hero-sub">Тренуйся, проходь контрольні, покращуй результат. Від множин до похідних.</p>
+        <div class="streak-badge">
+          <span class="streak-num">7</span>
+          ДНІВ<br>ПОСПІЛЬ
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-bg-num">30</div>
+      <div class="hero-stats">
+        <div class="hero-stats-label">// Статистика учня</div>
+        <div class="stat-row">
+          <span class="stat-name">Пройдено</span>
+          <span class="stat-val">18</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">Середній бал</span>
+          <span class="stat-val red">76%</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">Досягнень</span>
+          <span class="stat-val">3</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-name">Всього тем</span>
+          <span class="stat-val">30</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ SECTION -->
+  <div class="quiz-section">
+    <div class="section-head-typo">
+      <span class="big">Тригонометрія</span>
+      <span class="sub">Розділ 03 · 10 квізів</span>
+    </div>
+    <div class="quiz-grid">
+
+      <a href="#" class="quiz-card">
+        <div class="card-num">3.5 — ТОТОЖНОСТІ</div>
+        <div class="card-title">Основні тригонометричні тотожності</div>
+        <div class="card-progress-bar"><div class="card-progress-fill" style="width:84%"></div></div>
+        <div class="card-meta">10 питань · 84%</div>
+        <span class="card-badge done">✓ Пройдено</span>
+        <span class="card-cta">→</span>
+      </a>
+
+      <a href="#" class="quiz-card">
+        <div class="card-num">3.6 — ФОРМУЛИ</div>
+        <div class="card-title">Формули зведення</div>
+        <div class="card-progress-bar"><div class="card-progress-fill" style="width:90%"></div></div>
+        <div class="card-meta">10 питань · 90%</div>
+        <span class="card-badge done">✓ Пройдено</span>
+        <span class="card-cta">→</span>
+      </a>
+
+      <a href="#" class="quiz-card">
+        <div class="card-num">3.7 — ДОДАВАННЯ</div>
+        <div class="card-title">Формули додавання та пониження степеня</div>
+        <div class="card-progress-bar"><div class="card-progress-fill" style="width:0%"></div></div>
+        <div class="card-meta">12 питань</div>
+        <span class="card-badge new">New</span>
+        <span class="card-cta">→</span>
+      </a>
+
+      <a href="#" class="quiz-card">
+        <div class="card-num">3.8 — ПОДВІЙНИЙ КУТ</div>
+        <div class="card-title">Формули подвійного аргументу</div>
+        <div class="card-progress-bar"><div class="card-progress-fill" style="width:0%"></div></div>
+        <div class="card-meta">10 питань</div>
+        <span class="card-cta">→</span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- BOTTOM ROW -->
+  <div class="bottom-row">
+
+    <div class="cta-section">
+      <div class="cta-section-label">// Дії</div>
+      <div style="display:flex;gap:40px;flex-wrap:wrap;">
+        <div>
+          <div class="cta-big">Рей<br><span class="outline">тинг</span></div>
+          <p class="cta-desc">Твоє місце серед однокласників. Змагайся за перший рядок.</p>
+          <a href="#" class="cta-btn">Відкрити →</a>
+        </div>
+        <div>
+          <div class="cta-big" style="font-size:2.4em;">Для<br>Вчи<br>теля</div>
+          <p class="cta-desc">Графіки, статистика, найскладніші питання, CSV.</p>
+          <a href="#" class="cta-btn outline-btn">Дашборд →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ach-section">
+      <div class="ach-section-label">// Досягнення — 3 з 10</div>
+      <div class="ach-grid">
+        <div class="ach-item">
+          <span class="ach-icon">⚡</span>
+          <div><div class="ach-title">Перший квіз</div><div class="ach-sub">Earned</div></div>
+        </div>
+        <div class="ach-item">
+          <span class="ach-icon">🔥</span>
+          <div><div class="ach-title">7-денна серія</div><div class="ach-sub">Earned</div></div>
+        </div>
+        <div class="ach-item">
+          <span class="ach-icon">💪</span>
+          <div><div class="ach-title">Наполегливість</div><div class="ach-sub">Earned</div></div>
+        </div>
+        <div class="ach-item locked">
+          <span class="ach-icon">🏆</span>
+          <div><div class="ach-title">Відмінник</div><div class="ach-sub">Locked</div></div>
+        </div>
+        <div class="ach-item locked">
+          <span class="ach-icon">⏱</span>
+          <div><div class="ach-title">Блискавка</div><div class="ach-sub">Locked</div></div>
+        </div>
+        <div class="ach-item locked">
+          <span class="ach-icon">💫</span>
+          <div><div class="ach-title">Всезнайка</div><div class="ach-sub">Locked</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer-strip">
+    <span>Алгебра та початки аналізу — 10 клас</span>
+    <span>brobots-school-ua.github.io/algebra-quiz</span>
+    <span>© 2025 — Vol. VI</span>
+  </div>
+
+</body>
+</html>
