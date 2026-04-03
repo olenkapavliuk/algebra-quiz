@@ -558,6 +558,20 @@ h1.hero-title {
   height: 1px;
   background: linear-gradient(to right, var(--border-c), transparent);
 }
+.sec-toggle:hover h2 .holo-text { opacity: 0.8; }
+.sec-arrow {
+  font-size: 0.7em;
+  color: var(--text);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+.sec-grid {
+  display: none;
+  margin-bottom: 0;
+}
+.sec-grid.open {
+  display: grid;
+}
 
 /* ============================================
    CHIPS ROW

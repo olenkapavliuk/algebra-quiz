@@ -232,19 +232,24 @@
       const group = document.createElement('div');
       group.style.marginBottom = '40px';
 
-      // Section header
+      // Count done quizzes in section
+      const doneCount = sec.quizzes.filter(q => localStorage.getItem(`progress_${q.id}`)).length;
+      const total = sec.quizzes.length;
+
+      // Section header (collapsible)
       group.innerHTML = `
-        <div class="sec-head">
+        <div class="sec-head sec-toggle" onclick="toggleSection(this)" style="cursor:pointer; user-select:none;">
           <h2>
             <span class="holo-text">РОЗДІЛ ${secNum}</span>
           </h2>
           <span style="font-family:'Share Tech Mono',monospace; font-size:0.75em; color:var(--text); letter-spacing:0.1em;">${sec.name}</span>
           <div class="sec-line"></div>
-          <span class="sys-label">R-${secNum}</span>
+          <span class="sys-label" style="white-space:nowrap;">${doneCount}/${total}</span>
+          <span class="sec-arrow">▼</span>
         </div>`;
 
       const grid = document.createElement('div');
-      grid.className = 'quiz-grid';
+      grid.className = 'quiz-grid sec-grid';
 
       sec.quizzes.forEach(quiz => {
         const progress = JSON.parse(localStorage.getItem(`progress_${quiz.id}`) || 'null');
@@ -284,6 +289,14 @@
       catalog.appendChild(group);
       lucide.createIcons();
     });
+
+    function toggleSection(header) {
+      const grid = header.nextElementSibling;
+      const arrow = header.querySelector('.sec-arrow');
+      const isOpen = grid.classList.contains('open');
+      grid.classList.toggle('open', !isOpen);
+      arrow.style.transform = isOpen ? '' : 'rotate(180deg)';
+    }
   </script>
 
   <script>
