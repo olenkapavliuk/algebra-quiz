@@ -249,7 +249,8 @@
         </div>`;
 
       const grid = document.createElement('div');
-      grid.className = 'quiz-grid sec-grid';
+      grid.className = 'quiz-grid';
+      grid.style.display = 'none';
 
       sec.quizzes.forEach(quiz => {
         const progress = JSON.parse(localStorage.getItem(`progress_${quiz.id}`) || 'null');
@@ -293,8 +294,8 @@
     function toggleSection(header) {
       const grid = header.nextElementSibling;
       const arrow = header.querySelector('.sec-arrow');
-      const isOpen = grid.classList.contains('open');
-      grid.classList.toggle('open', !isOpen);
+      const isOpen = grid.style.display !== 'none';
+      grid.style.display = isOpen ? 'none' : 'grid';
       arrow.style.transform = isOpen ? '' : 'rotate(180deg)';
     }
   </script>
