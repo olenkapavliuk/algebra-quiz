@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALGEBRA.SYS — Signal Graphics v2.0</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       SYSTEM VARIABLES
+       ============================================ */
+    :root {
+      --bg:       #05050f;
+      --bg2:      #080818;
+      --lime:     #b3ff00;
+      --magenta:  #ff00aa;
+      --cyan:     #00ffee;
+      --purple:   #7700ff;
+      --chrome:   #c0c8d8;
+      --dark1:    #0d0d22;
+      --dark2:    #121230;
+      --border-c: #1a1a40;
+      --text:     #a0a8c0;
+      --text-bright: #d0d8f0;
+    }
+
+    /* ============================================
+       KEYFRAME ANIMATIONS
+       ============================================ */
+    @keyframes hologram {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes blink-cursor {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    @keyframes scanline {
+      0%   { transform: translateY(-100%); }
+      100% { transform: translateY(100vh); }
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 8px var(--lime), 0 0 20px rgba(179,255,0,0.3); }
+      50%       { box-shadow: 0 0 16px var(--lime), 0 0 40px rgba(179,255,0,0.6), 0 0 60px rgba(179,255,0,0.2); }
+    }
+
+    @keyframes pulse-cyan {
+      0%, 100% { box-shadow: 0 0 8px var(--cyan), 0 0 20px rgba(0,255,238,0.3); }
+      50%       { box-shadow: 0 0 16px var(--cyan), 0 0 40px rgba(0,255,238,0.6); }
+    }
+
+    @keyframes pulse-mag {
+      0%, 100% { box-shadow: 0 0 8px var(--magenta), 0 0 20px rgba(255,0,170,0.3); }
+      50%       { box-shadow: 0 0 16px var(--magenta), 0 0 40px rgba(255,0,170,0.6); }
+    }
+
+    @keyframes flicker {
+      0%, 95%, 100% { opacity: 1; }
+      96%            { opacity: 0.7; }
+      97%            { opacity: 1; }
+      98%            { opacity: 0.5; }
+      99%            { opacity: 0.9; }
+    }
+
+    @keyframes stripe-scroll {
+      0%   { background-position: 0 0; }
+      100% { background-position: 40px 40px; }
+    }
+
+    @keyframes dot-pulse {
+      0%, 100% { opacity: 0.4; transform: scale(1); }
+      50%       { opacity: 1;   transform: scale(1.5); }
+    }
+
+    @keyframes neon-flicker-text {
+      0%, 94%, 100% { text-shadow: 2px 2px 0 var(--cyan), -2px -2px 0 var(--magenta), 0 0 20px var(--cyan); }
+      95%            { text-shadow: none; }
+      96%            { text-shadow: 2px 2px 0 var(--cyan), -2px -2px 0 var(--magenta); }
+    }
+
+    @keyframes bar-fill {
+      from { width: 0; }
+      to   { width: var(--fill); }
+    }
+
+    /* ============================================
+       BASE
+       ============================================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Share Tech Mono', monospace;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Scanline overlay */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 9999;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(0,0,0,0.12) 3px,
+        rgba(0,0,0,0.12) 4px
+      );
+    }
+
+    /* Moving scan beam */
+    body::after {
+      content: '';
+      position: fixed;
+      left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(to right, transparent, rgba(0,255,238,0.4), transparent);
+      z-index: 9998;
+      pointer-events: none;
+      animation: scanline 8s linear infinite;
+      top: 0;
+    }
+
+    /* Pixel dot bg pattern */
+    .pixel-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        radial-gradient(circle, rgba(179,255,0,0.08) 1px, transparent 1px),
+        radial-gradient(circle, rgba(0,255,238,0.06) 1px, transparent 1px);
+      background-size: 40px 40px, 80px 80px;
+      background-position: 0 0, 20px 20px;
+    }
+
+    /* Corner decorations */
+    .corner-tl, .corner-tr, .corner-bl, .corner-br {
+      position: fixed; z-index: 200; pointer-events: none;
+      width: 60px; height: 60px;
+    }
+    .corner-tl { top: 12px; left: 12px;
+      border-top: 2px solid var(--cyan); border-left: 2px solid var(--cyan); }
+    .corner-tr { top: 12px; right: 12px;
+      border-top: 2px solid var(--magenta); border-right: 2px solid var(--magenta); }
+    .corner-bl { bottom: 12px; left: 12px;
+      border-bottom: 2px solid var(--lime); border-left: 2px solid var(--lime); }
+    .corner-br { bottom: 12px; right: 12px;
+      border-bottom: 2px solid var(--purple); border-right: 2px solid var(--purple); }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ============================================
+       SYSTEM LABELS / CHIPS
+       ============================================ */
+    .sys-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      padding: 3px 10px;
+      border: 1px solid var(--cyan);
+      display: inline-block;
+      clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+    }
+    .sys-label.lime  { color: var(--lime);    border-color: var(--lime); }
+    .sys-label.mag   { color: var(--magenta); border-color: var(--magenta); }
+    .sys-label.purple{ color: #aa66ff;        border-color: #aa66ff; }
+
+    /* Diagonal stripe accent bar */
+    .stripe-bar {
+      height: 6px;
+      background: repeating-linear-gradient(
+        -45deg,
+        var(--lime) 0px, var(--lime) 6px,
+        transparent 6px, transparent 12px
+      );
+      animation: stripe-scroll 1.5s linear infinite;
+    }
+    .stripe-bar.cyan-stripe {
+      background: repeating-linear-gradient(
+        -45deg,
+        var(--cyan) 0px, var(--cyan) 6px,
+        transparent 6px, transparent 12px
+      );
+    }
+    .stripe-bar.mag-stripe {
+      background: repeating-linear-gradient(
+        -45deg,
+        var(--magenta) 0px, var(--magenta) 6px,
+        transparent 6px, transparent 12px
+      );
+    }
+
+    /* ============================================
+       NAVIGATION
+       ============================================ */
+    nav {
+      position: sticky; top: 0; z-index: 500;
+      background: rgba(5,5,15,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-c);
+    }
+
+    nav .stripe-bar { height: 3px; }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+    }
+
+    .nav-logo {
+      font-family: 'Russo One', sans-serif;
+      font-size: 1.2em;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-logo-icon {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--lime), var(--cyan));
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75em;
+      color: #000;
+      font-weight: bold;
+    }
+    .nav-logo-text {
+      color: var(--lime);
+      text-shadow: 0 0 12px rgba(179,255,0,0.6);
+    }
+    .nav-logo-sub {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55em;
+      color: var(--cyan);
+      display: block;
+      letter-spacing: 0.2em;
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2px;
+      list-style: none;
+    }
+    .nav-links a {
+      display: block;
+      padding: 8px 16px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.78em;
+      letter-spacing: 0.1em;
+      text-decoration: none;
+      color: var(--text);
+      text-transform: uppercase;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--lime);
+      border-color: rgba(179,255,0,0.3);
+      text-shadow: 0 0 8px var(--lime);
+      background: rgba(179,255,0,0.05);
+    }
+    .nav-links a.active::before {
+      content: '◈ ';
+      color: var(--lime);
+    }
+
+    .nav-user {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-avatar {
+      width: 36px; height: 36px;
+      border: 2px solid var(--cyan);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      background: linear-gradient(135deg, #1a1a40, #2a0a40);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Russo One', sans-serif;
+      font-size: 0.8em;
+      color: var(--cyan);
+      animation: pulse-cyan 3s ease-in-out infinite;
+    }
+
+    .nav-username {
+      font-size: 0.75em;
+      color: var(--text-bright);
+      letter-spacing: 0.05em;
+    }
+    .nav-username span {
+      display: block;
+      font-size: 0.8em;
+      color: var(--cyan);
+      letter-spacing: 0.1em;
+    }
+
+    /* ============================================
+       HERO / HEADER
+       ============================================ */
+    .hero {
+      padding: 48px 0 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Diagonal accent lines background */
+    .hero::before {
+      content: '';
+      position: absolute;
+      right: -100px; top: -50px;
+      width: 600px; height: 500px;
+      background: repeating-linear-gradient(
+        -55deg,
+        transparent 0px, transparent 30px,
+        rgba(179,255,0,0.025) 30px, rgba(179,255,0,0.025) 31px
+      );
+      pointer-events: none;
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .hero-title-block { flex: 1; }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .hero-eyebrow .dot {
+      width: 6px; height: 6px;
+      background: var(--lime);
+      border-radius: 50%;
+      animation: dot-pulse 2s ease-in-out infinite;
+    }
+    .hero-eyebrow .dot:nth-child(2) { animation-delay: 0.4s; background: var(--cyan); }
+    .hero-eyebrow .dot:nth-child(3) { animation-delay: 0.8s; background: var(--magenta); }
+
+    h1.hero-title {
+      font-family: 'Russo One', sans-serif;
+      font-size: 3.8em;
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
+    }
+
+    .holo-text {
+      background: linear-gradient(
+        90deg,
+        var(--lime), var(--cyan), var(--magenta), var(--purple), var(--lime)
+      );
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: hologram 4s linear infinite;
+    }
+
+    .title-line2 {
+      display: block;
+      color: var(--text-bright);
+      text-shadow:
+        2px  2px 0 var(--cyan),
+        -1px -1px 0 var(--magenta);
+    }
+    .title-line3 {
+      display: block;
+      font-size: 0.45em;
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--lime);
+      letter-spacing: 0.25em;
+      text-shadow: 0 0 12px rgba(179,255,0,0.8);
+      margin-top: 8px;
+      animation: neon-flicker-text 5s infinite;
+    }
+
+    .hero-desc {
+      color: var(--text);
+      font-size: 0.82em;
+      line-height: 1.7;
+      margin-top: 20px;
+      max-width: 480px;
+      letter-spacing: 0.05em;
+    }
+
+    /* Stats panel */
+    .stats-panel {
+      background: var(--dark1);
+      border: 1px solid var(--border-c);
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+      padding: 24px;
+      min-width: 280px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .stats-panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--cyan), var(--magenta), var(--lime));
+    }
+
+    .stats-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .stats-title {
+      font-family: 'Russo One', sans-serif;
+      font-size: 0.7em;
+      letter-spacing: 0.2em;
+      color: var(--cyan);
+      text-transform: uppercase;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .stat-row:last-child { border-bottom: none; }
+
+    .stat-label {
+      font-size: 0.72em;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .stat-value {
+      font-family: 'Russo One', sans-serif;
+      font-size: 1.05em;
+      color: var(--lime);
+      text-shadow: 0 0 10px rgba(179,255,0,0.5);
+    }
+    .stat-value.cyan  { color: var(--cyan);    text-shadow: 0 0 10px rgba(0,255,238,0.5); }
+    .stat-value.mag   { color: var(--magenta); text-shadow: 0 0 10px rgba(255,0,170,0.5); }
+
+    .cursor-blink::after {
+      content: '_';
+      animation: blink-cursor 1s step-end infinite;
+    }
+
+    /* XP Progress bar in stats */
+    .xp-bar-wrap {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-c);
+    }
+    .xp-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.65em;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: 0.1em;
+    }
+    .xp-track {
+      height: 8px;
+      background: var(--dark2);
+      border: 1px solid var(--border-c);
+      position: relative;
+      clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px));
+    }
+    .xp-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--lime), var(--cyan));
+      --fill: 72%;
+      width: var(--fill);
+      box-shadow: 0 0 10px rgba(179,255,0,0.6);
+      animation: bar-fill 1.5s ease-out;
+    }
+
+    /* Divider */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 40px 0 28px;
+    }
+    .section-divider .line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border-c), var(--border-c), transparent);
+    }
+    .section-divider .title {
+      font-family: 'Russo One', sans-serif;
+      font-size: 0.75em;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-divider .title .holo-text {
+      font-size: 1.4em;
+    }
+
+    /* ============================================
+       QUICK STAT CHIPS ROW
+       ============================================ */
+    .chips-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--dark1);
+      border: 1px solid var(--border-c);
+      padding: 10px 16px;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+      flex: 1;
+      min-width: 160px;
+      position: relative;
+      overflow: hidden;
+    }
+    .chip::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+    }
+    .chip.c-lime::after  { background: var(--lime); }
+    .chip.c-cyan::after  { background: var(--cyan); }
+    .chip.c-mag::after   { background: var(--magenta); }
+    .chip.c-purp::after  { background: var(--purple); }
+
+    .chip-icon {
+      font-size: 1.5em;
+      line-height: 1;
+    }
+    .chip-data { flex: 1; }
+    .chip-value {
+      font-family: 'Russo One', sans-serif;
+      font-size: 1.3em;
+      display: block;
+      line-height: 1;
+    }
+    .chip.c-lime  .chip-value { color: var(--lime);    text-shadow: 0 0 8px rgba(179,255,0,0.6); }
+    .chip.c-cyan  .chip-value { color: var(--cyan);    text-shadow: 0 0 8px rgba(0,255,238,0.6); }
+    .chip.c-mag   .chip-value { color: var(--magenta); text-shadow: 0 0 8px rgba(255,0,170,0.6); }
+    .chip.c-purp  .chip-value { color: #aa66ff;        text-shadow: 0 0 8px rgba(170,102,255,0.6); }
+    .chip-label {
+      font-size: 0.65em;
+      color: var(--text);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* ============================================
+       QUIZ GRID
+       ============================================ */
+    .grid-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .grid-header h2 {
+      font-family: 'Russo One', sans-serif;
+      font-size: 1.1em;
+      letter-spacing: 0.15em;
+      color: var(--text-bright);
+      text-shadow:
+        1px  1px 0 rgba(0,255,238,0.4),
+        -1px -1px 0 rgba(255,0,170,0.4);
+    }
+    .grid-filter {
+      display: flex;
+      gap: 4px;
+    }
+    .filter-btn {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border: 1px solid var(--border-c);
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      border-color: var(--lime);
+      color: var(--lime);
+      background: rgba(179,255,0,0.05);
+    }
+
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .quiz-card {
+      background: var(--dark1);
+      border: 1px solid var(--border-c);
+      position: relative;
+      overflow: hidden;
+      clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+      transition: transform 0.2s, border-color 0.2s;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+    .quiz-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(179,255,0,0.4);
+    }
+    .quiz-card:hover .card-glow { opacity: 1; }
+    .quiz-card:hover .card-btn  { opacity: 1; transform: translateY(0); }
+
+    /* Card color accent on top */
+    .quiz-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .quiz-card.col-lime::before   { background: linear-gradient(to right, var(--lime), var(--cyan)); }
+    .quiz-card.col-mag::before    { background: linear-gradient(to right, var(--magenta), var(--purple)); }
+    .quiz-card.col-cyan::before   { background: linear-gradient(to right, var(--cyan), var(--lime)); }
+    .quiz-card.col-purple::before { background: linear-gradient(to right, var(--purple), var(--magenta)); }
+
+    /* Glowing bg on hover */
+    .card-glow {
+      position: absolute; inset: 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .col-lime   .card-glow { background: radial-gradient(circle at 30% 30%, rgba(179,255,0,0.07), transparent 70%); }
+    .col-mag    .card-glow { background: radial-gradient(circle at 30% 30%, rgba(255,0,170,0.07), transparent 70%); }
+    .col-cyan   .card-glow { background: radial-gradient(circle at 30% 30%, rgba(0,255,238,0.07), transparent 70%); }
+    .col-purple .card-glow { background: radial-gradient(circle at 30% 30%, rgba(119,0,255,0.07), transparent 70%); }
+
+    /* Diagonal stripe on card */
+    .card-stripe {
+      position: absolute;
+      right: -20px; bottom: -20px;
+      width: 100px; height: 100px;
+      opacity: 0.06;
+      background: repeating-linear-gradient(
+        -45deg,
+        #fff 0px, #fff 3px,
+        transparent 3px, transparent 9px
+      );
+      transform: rotate(0deg);
+    }
+
+    .card-inner { padding: 20px 20px 16px; flex: 1; display: flex; flex-direction: column; }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .card-icon-wrap {
+      width: 48px; height: 48px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6em;
+      background: var(--dark2);
+      border: 1px solid var(--border-c);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      flex-shrink: 0;
+    }
+    .col-lime .card-icon-wrap   { border-color: rgba(179,255,0,0.3); }
+    .col-mag  .card-icon-wrap   { border-color: rgba(255,0,170,0.3); }
+    .col-cyan .card-icon-wrap   { border-color: rgba(0,255,238,0.3); }
+    .col-purple .card-icon-wrap { border-color: rgba(119,0,255,0.3); }
+
+    .card-meta {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    .difficulty-pip {
+      display: flex;
+      gap: 3px;
+    }
+    .pip {
+      width: 16px; height: 4px;
+      background: var(--border-c);
+    }
+    .pip.filled.lime   { background: var(--lime);    box-shadow: 0 0 4px var(--lime); }
+    .pip.filled.mag    { background: var(--magenta); box-shadow: 0 0 4px var(--magenta); }
+    .pip.filled.cyan   { background: var(--cyan);    box-shadow: 0 0 4px var(--cyan); }
+    .pip.filled.purple { background: #aa66ff;        box-shadow: 0 0 4px #aa66ff; }
+
+    .card-title {
+      font-family: 'Russo One', sans-serif;
+      font-size: 1.0em;
+      color: var(--text-bright);
+      letter-spacing: 0.03em;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .card-desc {
+      font-size: 0.72em;
+      color: var(--text);
+      line-height: 1.6;
+      letter-spacing: 0.04em;
+      flex: 1;
+      margin-bottom: 16px;
+    }
+
+    /* Progress bar on card */
+    .card-progress { margin-bottom: 14px; }
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.62em;
+      color: var(--text);
+      margin-bottom: 6px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .progress-track {
+      height: 6px;
+      background: var(--dark2);
+      border: 1px solid var(--border-c);
+      position: relative;
+    }
+    .progress-fill {
+      height: 100%;
+      --fill: 0%;
+      width: var(--fill);
+      animation: bar-fill 2s ease-out;
+    }
+    .col-lime   .progress-fill { background: linear-gradient(to right, var(--lime), rgba(0,255,238,0.7)); box-shadow: 0 0 6px rgba(179,255,0,0.5); }
+    .col-mag    .progress-fill { background: linear-gradient(to right, var(--magenta), rgba(170,0,255,0.7)); box-shadow: 0 0 6px rgba(255,0,170,0.5); }
+    .col-cyan   .progress-fill { background: linear-gradient(to right, var(--cyan), rgba(179,255,0,0.7)); box-shadow: 0 0 6px rgba(0,255,238,0.5); }
+    .col-purple .progress-fill { background: linear-gradient(to right, var(--purple), rgba(255,0,170,0.7)); box-shadow: 0 0 6px rgba(119,0,255,0.5); }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-c);
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+    }
+    .ctag {
+      font-size: 0.6em;
+      letter-spacing: 0.1em;
+      padding: 2px 8px;
+      border: 1px solid;
+      text-transform: uppercase;
+    }
+    .col-lime   .ctag { color: var(--lime);    border-color: rgba(179,255,0,0.4); }
+    .col-mag    .ctag { color: var(--magenta); border-color: rgba(255,0,170,0.4); }
+    .col-cyan   .ctag { color: var(--cyan);    border-color: rgba(0,255,238,0.4); }
+    .col-purple .ctag { color: #aa66ff;        border-color: rgba(170,102,255,0.4); }
+
+    .card-btn {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border: none;
+      cursor: pointer;
+      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .col-lime   .card-btn { background: var(--lime);    color: #000; }
+    .col-mag    .card-btn { background: var(--magenta); color: #fff; }
+    .col-cyan   .card-btn { background: var(--cyan);    color: #000; }
+    .col-purple .card-btn { background: #7700ff;        color: #fff; }
+
+    /* ============================================
+       SECTION: CTA ROW (Leaderboard + Teacher)
+       ============================================ */
+    .cta-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 40px 0;
+    }
+
+    .cta-card {
+      background: var(--dark1);
+      border: 1px solid var(--border-c);
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .cta-card.cta-lime::before  { background: linear-gradient(to right, var(--lime), var(--cyan)); }
+    .cta-card.cta-mag::before   { background: linear-gradient(to right, var(--magenta), var(--purple)); }
+
+    .cta-card-title {
+      font-family: 'Russo One', sans-serif;
+      font-size: 1.1em;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .cta-lime .cta-card-title { color: var(--lime); text-shadow: 0 0 12px rgba(179,255,0,0.5); }
+    .cta-mag  .cta-card-title { color: var(--magenta); text-shadow: 0 0 12px rgba(255,0,170,0.5); }
+
+    .cta-card-text {
+      font-size: 0.74em;
+      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      letter-spacing: 0.04em;
+    }
+
+    /* Leaderboard mini */
+    .leaderboard-mini { margin-bottom: 20px; }
+    .lb-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 0.72em;
+    }
+    .lb-rank {
+      width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Russo One', sans-serif;
+      font-size: 0.85em;
+      flex-shrink: 0;
+    }
+    .lb-rank.gold   { color: #ffd700; text-shadow: 0 0 8px rgba(255,215,0,0.7); }
+    .lb-rank.silver { color: var(--chrome); }
+    .lb-rank.bronze { color: #cd7f32; }
+    .lb-rank.me     {
+      color: var(--lime);
+      background: rgba(179,255,0,0.1);
+      border: 1px solid rgba(179,255,0,0.4);
+      font-size: 0.7em;
+    }
+
+    .lb-name { flex: 1; color: var(--text-bright); letter-spacing: 0.04em; }
+    .lb-name.me-name { color: var(--lime); }
+    .lb-score {
+      font-family: 'Russo One', sans-serif;
+      color: var(--cyan);
+      font-size: 0.9em;
+    }
+    .lb-bar-wrap {
+      width: 60px;
+      height: 4px;
+      background: var(--dark2);
+      border: 1px solid var(--border-c);
+    }
+    .lb-bar {
+      height: 100%;
+      background: var(--cyan);
+      box-shadow: 0 0 4px var(--cyan);
+    }
+
+    .cta-btn {
+      display: inline-block;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72em;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      border: 1px solid;
+      cursor: pointer;
+      text-decoration: none;
+      background: transparent;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+      transition: all 0.2s;
+    }
+    .btn-lime {
+      color: var(--lime); border-color: var(--lime);
+      text-shadow: 0 0 8px rgba(179,255,0,0.5);
+    }
+    .btn-lime:hover {
+      background: rgba(179,255,0,0.1);
+      box-shadow: 0 0 20px rgba(179,255,0,0.2);
+    }
+    .btn-mag {
+      color: var(--magenta); border-color: var(--magenta);
+      text-shadow: 0 0 8px rgba(255,0,170,0.5);
+    }
+    .btn-mag:hover {
+      background: rgba(255,0,170,0.1);
+      box-shadow: 0 0 20px rgba(255,0,170,0.2);
+    }
+
+    /* Teacher card extras */
+    .teacher-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+      padding: 12px;
+      background: var(--dark2);
+      border: 1px solid var(--border-c);
+    }
+    .teacher-avatar {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, #2a0030, #400050);
+      border: 2px solid var(--magenta);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4em;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      animation: pulse-mag 3s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    .teacher-details { flex: 1; }
+    .teacher-name {
+      font-family: 'Russo One', sans-serif;
+      font-size: 0.9em;
+      color: var(--text-bright);
+      margin-bottom: 2px;
+    }
+    .teacher-role {
+      font-size: 0.65em;
+      color: var(--magenta);
+      letter-spacing: 0.1em;
+    }
+    .teacher-status {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.62em;
+      color: var(--lime);
+      margin-top: 4px;
+    }
+    .status-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 6px var(--lime);
+      animation: dot-pulse 2s ease-in-out infinite;
+    }
+
+    /* ============================================
+       ACHIEVEMENTS STRIP
+       ============================================ */
+    .achievements { margin: 40px 0; }
+
+    .achievements-scroll {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-c) transparent;
+    }
+
+    .badge {
+      flex-shrink: 0;
+      width: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 8px;
+      background: var(--dark1);
+      border: 1px solid var(--border-c);
+      position: relative;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      transition: transform 0.2s;
+    }
+    .badge:hover { transform: scale(1.08); }
+    .badge.earned { border-color: rgba(179,255,0,0.4); }
+    .badge.earned.cyan-badge   { border-color: rgba(0,255,238,0.4); }
+    .badge.earned.mag-badge    { border-color: rgba(255,0,170,0.4); }
+    .badge.earned.purple-badge { border-color: rgba(119,0,255,0.4); }
+
+    .badge-icon { font-size: 1.8em; line-height: 1; }
+
+    .badge-name {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6em;
+      letter-spacing: 0.05em;
+      text-align: center;
+      text-transform: uppercase;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .badge.earned .badge-name { color: var(--lime); }
+    .badge.earned.cyan-badge   .badge-name { color: var(--cyan); }
+    .badge.earned.mag-badge    .badge-name { color: var(--magenta); }
+    .badge.earned.purple-badge .badge-name { color: #aa66ff; }
+
+    .badge.earned::after {
+      content: '✓';
+      position: absolute;
+      bottom: 14px;
+      font-size: 0.55em;
+      color: var(--lime);
+    }
+    .badge.earned.cyan-badge::after   { color: var(--cyan); }
+    .badge.earned.mag-badge::after    { color: var(--magenta); }
+    .badge.earned.purple-badge::after { color: #aa66ff; }
+
+    .badge.locked { opacity: 0.4; filter: grayscale(0.8); }
+
+    /* Badge wrapper (compensates for hex clip-path shape) */
+    .badges-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px 0;
+    }
+
+    /* Redo badges as angled panels instead of hex for better layout */
+    .badge {
+      clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+      width: 110px;
+    }
+
+    /* ============================================
+       SYSTEM STATUS BAR (footer-like)
+       ============================================ */
+    .system-bar {
+      margin-top: 48px;
+      padding: 12px 0;
+      border-top: 1px solid var(--border-c);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.65em;
+      color: var(--text);
+      letter-spacing: 0.1em;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .sys-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .sys-status .live-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--lime);
+      box-shadow: 0 0 8px var(--lime);
+      animation: dot-pulse 1.5s ease-in-out infinite;
+    }
+
+    .sys-right {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    /* ============================================
+       SECTION HEADINGS
+       ============================================ */
+    .sec-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .sec-head h2 {
+      font-family: 'Russo One', sans-serif;
+      font-size: 1.0em;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-bright);
+    }
+    .sec-head h2 .holo-text { font-size: 1em; }
+    .sec-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, var(--border-c), transparent);
+    }
+
+    /* ============================================
+       TOPIC COUNTER SECTION
+       ============================================ */
+    .topic-counter {
+      background: var(--dark1);
+      border: 1px solid var(--border-c);
+      padding: 20px 24px;
+      margin-bottom: 40px;
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      position: relative;
+    }
+    .topic-counter::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(to right, var(--cyan), var(--lime), transparent);
+    }
+
+    .topic-big {
+      font-family: 'Russo One', sans-serif;
+      font-size: 3.5em;
+      color: var(--lime);
+      text-shadow: 0 0 20px rgba(179,255,0,0.6), 2px 2px 0 var(--cyan);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .topic-detail { flex: 1; }
+    .topic-detail p {
+      font-size: 0.72em;
+      color: var(--text);
+      line-height: 1.6;
+      letter-spacing: 0.05em;
+    }
+    .topic-detail p strong {
+      color: var(--text-bright);
+      font-weight: normal;
+    }
+
+    .topic-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 200px;
+    }
+    .tb-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.67em;
+    }
+    .tb-label {
+      color: var(--text);
+      letter-spacing: 0.05em;
+      width: 80px;
+      flex-shrink: 0;
+      text-transform: uppercase;
+    }
+    .tb-track {
+      flex: 1;
+      height: 4px;
+      background: var(--dark2);
+      border: 1px solid var(--border-c);
+    }
+    .tb-fill {
+      height: 100%;
+      --fill: 50%;
+      width: var(--fill);
+    }
+    .tb-fill.f-lime   { background: var(--lime);    box-shadow: 0 0 4px var(--lime); }
+    .tb-fill.f-cyan   { background: var(--cyan);    box-shadow: 0 0 4px var(--cyan); }
+    .tb-fill.f-mag    { background: var(--magenta); box-shadow: 0 0 4px var(--magenta); }
+    .tb-count {
+      color: var(--chrome);
+      width: 28px;
+      text-align: right;
+    }
+
+    /* ============================================
+       RESPONSIVE
+       ============================================ */
+    @media (max-width: 700px) {
+      h1.hero-title { font-size: 2.4em; }
+      .hero-top     { flex-direction: column; }
+      .quiz-grid    { grid-template-columns: 1fr; }
+      .cta-row      { grid-template-columns: 1fr; }
+      .topic-counter { flex-wrap: wrap; }
+      .topic-breakdown { min-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Decorative pixel background -->
+  <div class="pixel-bg"></div>
+
+  <!-- Corner brackets -->
+  <div class="corner-tl"></div>
+  <div class="corner-tr"></div>
+  <div class="corner-bl"></div>
+  <div class="corner-br"></div>
+
+  <!-- ============================================
+       NAVIGATION
+       ============================================ -->
+  <nav>
+    <div class="stripe-bar"></div>
+    <div class="container">
+      <div class="nav-inner">
+
+        <a href="#" class="nav-logo">
+          <div class="nav-logo-icon">Σ</div>
+          <div>
+            <span class="nav-logo-text">ALGEBRA.SYS</span>
+            <span class="nav-logo-sub">◈ SIGNAL GRAPHICS V2.0 ◈</span>
+          </div>
+        </a>
+
+        <ul class="nav-links">
+          <li><a href="#" class="active">КАТАЛОГ</a></li>
+          <li><a href="#">МОЇ РЕЗУЛЬТАТИ</a></li>
+          <li><a href="#">РЕЙТИНГ</a></li>
+          <li><a href="#">ДЛЯ ВЧИТЕЛЯ</a></li>
+        </ul>
+
+        <div class="nav-user">
+          <div class="nav-avatar">О</div>
+          <div class="nav-username">
+            Олена П.
+            <span>УЧЕНЬ // 10-А</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================
+       MAIN CONTENT
+       ============================================ -->
+  <div class="container">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-top">
+
+        <div class="hero-title-block">
+          <div class="hero-eyebrow">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <span class="sys-label">SYS // ALGEBRA QUIZ PLATFORM</span>
+          </div>
+
+          <h1 class="hero-title">
+            <span class="holo-text">АЛГЕБРА</span>
+            <span class="title-line2">КВІЗ-ПЛАТФОРМА</span>
+            <span class="title-line3">◈ 10-й КЛАС // МАТЕМАТИКА // [LOADING...] ◈</span>
+          </h1>
+
+          <p class="hero-desc">
+            [SYS_MSG] Ласкаво просимо, ОЛЕНА_П. //
+            Активна сесія // Підключення до бази знань...
+            <br>Доступно 30 тем. Твій прогрес синхронізується в реальному часі.
+          </p>
+        </div>
+
+        <!-- Stats panel -->
+        <div class="stats-panel">
+          <div class="stats-header">
+            <span class="stats-title">◈ СТАТИСТИКА ГРАВЦЯ</span>
+            <span class="sys-label">V.2.0</span>
+          </div>
+
+          <div class="stat-row">
+            <span class="stat-label">Юзер</span>
+            <span class="stat-value cursor-blink">ОЛЕНА_П</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Клас</span>
+            <span class="stat-value cyan">10-А // MATH</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Стрік</span>
+            <span class="stat-value">7 ДНІВ 🔥</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Завершено</span>
+            <span class="stat-value mag">18 / 30</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Середній бал</span>
+            <span class="stat-value">84%</span>
+          </div>
+
+          <div class="xp-bar-wrap">
+            <div class="xp-label">
+              <span>XP ПРОГРЕС</span>
+              <span>1840 / 2500</span>
+            </div>
+            <div class="xp-track">
+              <div class="xp-fill"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- QUICK CHIPS -->
+    <div class="chips-row">
+      <div class="chip c-lime">
+        <div class="chip-icon">📚</div>
+        <div class="chip-data">
+          <span class="chip-value">30</span>
+          <span class="chip-label">ТЕМ ВСЬОГО</span>
+        </div>
+      </div>
+      <div class="chip c-cyan">
+        <div class="chip-icon">✅</div>
+        <div class="chip-data">
+          <span class="chip-value">18</span>
+          <span class="chip-label">ЗАВЕРШЕНО</span>
+        </div>
+      </div>
+      <div class="chip c-mag">
+        <div class="chip-icon">🔥</div>
+        <div class="chip-data">
+          <span class="chip-value">7</span>
+          <span class="chip-label">ДЕНЬ СТРІКУ</span>
+        </div>
+      </div>
+      <div class="chip c-purp">
+        <div class="chip-icon">🏆</div>
+        <div class="chip-data">
+          <span class="chip-value">#4</span>
+          <span class="chip-label">В РЕЙТИНГУ</span>
+        </div>
+      </div>
+      <div class="chip c-lime">
+        <div class="chip-icon">⭐</div>
+        <div class="chip-data">
+          <span class="chip-value">1840</span>
+          <span class="chip-label">XP БАЛІВ</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOPIC COUNTER -->
+    <div class="topic-counter">
+      <div class="topic-big">30</div>
+      <div class="topic-detail">
+        <p><strong>// TOPICS_LOADED //</strong></p>
+        <p>Тригонометрія · Логарифми · Степенева функція · Геометрія ·</p>
+        <p>Рівняння · Нерівності · Комплексні числа · Інтеграли</p>
+      </div>
+      <div class="topic-breakdown">
+        <div class="tb-row">
+          <span class="tb-label">Тригон.</span>
+          <div class="tb-track"><div class="tb-fill f-lime" style="--fill:100%"></div></div>
+          <span class="tb-count">8</span>
+        </div>
+        <div class="tb-row">
+          <span class="tb-label">Логаритми</span>
+          <div class="tb-track"><div class="tb-fill f-cyan" style="--fill:75%"></div></div>
+          <span class="tb-count">6</span>
+        </div>
+        <div class="tb-row">
+          <span class="tb-label">Рівняння</span>
+          <div class="tb-track"><div class="tb-fill f-mag" style="--fill:88%"></div></div>
+          <span class="tb-count">7</span>
+        </div>
+        <div class="tb-row">
+          <span class="tb-label">Геометрія</span>
+          <div class="tb-track"><div class="tb-fill f-lime" style="--fill:56%"></div></div>
+          <span class="tb-count">5</span>
+        </div>
+        <div class="tb-row">
+          <span class="tb-label">Функції</span>
+          <div class="tb-track"><div class="tb-fill f-cyan" style="--fill:50%"></div></div>
+          <span class="tb-count">4</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUIZ GRID HEADER -->
+    <div class="sec-head">
+      <h2><span class="holo-text">◈</span> КВІЗИ // ТРИГОНОМЕТРІЯ</h2>
+      <div class="sec-line"></div>
+      <span class="sys-label lime">SECTION_03</span>
+    </div>
+
+    <div class="grid-header">
+      <div style="font-size:0.72em; color:var(--text); letter-spacing:0.1em;">
+        [SHOWING 4 OF 8 MODULES]
+      </div>
+      <div class="grid-filter">
+        <button class="filter-btn active">ВСІ</button>
+        <button class="filter-btn">АКТИВНІ</button>
+        <button class="filter-btn">ПРОЙДЕНІ</button>
+        <button class="filter-btn">НОВІ</button>
+      </div>
+    </div>
+
+    <!-- QUIZ GRID -->
+    <div class="quiz-grid">
+
+      <!-- Card 1 -->
+      <div class="quiz-card col-lime">
+        <div class="card-glow"></div>
+        <div class="card-stripe"></div>
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-icon-wrap">📐</div>
+            <div class="card-meta">
+              <span class="sys-label lime" style="font-size:0.55em;">ЗАВЕРШЕНО</span>
+              <div class="difficulty-pip">
+                <div class="pip filled lime"></div>
+                <div class="pip filled lime"></div>
+                <div class="pip filled lime"></div>
+                <div class="pip"></div>
+              </div>
+            </div>
+          </div>
+          <div class="card-title">Тригонометричні функції. Означення та графіки</div>
+          <div class="card-desc">
+            [MODULE_3.1] // sin, cos, tan, ctg — означення через одиничне коло.
+            Основні властивості та побудова графіків.
+          </div>
+          <div class="card-progress">
+            <div class="progress-meta">
+              <span>ПРОГРЕС</span>
+              <span>10/10 ПИТАНЬ</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" style="--fill: 100%"></div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="card-tags">
+              <span class="ctag">SIN/COS</span>
+              <span class="ctag">ГРАФІКИ</span>
+            </div>
+            <button class="card-btn">▶ ПОВТОРИТИ</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="quiz-card col-mag">
+        <div class="card-glow"></div>
+        <div class="card-stripe"></div>
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-icon-wrap">🔄</div>
+            <div class="card-meta">
+              <span class="sys-label mag" style="font-size:0.55em;">В ПРОЦЕСІ</span>
+              <div class="difficulty-pip">
+                <div class="pip filled mag"></div>
+                <div class="pip filled mag"></div>
+                <div class="pip filled mag"></div>
+                <div class="pip filled mag"></div>
+              </div>
+            </div>
+          </div>
+          <div class="card-title">Тригонометричні тотожності та формули</div>
+          <div class="card-desc">
+            [MODULE_3.2] // Основна тотожність, формули подвійного кута,
+            суми і різниці. Доведення та застосування.
+          </div>
+          <div class="card-progress">
+            <div class="progress-meta">
+              <span>ПРОГРЕС</span>
+              <span>6/10 ПИТАНЬ</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" style="--fill: 60%"></div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="card-tags">
+              <span class="ctag">ТОТОЖН.</span>
+              <span class="ctag">HARD</span>
+            </div>
+            <button class="card-btn">▶ ПРОДОВЖИТИ</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="quiz-card col-cyan">
+        <div class="card-glow"></div>
+        <div class="card-stripe"></div>
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-icon-wrap">🌊</div>
+            <div class="card-meta">
+              <span class="sys-label" style="font-size:0.55em;">ЗАВЕРШЕНО</span>
+              <div class="difficulty-pip">
+                <div class="pip filled cyan"></div>
+                <div class="pip filled cyan"></div>
+                <div class="pip"></div>
+                <div class="pip"></div>
+              </div>
+            </div>
+          </div>
+          <div class="card-title">Тригонометричні рівняння. Базові типи</div>
+          <div class="card-desc">
+            [MODULE_3.3] // sin x = a, cos x = a, tan x = a.
+            Загальні розв'язки, ОДЗ, стандартні підстановки.
+          </div>
+          <div class="card-progress">
+            <div class="progress-meta">
+              <span>ПРОГРЕС</span>
+              <span>10/10 ПИТАНЬ</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" style="--fill: 100%"></div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="card-tags">
+              <span class="ctag">РІВНЯННЯ</span>
+              <span class="ctag">EASY</span>
+            </div>
+            <button class="card-btn">▶ ПОВТОРИТИ</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="quiz-card col-purple">
+        <div class="card-glow"></div>
+        <div class="card-stripe"></div>
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-icon-wrap">🔐</div>
+            <div class="card-meta">
+              <span class="sys-label purple" style="font-size:0.55em;">НОВЕ</span>
+              <div class="difficulty-pip">
+                <div class="pip filled purple"></div>
+                <div class="pip filled purple"></div>
+                <div class="pip filled purple"></div>
+                <div class="pip filled purple"></div>
+              </div>
+            </div>
+          </div>
+          <div class="card-title">Обернені тригонометричні функції</div>
+          <div class="card-desc">
+            [MODULE_3.4] // arcsin, arccos, arctg. Область визначення,
+            область значень. Зв'язок з основними функціями.
+          </div>
+          <div class="card-progress">
+            <div class="progress-meta">
+              <span>ПРОГРЕС</span>
+              <span>0/10 ПИТАНЬ</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" style="--fill: 0%"></div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="card-tags">
+              <span class="ctag">ARCSIN</span>
+              <span class="ctag">EXPERT</span>
+            </div>
+            <button class="card-btn">▶ ПОЧАТИ</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /quiz-grid -->
+
+    <!-- CTA ROW -->
+    <div class="cta-row" style="margin-top: 40px;">
+
+      <!-- Leaderboard card -->
+      <div class="cta-card cta-lime">
+        <div class="sec-head" style="margin-bottom:16px;">
+          <h2 style="font-size:0.85em;">◈ РЕЙТИНГ КЛАСУ</h2>
+          <div class="sec-line"></div>
+          <span class="sys-label lime" style="font-size:0.55em;">LIVE</span>
+        </div>
+
+        <div class="leaderboard-mini">
+          <div class="lb-row">
+            <div class="lb-rank gold">1</div>
+            <div class="lb-name">Микола В.</div>
+            <div class="lb-bar-wrap"><div class="lb-bar" style="width:100%"></div></div>
+            <div class="lb-score">2480</div>
+          </div>
+          <div class="lb-row">
+            <div class="lb-rank silver">2</div>
+            <div class="lb-name">Катерина Л.</div>
+            <div class="lb-bar-wrap"><div class="lb-bar" style="width:88%"></div></div>
+            <div class="lb-score">2190</div>
+          </div>
+          <div class="lb-row">
+            <div class="lb-rank bronze">3</div>
+            <div class="lb-name">Іван П.</div>
+            <div class="lb-bar-wrap"><div class="lb-bar" style="width:80%"></div></div>
+            <div class="lb-score">2010</div>
+          </div>
+          <div class="lb-row" style="background: rgba(179,255,0,0.03); padding: 6px 4px; border: 1px solid rgba(179,255,0,0.15);">
+            <div class="lb-rank me">04</div>
+            <div class="lb-name me-name">Олена П. ← ТИ</div>
+            <div class="lb-bar-wrap"><div class="lb-bar" style="width:74%; background: var(--lime); box-shadow: 0 0 6px var(--lime);"></div></div>
+            <div class="lb-score" style="color: var(--lime);">1840</div>
+          </div>
+          <div class="lb-row">
+            <div class="lb-rank" style="color:var(--text);">5</div>
+            <div class="lb-name">Марина Т.</div>
+            <div class="lb-bar-wrap"><div class="lb-bar" style="width:60%; background: var(--text);"></div></div>
+            <div class="lb-score" style="color:var(--text);">1520</div>
+          </div>
+        </div>
+
+        <a href="#" class="cta-btn btn-lime">◈ ПОВНИЙ РЕЙТИНГ</a>
+      </div>
+
+      <!-- Teacher card -->
+      <div class="cta-card cta-mag">
+        <div class="sec-head" style="margin-bottom:16px;">
+          <h2 style="font-size:0.85em;">◈ МІЙ ВЧИТЕЛЬ</h2>
+          <div class="sec-line"></div>
+          <span class="sys-label mag" style="font-size:0.55em;">ONLINE</span>
+        </div>
+
+        <div class="teacher-info">
+          <div class="teacher-avatar">👩‍🏫</div>
+          <div class="teacher-details">
+            <div class="teacher-name">Олена Павлюк</div>
+            <div class="teacher-role">// УЧИТЕЛЬ МАТЕМАТИКИ // 10-А</div>
+            <div class="teacher-status">
+              <div class="status-dot"></div>
+              ОНЛАЙН // Перевіряє результати
+            </div>
+          </div>
+        </div>
+
+        <div class="cta-card-text">
+          [SYS] Останній коментар учителя:<br>
+          "Молодець, Олено! Тема тригонометрії — відмінний прогрес.
+          Зосередься на темі обернених функцій до п'ятниці."
+        </div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a href="#" class="cta-btn btn-mag">◈ РЕЗУЛЬТАТИ</a>
+          <a href="#" class="cta-btn" style="color:var(--text); border-color:var(--border-c); clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); font-family:'Share Tech Mono',monospace; font-size:0.72em; letter-spacing:0.15em; text-transform:uppercase; padding:10px 20px; text-decoration:none;">◈ ПОВІДОМЛЕННЯ</a>
+        </div>
+      </div>
+
+    </div>
+    <!-- /cta-row -->
+
+    <!-- ACHIEVEMENTS -->
+    <div class="achievements">
+      <div class="sec-head">
+        <h2><span class="holo-text">◈</span> ДОСЯГНЕННЯ</h2>
+        <div class="sec-line"></div>
+        <span class="sys-label" style="font-size:0.6em;">7 / 12 EARNED</span>
+      </div>
+
+      <div class="badges-row">
+
+        <div class="badge earned">
+          <div class="badge-icon">🔥</div>
+          <div class="badge-name">ТИЖНЕВИЙ СТРІК</div>
+        </div>
+
+        <div class="badge earned cyan-badge">
+          <div class="badge-icon">🏁</div>
+          <div class="badge-name">ПЕРШИЙ КВІЗ</div>
+        </div>
+
+        <div class="badge earned mag-badge">
+          <div class="badge-icon">⚡</div>
+          <div class="badge-name">ШВИДКИЙ СТАРТ</div>
+        </div>
+
+        <div class="badge earned">
+          <div class="badge-icon">📐</div>
+          <div class="badge-name">ТРИГОНОМЕТР</div>
+        </div>
+
+        <div class="badge earned cyan-badge">
+          <div class="badge-icon">💯</div>
+          <div class="badge-name">ІДЕАЛЬНИЙ БАЛ</div>
+        </div>
+
+        <div class="badge earned purple-badge">
+          <div class="badge-icon">🌙</div>
+          <div class="badge-name">НІЧ НА ВЧЕБУ</div>
+        </div>
+
+        <div class="badge earned mag-badge">
+          <div class="badge-icon">🎯</div>
+          <div class="badge-name">СНАЙПЕР</div>
+        </div>
+
+        <div class="badge locked">
+          <div class="badge-icon">👑</div>
+          <div class="badge-name">ТОП-3 КЛАСУ</div>
+        </div>
+
+        <div class="badge locked">
+          <div class="badge-icon">🔮</div>
+          <div class="badge-name">ВСІ 30 ТЕМ</div>
+        </div>
+
+        <div class="badge locked">
+          <div class="badge-icon">🚀</div>
+          <div class="badge-name">30-ДЕННИЙ СТРІК</div>
+        </div>
+
+        <div class="badge locked">
+          <div class="badge-icon">🧪</div>
+          <div class="badge-name">ЛОГАРИФМ-ПРО</div>
+        </div>
+
+        <div class="badge locked">
+          <div class="badge-icon">🌀</div>
+          <div class="badge-name">МАЙСТЕР КВІЗУ</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SYSTEM STATUS BAR -->
+    <div class="system-bar">
+      <div class="sys-status">
+        <div class="live-dot"></div>
+        <span>СИСТЕМА ОНЛАЙН // ALGEBRA_QUIZ_SYS v2.0.4</span>
+      </div>
+      <div class="sys-right">
+        <span style="color: var(--lime);">SESSION: ОЛЕНА_П</span>
+        <span>◈</span>
+        <span>10-А // MATH</span>
+        <span>◈</span>
+        <span style="color: var(--cyan);">SYNC: OK</span>
+        <span>◈</span>
+        <span>[2024.SYS]</span>
+      </div>
+    </div>
+
+    <div style="height: 40px;"></div>
+
+  </div>
+  <!-- /container -->
+
+</body>
+</html>

@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALGEBRA QUIZ // BLUEPRINT DESIGN v2.1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     BLUEPRINT DESIGN SYSTEM — ALGEBRA QUIZ PLATFORM
+     REF: DESIGN_DOC_v2.1 // APPROVED: 2026-04-03
+     SCALE: 1:1 // UNITS: CSS PIXELS
+  ============================================================ */
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --bg: #0a1628;
+    --bg-mid: #0d1e38;
+    --cyan: #4fc3f7;
+    --cyan-dim: #2a7fa8;
+    --cyan-glow: rgba(79, 195, 247, 0.15);
+    --white: #e8f4fd;
+    --white-dim: rgba(232, 244, 253, 0.5);
+    --yellow: #ffd54f;
+    --yellow-dim: rgba(255, 213, 79, 0.2);
+    --grid-line: rgba(79, 195, 247, 0.07);
+    --font-mono: 'Share Tech Mono', 'Courier Prime', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(rgba(79,195,247,0.03) 2px, transparent 2px),
+      linear-gradient(90deg, rgba(79,195,247,0.03) 2px, transparent 2px);
+    background-size: 24px 24px, 24px 24px, 120px 120px, 120px 120px;
+    font-family: var(--font-mono);
+    color: var(--cyan);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── DIMENSION ANNOTATIONS ── */
+  .ann {
+    font-size: 9px;
+    color: var(--yellow);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+  .ann-h { /* horizontal dimension line */
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .ann-h::before, .ann-h::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--yellow);
+    opacity: 0.5;
+  }
+  .ann-v-label {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-size: 9px;
+    color: var(--yellow);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── CROSSHAIR CORNER MARKS ── */
+  .crosshair-box {
+    position: relative;
+  }
+  .crosshair-box::before,
+  .crosshair-box::after {
+    content: '';
+    position: absolute;
+    width: 12px; height: 12px;
+    border-color: var(--cyan);
+    border-style: solid;
+    opacity: 0.6;
+  }
+  .crosshair-box::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
+  .crosshair-box::after  { top: -1px; right: -1px; border-width: 1px 1px 0 0; }
+
+  /* ── SECTION BREAK ── */
+  .section-break {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 32px 0 24px;
+    color: var(--cyan-dim);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+  }
+  .section-break::before,
+  .section-break::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cyan-dim), transparent);
+  }
+  .section-break span {
+    border: 1px solid var(--cyan-dim);
+    padding: 2px 10px;
+    white-space: nowrap;
+  }
+
+  /* ── NAV BAR ── */
+  .nav-wrapper {
+    position: relative;
+    padding: 0 0 14px;
+  }
+  .nav-dim-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 0 2px;
+    gap: 8px;
+    border-top: 1px solid rgba(79,195,247,0.2);
+  }
+  .nav-dim-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 0 4px;
+    gap: 8px;
+    border-bottom: 1px solid rgba(79,195,247,0.2);
+  }
+  .dim-tick {
+    width: 1px; height: 6px;
+    background: var(--yellow);
+    opacity: 0.6;
+    display: inline-block;
+  }
+  nav {
+    height: 56px;
+    background: rgba(10, 22, 40, 0.95);
+    border-top: 1px solid var(--cyan);
+    border-bottom: 1px solid var(--cyan);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    position: relative;
+  }
+  .nav-logo {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--white);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .nav-logo span { color: var(--cyan); }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--cyan-dim);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+  }
+  .nav-links a:hover, .nav-links a.active {
+    color: var(--cyan);
+    border-bottom-color: var(--cyan);
+  }
+  .nav-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 10px;
+    color: var(--white-dim);
+  }
+  .nav-avatar {
+    width: 28px; height: 28px;
+    border: 1px solid var(--cyan);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    color: var(--cyan);
+    background: var(--cyan-glow);
+  }
+  .nav-streak {
+    background: var(--yellow-dim);
+    border: 1px solid var(--yellow);
+    color: var(--yellow);
+    padding: 2px 7px;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+  .nav-ann {
+    position: absolute;
+    right: 32px;
+    top: -18px;
+    font-size: 8px;
+    color: var(--yellow);
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .nav-ann::after {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 1px;
+    background: var(--yellow);
+    opacity: 0.5;
+    vertical-align: middle;
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 32px 80px;
+  }
+
+  /* ── HEADER / HERO STATS ── */
+  .header-block {
+    border: 1px solid var(--cyan);
+    background: rgba(13, 30, 56, 0.7);
+    padding: 24px 28px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+  .header-block .corner-br {
+    position: absolute;
+    bottom: -1px; right: -1px;
+    width: 12px; height: 12px;
+    border-bottom: 1px solid var(--cyan);
+    border-right: 1px solid var(--cyan);
+  }
+  .header-block .corner-bl {
+    position: absolute;
+    bottom: -1px; left: -1px;
+    width: 12px; height: 12px;
+    border-bottom: 1px solid var(--cyan);
+    border-left: 1px solid var(--cyan);
+  }
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .header-title-group {
+    flex: 1;
+  }
+  .header-ref {
+    font-size: 9px;
+    color: var(--cyan-dim);
+    letter-spacing: 0.12em;
+    margin-bottom: 6px;
+  }
+  .header-name {
+    font-size: 26px;
+    color: var(--white);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+  .header-name em {
+    color: var(--cyan);
+    font-style: normal;
+  }
+  .header-sub {
+    font-size: 10px;
+    color: var(--white-dim);
+    margin-top: 6px;
+    letter-spacing: 0.1em;
+  }
+
+  /* Stats callout row */
+  .stats-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+  .stat-callout {
+    position: relative;
+    background: rgba(79,195,247,0.05);
+    border: 1px solid var(--cyan-dim);
+    padding: 14px 18px 10px;
+    min-width: 130px;
+    flex: 1;
+  }
+  .stat-callout .stat-label {
+    font-size: 8px;
+    color: var(--yellow);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .stat-callout .stat-value {
+    font-size: 28px;
+    color: var(--white);
+    line-height: 1;
+  }
+  .stat-callout .stat-unit {
+    font-size: 10px;
+    color: var(--cyan-dim);
+    margin-top: 2px;
+    letter-spacing: 0.08em;
+  }
+  .stat-callout .stat-ann {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8px;
+    color: var(--yellow);
+    white-space: nowrap;
+    letter-spacing: 0.08em;
+  }
+  .stat-callout .stat-ann::before {
+    content: '▲ ';
+    font-size: 7px;
+  }
+  /* Arrow callout line from stat */
+  .callout-arrow {
+    position: absolute;
+    right: -28px;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .callout-arrow .arrow-line {
+    width: 24px; height: 1px;
+    background: var(--yellow);
+    opacity: 0.5;
+  }
+  .callout-arrow .arrow-tip {
+    width: 0; height: 0;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-left: 5px solid var(--yellow);
+    opacity: 0.5;
+  }
+
+  /* Progress bar as measurement scale */
+  .progress-block {
+    margin-top: 20px;
+  }
+  .progress-label-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: var(--cyan-dim);
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+  .progress-track {
+    position: relative;
+    height: 14px;
+    background: rgba(79,195,247,0.06);
+    border: 1px solid var(--cyan-dim);
+  }
+  .progress-fill {
+    height: 100%;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--cyan) 0px, var(--cyan) 3px,
+      transparent 3px, transparent 8px
+    );
+    opacity: 0.7;
+    transition: width 0.8s ease;
+  }
+  .progress-ticks {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3px;
+  }
+  .progress-ticks span {
+    font-size: 7px;
+    color: var(--cyan-dim);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── SECTION LABEL BOX ── */
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 16px;
+  }
+  .section-label .slabel-box {
+    border: 1px solid var(--cyan);
+    padding: 4px 12px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: rgba(79,195,247,0.08);
+  }
+  .section-label .slabel-ref {
+    border: 1px solid var(--cyan-dim);
+    border-left: none;
+    padding: 4px 10px;
+    font-size: 9px;
+    color: var(--cyan-dim);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── QUIZ CARD GRID ── */
+  .quiz-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 28px;
+    margin-top: 8px;
+  }
+
+  .quiz-card {
+    position: relative;
+    background: rgba(13, 30, 56, 0.6);
+    border: 1px dashed var(--cyan-dim);
+    padding: 20px 16px 16px;
+  }
+  /* Crosshair marks at all 4 corners */
+  .quiz-card::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px;
+    width: 10px; height: 10px;
+    border-top: 1px solid var(--cyan);
+    border-left: 1px solid var(--cyan);
+  }
+  .quiz-card .corner-tr {
+    position: absolute;
+    top: -1px; right: -1px;
+    width: 10px; height: 10px;
+    border-top: 1px solid var(--cyan);
+    border-right: 1px solid var(--cyan);
+  }
+  .quiz-card .corner-bl-mark {
+    position: absolute;
+    bottom: -1px; left: -1px;
+    width: 10px; height: 10px;
+    border-bottom: 1px solid var(--cyan);
+    border-left: 1px solid var(--cyan);
+  }
+  .quiz-card .corner-br-mark {
+    position: absolute;
+    bottom: -1px; right: -1px;
+    width: 10px; height: 10px;
+    border-bottom: 1px solid var(--cyan);
+    border-right: 1px solid var(--cyan);
+  }
+  /* Component label tag */
+  .card-comp-label {
+    position: absolute;
+    top: -10px;
+    left: 12px;
+    background: var(--bg);
+    padding: 0 6px;
+    font-size: 8px;
+    color: var(--yellow);
+    letter-spacing: 0.1em;
+    border: 1px solid var(--yellow);
+    text-transform: uppercase;
+  }
+  /* Height annotation on right side */
+  .card-height-ann {
+    position: absolute;
+    right: -46px;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    pointer-events: none;
+  }
+  .card-height-ann .ann-line {
+    flex: 1;
+    width: 1px;
+    background: var(--yellow);
+    opacity: 0.3;
+  }
+  .card-height-ann .ann-text {
+    font-size: 7px;
+    color: var(--yellow);
+    letter-spacing: 0.08em;
+    writing-mode: vertical-rl;
+    padding: 4px 0;
+    opacity: 0.7;
+  }
+  .card-height-ann .tick {
+    width: 6px; height: 1px;
+    background: var(--yellow);
+    opacity: 0.4;
+  }
+
+  .card-topic-num {
+    font-size: 9px;
+    color: var(--cyan-dim);
+    letter-spacing: 0.12em;
+    margin-bottom: 6px;
+  }
+  .card-title {
+    font-size: 14px;
+    color: var(--white);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.3;
+    margin-bottom: 8px;
+    border-bottom: 1px solid rgba(79,195,247,0.2);
+    padding-bottom: 8px;
+  }
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 8px;
+    color: var(--cyan-dim);
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+  .card-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .card-meta-item strong {
+    color: var(--cyan);
+    font-size: 10px;
+  }
+
+  .card-score-bar {
+    margin-bottom: 10px;
+  }
+  .card-score-bar-track {
+    height: 8px;
+    background: rgba(79,195,247,0.05);
+    border: 1px solid rgba(79,195,247,0.3);
+    position: relative;
+  }
+  .card-score-bar-fill {
+    height: 100%;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--cyan) 0, var(--cyan) 2px,
+      transparent 2px, transparent 5px
+    );
+    opacity: 0.8;
+  }
+  .card-score-ann {
+    display: flex;
+    justify-content: space-between;
+    font-size: 7px;
+    color: var(--yellow);
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+  }
+
+  .card-status-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+  }
+  .status-badge {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    padding: 2px 8px;
+    border: 1px solid;
+    text-transform: uppercase;
+  }
+  .status-done {
+    color: var(--cyan);
+    border-color: var(--cyan);
+    background: var(--cyan-glow);
+  }
+  .status-progress {
+    color: var(--yellow);
+    border-color: var(--yellow);
+    background: var(--yellow-dim);
+  }
+  .status-locked {
+    color: var(--white-dim);
+    border-color: rgba(232,244,253,0.2);
+    background: transparent;
+  }
+
+  .card-btn {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    background: transparent;
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    position: relative;
+  }
+  .card-btn:hover {
+    background: var(--cyan-glow);
+  }
+  .card-btn-ann {
+    position: absolute;
+    bottom: -14px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 7px;
+    color: var(--yellow);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  /* Arrow annotation from card element */
+  .card-ann-arrow {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 8px;
+    color: var(--yellow);
+    letter-spacing: 0.07em;
+    margin-top: 4px;
+  }
+  .card-ann-arrow .dash-line {
+    flex: 1;
+    border-top: 1px dashed rgba(255,213,79,0.4);
+  }
+  .card-ann-arrow .dot { font-size: 10px; }
+
+  /* ── CTA ROW ── */
+  .cta-row {
+    display: flex;
+    gap: 16px;
+    align-items: stretch;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  .cta-card {
+    flex: 1;
+    min-width: 200px;
+    border: 1px solid var(--cyan-dim);
+    background: rgba(79,195,247,0.04);
+    padding: 20px 20px 16px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .cta-card .cta-title {
+    font-size: 11px;
+    color: var(--white);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-bottom: 1px dashed var(--cyan-dim);
+    padding-bottom: 8px;
+  }
+  .cta-card .cta-desc {
+    font-size: 9px;
+    color: var(--white-dim);
+    letter-spacing: 0.08em;
+    line-height: 1.7;
+  }
+  .cta-card .cta-btn {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    background: transparent;
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background 0.2s;
+  }
+  .cta-card .cta-btn:hover { background: var(--cyan-glow); }
+  .cta-btn-label {
+    font-size: 7px;
+    color: var(--yellow);
+    letter-spacing: 0.08em;
+    margin-top: -4px;
+  }
+  .cta-card .spec-tag {
+    position: absolute;
+    top: -1px;
+    right: 12px;
+    background: var(--bg);
+    font-size: 7px;
+    color: var(--cyan-dim);
+    letter-spacing: 0.1em;
+    padding: 0 5px;
+    border: 1px solid var(--cyan-dim);
+  }
+
+  /* ── ACHIEVEMENTS ── */
+  .achievements-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .achievement {
+    flex: 1;
+    min-width: 180px;
+    border: 1px solid var(--cyan);
+    background: rgba(13,30,56,0.7);
+    padding: 16px;
+    position: relative;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  /* Stamp circle */
+  .ach-stamp {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: 2px solid var(--cyan);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+    background: rgba(79,195,247,0.08);
+  }
+  .ach-stamp::before {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    border: 1px dashed var(--cyan-dim);
+  }
+  .ach-stamp-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+  .ach-stamp-text {
+    font-size: 6px;
+    color: var(--cyan-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 1px;
+  }
+  /* Stamp seal lines */
+  .ach-stamp::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 1px solid rgba(79,195,247,0.2);
+  }
+  .ach-body {
+    flex: 1;
+  }
+  .ach-ref {
+    font-size: 7px;
+    color: var(--yellow);
+    letter-spacing: 0.12em;
+    margin-bottom: 3px;
+  }
+  .ach-title {
+    font-size: 11px;
+    color: var(--white);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .ach-desc {
+    font-size: 8px;
+    color: var(--white-dim);
+    letter-spacing: 0.07em;
+    line-height: 1.6;
+  }
+  .ach-approved {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    font-size: 8px;
+    color: var(--cyan);
+    letter-spacing: 0.12em;
+    border: 1px solid var(--cyan);
+    padding: 1px 5px;
+    transform: rotate(-2deg);
+    background: rgba(79,195,247,0.08);
+  }
+
+  /* ── TITLE BLOCK (bottom-right) ── */
+  .title-block {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border: 1px solid var(--cyan-dim);
+    background: rgba(10,22,40,0.95);
+    width: 220px;
+    font-size: 8px;
+    z-index: 100;
+  }
+  .tb-header {
+    background: var(--cyan-dim);
+    color: var(--bg);
+    padding: 3px 8px;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  .tb-row {
+    display: flex;
+    border-bottom: 1px solid rgba(79,195,247,0.15);
+  }
+  .tb-row:last-child { border-bottom: none; }
+  .tb-key {
+    color: var(--cyan-dim);
+    padding: 3px 8px;
+    width: 80px;
+    letter-spacing: 0.08em;
+    border-right: 1px solid rgba(79,195,247,0.15);
+  }
+  .tb-val {
+    color: var(--white);
+    padding: 3px 8px;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── COMPASS ROSE ── */
+  .compass-rose {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 70px;
+    height: 70px;
+    z-index: 100;
+    opacity: 0.5;
+  }
+  .compass-rose svg { width: 100%; height: 100%; }
+
+  /* ── UTILITY ── */
+  .mt4  { margin-top: 4px; }
+  .mt8  { margin-top: 8px; }
+  .mt16 { margin-top: 16px; }
+  .mt24 { margin-top: 24px; }
+  .flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  /* ── TOPIC LIST SIDEBAR HINT ── */
+  .topic-counter {
+    border: 1px solid var(--cyan-dim);
+    background: rgba(13,30,56,0.7);
+    padding: 14px 16px;
+    margin-bottom: 0;
+    position: relative;
+  }
+  .topic-counter .tc-title {
+    font-size: 9px;
+    color: var(--yellow);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .tc-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 4px;
+  }
+  .tc-cell {
+    width: 20px; height: 20px;
+    border: 1px solid;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 7px;
+    letter-spacing: 0;
+  }
+  .tc-done { border-color: var(--cyan); color: var(--cyan); background: var(--cyan-glow); }
+  .tc-inprog { border-color: var(--yellow); color: var(--yellow); background: var(--yellow-dim); }
+  .tc-todo { border-color: rgba(79,195,247,0.2); color: rgba(79,195,247,0.3); }
+  .tc-legend {
+    display: flex;
+    gap: 14px;
+    margin-top: 8px;
+    font-size: 7px;
+    color: var(--white-dim);
+    letter-spacing: 0.08em;
+  }
+  .tc-legend-item { display: flex; align-items: center; gap: 4px; }
+  .tc-legend-dot {
+    width: 8px; height: 8px;
+    border: 1px solid;
+  }
+
+  /* ── DECORATIVE TEXT CALLOUTS ── */
+  .float-note {
+    position: absolute;
+    font-size: 8px;
+    color: var(--yellow);
+    letter-spacing: 0.07em;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .float-note::before {
+    content: '// ';
+    color: var(--cyan-dim);
+  }
+</style>
+</head>
+<body>
+
+<!-- ╔══════════════════════════════════════════════════════════╗
+     ║  ALGEBRA QUIZ PLATFORM — CATALOG VIEW                   ║
+     ║  DOC: BLUEPRINT_DESIGN_v2.1 // DATE: 2026-04-03        ║
+     ╚══════════════════════════════════════════════════════════╝ -->
+
+<!-- NAV BAR WITH DIMENSION LINES -->
+<div class="nav-wrapper">
+  <div class="nav-dim-top">
+    <span class="dim-tick"></span>
+    <span class="ann">← FULL VIEWPORT WIDTH →</span>
+    <span class="dim-tick"></span>
+  </div>
+  <nav>
+    <div class="nav-logo">ALGEBRA<span>/</span>QUIZ &nbsp;<span style="font-size:9px;color:var(--cyan-dim);font-weight:normal">v2.1</span></div>
+    <ul class="nav-links">
+      <li><a href="#" class="active">Каталог</a></li>
+      <li><a href="#">Мої результати</a></li>
+      <li><a href="#">Рейтинг</a></li>
+      <li><a href="#">Довідник</a></li>
+    </ul>
+    <div class="nav-user">
+      <div class="nav-avatar">ОП</div>
+      <div>
+        <div style="color:var(--white);font-size:10px;letter-spacing:0.08em;">ОЛЕНА П.</div>
+        <div style="font-size:8px;letter-spacing:0.07em;">10-А КЛАС</div>
+      </div>
+      <div class="nav-streak">🔥 STREAK: 7d</div>
+    </div>
+    <div class="nav-ann">COMPONENT: NAV_BAR_v1.0</div>
+  </nav>
+  <div class="nav-dim-bottom">
+    <span class="dim-tick"></span>
+    <span class="ann">HEIGHT: 56px &nbsp;|&nbsp; BORDER: 1px SOLID #4FC3F7 &nbsp;|&nbsp; REF: NAV-001</span>
+    <span class="dim-tick"></span>
+  </div>
+</div>
+
+<!-- ══════ SECTION BREAK ══════ -->
+<div class="section-break">
+  <span>══ CONTENT AREA START // REF: LAYOUT-MAIN ══</span>
+</div>
+
+<div class="main">
+
+  <!-- ┌─────────────────────────────────────────────────────┐
+       │  HEADER: STUDENT DASHBOARD STATS                    │
+       └─────────────────────────────────────────────────────┘ -->
+  <div class="header-block crosshair-box">
+    <div class="corner-br"></div>
+    <div class="corner-bl"></div>
+    <!-- Float note -->
+    <span class="float-note" style="top:8px;right:16px;">RENDER: STUDENT_HEADER_COMPONENT</span>
+
+    <div class="header-top">
+      <div class="header-title-group">
+        <div class="header-ref">REF: USR-0042 &nbsp;//&nbsp; SESSION: ACTIVE &nbsp;//&nbsp; GRADE: 10</div>
+        <div class="header-name">КАТАЛОГ&nbsp;<em>КВІЗІВ</em></div>
+        <div class="header-sub">STUDENT: ОЛЕНА ПЕТРЕНКО &nbsp;·&nbsp; CLASS: 10-А &nbsp;·&nbsp; SCHOOL: ЛІЦЕЙ №15</div>
+        <div class="header-sub mt4" style="color:var(--yellow)">⚠ ANNOTATION: SHOWING TOPICS MATCHING CURRICULUM 10TH GRADE // UA_MATH_STD_2026</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0;">
+        <div class="ann mt4">LAST ACTIVE: 2026-04-03 // 14:22 UTC+3</div>
+        <div class="ann mt4">SESSION_TOKEN: 9f3a...d7e2</div>
+        <div style="margin-top:10px;font-size:9px;color:var(--cyan-dim);letter-spacing:0.1em;">COMPLETION RATE</div>
+        <div style="font-size:32px;color:var(--white);letter-spacing:0.05em;">60<span style="font-size:14px;color:var(--cyan)">%</span></div>
+        <div class="ann">18 OF 30 TOPICS PASSED</div>
+      </div>
+    </div>
+
+    <!-- Stats Callouts -->
+    <div class="stats-row">
+      <div class="stat-callout crosshair-box">
+        <div class="stat-label">▶ TOPICS COMPLETED</div>
+        <div class="stat-value">18<span style="font-size:14px;color:var(--cyan-dim)">/30</span></div>
+        <div class="stat-unit">QUIZ MODULES PASSED</div>
+        <div class="stat-ann">PROGRESS: 60.0%</div>
+      </div>
+      <div class="stat-callout crosshair-box">
+        <div class="stat-label">▶ AVG SCORE</div>
+        <div class="stat-value">76<span style="font-size:14px;color:var(--cyan)">%</span></div>
+        <div class="stat-unit">ACROSS ALL ATTEMPTS</div>
+        <div class="stat-ann">ABOVE CLASS AVG (+4%)</div>
+      </div>
+      <div class="stat-callout crosshair-box">
+        <div class="stat-label">▶ ACTIVE STREAK</div>
+        <div class="stat-value">7<span style="font-size:14px;color:var(--yellow)">d</span></div>
+        <div class="stat-unit">CONSECUTIVE DAYS</div>
+        <div class="stat-ann">STREAK_BONUS: ACTIVE</div>
+      </div>
+      <div class="stat-callout crosshair-box">
+        <div class="stat-label">▶ ACHIEVEMENTS</div>
+        <div class="stat-value">3</div>
+        <div class="stat-unit">BADGES EARNED</div>
+        <div class="stat-ann">NEXT UNLOCK: 5/5 DONE</div>
+      </div>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="progress-block mt16">
+      <div class="progress-label-row">
+        <span>← ЗАГАЛЬНИЙ ПРОГРЕС КУРСУ (ВИМІРЯНИЙ: UNIT_SCALE_v1)</span>
+        <span>18/30 ТЕМ →</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:60%"></div>
+      </div>
+      <div class="progress-ticks">
+        <span>0</span><span>|3</span><span>|6</span><span>|9</span>
+        <span>|12</span><span>|15</span><span class="ann" style="color:var(--cyan)">▲18</span>
+        <span>|21</span><span>|24</span><span>|27</span><span>30</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- dimension label under header -->
+  <div class="ann-h ann mt8">
+    <span>← PADDING: 28px</span>
+    <span style="border:1px solid var(--yellow);padding:0 6px;opacity:0.6;">WIDTH: 100% OF CONTENT_AREA // MAX: 1136px</span>
+    <span>PADDING: 28px →</span>
+  </div>
+
+  <!-- ══════ SECTION BREAK ══════ -->
+  <div class="section-break mt24">
+    <span>══ SECTION 01 — КАТАЛОГ КВІЗІВ // 30 TOPICS TOTAL ══</span>
+  </div>
+
+  <!-- TOPIC MAP -->
+  <div style="display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap;align-items:flex-start;">
+    <div class="topic-counter" style="flex:1;min-width:280px;">
+      <div class="tc-title">▶ TOPIC COMPLETION MAP (MATRIX 3×10) // REF: MAP-001</div>
+      <div class="tc-grid">
+        <!-- 18 done, 3 in progress, 9 todo -->
+        <div class="tc-cell tc-done" title="T01">✓</div>
+        <div class="tc-cell tc-done" title="T02">✓</div>
+        <div class="tc-cell tc-done" title="T03">✓</div>
+        <div class="tc-cell tc-done" title="T04">✓</div>
+        <div class="tc-cell tc-done" title="T05">✓</div>
+        <div class="tc-cell tc-done" title="T06">✓</div>
+        <div class="tc-cell tc-done" title="T07">✓</div>
+        <div class="tc-cell tc-done" title="T08">✓</div>
+        <div class="tc-cell tc-done" title="T09">✓</div>
+        <div class="tc-cell tc-done" title="T10">✓</div>
+        <div class="tc-cell tc-done" title="T11">✓</div>
+        <div class="tc-cell tc-done" title="T12">✓</div>
+        <div class="tc-cell tc-done" title="T13">✓</div>
+        <div class="tc-cell tc-done" title="T14">✓</div>
+        <div class="tc-cell tc-done" title="T15">✓</div>
+        <div class="tc-cell tc-done" title="T16">✓</div>
+        <div class="tc-cell tc-done" title="T17">✓</div>
+        <div class="tc-cell tc-done" title="T18">✓</div>
+        <div class="tc-cell tc-inprog" title="T19">~</div>
+        <div class="tc-cell tc-inprog" title="T20">~</div>
+        <div class="tc-cell tc-inprog" title="T21">~</div>
+        <div class="tc-cell tc-todo" title="T22">22</div>
+        <div class="tc-cell tc-todo" title="T23">23</div>
+        <div class="tc-cell tc-todo" title="T24">24</div>
+        <div class="tc-cell tc-todo" title="T25">25</div>
+        <div class="tc-cell tc-todo" title="T26">26</div>
+        <div class="tc-cell tc-todo" title="T27">27</div>
+        <div class="tc-cell tc-todo" title="T28">28</div>
+        <div class="tc-cell tc-todo" title="T29">29</div>
+        <div class="tc-cell tc-todo" title="T30">30</div>
+      </div>
+      <div class="tc-legend">
+        <div class="tc-legend-item"><div class="tc-legend-dot" style="border-color:var(--cyan);background:var(--cyan-glow)"></div>COMPLETED (18)</div>
+        <div class="tc-legend-item"><div class="tc-legend-dot" style="border-color:var(--yellow);background:var(--yellow-dim)"></div>IN PROGRESS (3)</div>
+        <div class="tc-legend-item"><div class="tc-legend-dot" style="border-color:rgba(79,195,247,0.2)"></div>NOT STARTED (9)</div>
+      </div>
+    </div>
+
+    <div style="flex:1;min-width:200px;border:1px solid var(--cyan-dim);background:rgba(13,30,56,0.6);padding:14px 16px;">
+      <div class="tc-title">▶ SECTION INDEX // REF: IDX-001</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:8px;letter-spacing:0.07em;color:var(--white-dim);">
+        <div style="padding:3px 6px;border-left:2px solid var(--cyan)">T01–T06: Квадратні рівняння</div>
+        <div style="padding:3px 6px;border-left:2px solid var(--cyan)">T07–T12: Функції та графіки</div>
+        <div style="padding:3px 6px;border-left:2px solid var(--cyan)">T13–T18: Алгебраїчні вирази</div>
+        <div style="padding:3px 6px;border-left:2px solid var(--yellow);color:var(--yellow)">T19–T24: Тригонометрія ▶</div>
+        <div style="padding:3px 6px;border-left:2px solid rgba(79,195,247,0.2);color:rgba(79,195,247,0.3)">T25–T27: Показникова ф-ція</div>
+        <div style="padding:3px 6px;border-left:2px solid rgba(79,195,247,0.2);color:rgba(79,195,247,0.3)">T28–T30: Логарифми</div>
+      </div>
+      <div class="ann mt8" style="color:var(--yellow)">ACTIVE_SECTION: ТРИГОНОМЕТРІЯ // SEC-04</div>
+    </div>
+  </div>
+
+  <!-- SECTION LABEL -->
+  <div class="section-label">
+    <div class="slabel-box">[SECTION 03 — ТРИГОНОМЕТРІЯ]</div>
+    <div class="slabel-ref">REF: SEC-3.5 &nbsp;|&nbsp; 6 TOPICS &nbsp;|&nbsp; T19–T24</div>
+  </div>
+  <div class="ann" style="margin-bottom:14px;">↓ RENDERING: QUIZ_CARD_GRID // COLUMNS: 4 // GAP: 28px // COMPONENT_VER: v2.1</div>
+
+  <!-- QUIZ CARD GRID -->
+  <div class="quiz-grid">
+
+    <!-- CARD 1 — COMPLETED -->
+    <div class="quiz-card" style="margin-right:52px;">
+      <div class="corner-tr"></div>
+      <div class="corner-bl-mark"></div>
+      <div class="corner-br-mark"></div>
+      <div class="card-comp-label">COMPONENT: QUIZ_CARD_v2.1</div>
+
+      <!-- Right-side height annotation -->
+      <div class="card-height-ann">
+        <div class="tick"></div>
+        <div class="ann-line"></div>
+        <div class="ann-text">HEIGHT: ~220px</div>
+        <div class="ann-line"></div>
+        <div class="tick"></div>
+      </div>
+
+      <div class="card-topic-num">TOPIC 19 OF 30 &nbsp;//&nbsp; SEC-3.5.1</div>
+      <div class="card-title">Синус і косинус кута</div>
+      <div class="card-meta">
+        <div class="card-meta-item">
+          <span>ПИТАНЬ</span>
+          <strong>10</strong>
+          <span style="font-size:7px;color:var(--yellow)">MAX CAPACITY: 10</span>
+        </div>
+        <div class="card-meta-item">
+          <span>СКЛАДНІСТЬ</span>
+          <strong style="color:var(--cyan)">● ● ● ○ ○</strong>
+          <span style="font-size:7px;">LEVEL: 3/5</span>
+        </div>
+        <div class="card-meta-item">
+          <span>СПРОБ</span>
+          <strong>3</strong>
+          <span style="font-size:7px;">ATTEMPTS_LOG</span>
+        </div>
+      </div>
+      <div class="card-score-bar">
+        <div style="font-size:7px;color:var(--yellow);letter-spacing:0.08em;margin-bottom:2px;">SCORE MEASUREMENT SCALE:</div>
+        <div class="card-score-bar-track">
+          <div class="card-score-bar-fill" style="width:84%"></div>
+        </div>
+        <div class="card-score-ann">
+          <span>0%</span>
+          <span>|25</span>
+          <span>|50</span>
+          <span style="color:var(--cyan)">▲84%</span>
+          <span>100%</span>
+        </div>
+      </div>
+      <div class="card-ann-arrow">
+        <span>BEST SCORE:</span>
+        <span class="dash-line"></span>
+        <span style="color:var(--white)">84%</span>
+        <span class="dot" style="color:var(--cyan)">◀</span>
+        <span style="color:var(--cyan-dim);font-size:7px;">VERIFIED ✓</span>
+      </div>
+      <div class="card-status-row" style="margin-top:14px;">
+        <div class="status-badge status-done">STATUS: COMPLETED ✓</div>
+        <button class="card-btn" style="position:relative;">
+          ПОВТОРИТИ
+          <div class="card-btn-ann">EXECUTE: retryQuiz(19)</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- CARD 2 — IN PROGRESS -->
+    <div class="quiz-card" style="margin-right:52px;">
+      <div class="corner-tr"></div>
+      <div class="corner-bl-mark"></div>
+      <div class="corner-br-mark"></div>
+      <div class="card-comp-label">COMPONENT: QUIZ_CARD_v2.1</div>
+
+      <div class="card-height-ann">
+        <div class="tick"></div>
+        <div class="ann-line"></div>
+        <div class="ann-text">HEIGHT: ~220px</div>
+        <div class="ann-line"></div>
+        <div class="tick"></div>
+      </div>
+
+      <div class="card-topic-num">TOPIC 20 OF 30 &nbsp;//&nbsp; SEC-3.5.2</div>
+      <div class="card-title">Тангенс і котангенс</div>
+      <div class="card-meta">
+        <div class="card-meta-item">
+          <span>ПИТАНЬ</span>
+          <strong>10</strong>
+          <span style="font-size:7px;color:var(--yellow)">MAX CAPACITY: 10</span>
+        </div>
+        <div class="card-meta-item">
+          <span>СКЛАДНІСТЬ</span>
+          <strong style="color:var(--yellow)">● ● ● ● ○</strong>
+          <span style="font-size:7px;">LEVEL: 4/5</span>
+        </div>
+        <div class="card-meta-item">
+          <span>СПРОБ</span>
+          <strong>1</strong>
+          <span style="font-size:7px;">ATTEMPTS_LOG</span>
+        </div>
+      </div>
+      <div class="card-score-bar">
+        <div style="font-size:7px;color:var(--yellow);letter-spacing:0.08em;margin-bottom:2px;">SCORE MEASUREMENT SCALE:</div>
+        <div class="card-score-bar-track">
+          <div class="card-score-bar-fill" style="width:40%;background:repeating-linear-gradient(90deg,var(--yellow) 0,var(--yellow) 2px,transparent 2px,transparent 5px);opacity:0.8;"></div>
+        </div>
+        <div class="card-score-ann">
+          <span>0%</span>
+          <span>|25</span>
+          <span style="color:var(--yellow)">▲40%</span>
+          <span>|75</span>
+          <span>100%</span>
+        </div>
+      </div>
+      <div class="card-ann-arrow">
+        <span>LAST SCORE:</span>
+        <span class="dash-line"></span>
+        <span style="color:var(--yellow)">40%</span>
+        <span class="dot" style="color:var(--yellow)">◀</span>
+        <span style="color:var(--yellow);font-size:7px;">⚠ NEEDS WORK</span>
+      </div>
+      <div class="card-status-row" style="margin-top:14px;">
+        <div class="status-badge status-progress">STATUS: IN_PROGRESS ~</div>
+        <button class="card-btn" style="border-color:var(--yellow);color:var(--yellow);position:relative;">
+          ПРОДОВЖИТИ
+          <div class="card-btn-ann" style="color:var(--yellow)">EXECUTE: resumeQuiz(20)</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- CARD 3 — IN PROGRESS -->
+    <div class="quiz-card" style="margin-right:52px;">
+      <div class="corner-tr"></div>
+      <div class="corner-bl-mark"></div>
+      <div class="corner-br-mark"></div>
+      <div class="card-comp-label">COMPONENT: QUIZ_CARD_v2.1</div>
+
+      <div class="card-height-ann">
+        <div class="tick"></div>
+        <div class="ann-line"></div>
+        <div class="ann-text">HEIGHT: ~220px</div>
+        <div class="ann-line"></div>
+        <div class="tick"></div>
+      </div>
+
+      <div class="card-topic-num">TOPIC 21 OF 30 &nbsp;//&nbsp; SEC-3.5.3</div>
+      <div class="card-title">Тригонометричне коло</div>
+      <div class="card-meta">
+        <div class="card-meta-item">
+          <span>ПИТАНЬ</span>
+          <strong>8</strong>
+          <span style="font-size:7px;color:var(--yellow)">MAX CAPACITY: 10</span>
+        </div>
+        <div class="card-meta-item">
+          <span>СКЛАДНІСТЬ</span>
+          <strong style="color:var(--yellow)">● ● ● ● ○</strong>
+          <span style="font-size:7px;">LEVEL: 4/5</span>
+        </div>
+        <div class="card-meta-item">
+          <span>СПРОБ</span>
+          <strong>1</strong>
+          <span style="font-size:7px;">ATTEMPTS_LOG</span>
+        </div>
+      </div>
+      <div class="card-score-bar">
+        <div style="font-size:7px;color:var(--yellow);letter-spacing:0.08em;margin-bottom:2px;">SCORE MEASUREMENT SCALE:</div>
+        <div class="card-score-bar-track">
+          <div class="card-score-bar-fill" style="width:55%;background:repeating-linear-gradient(90deg,var(--yellow) 0,var(--yellow) 2px,transparent 2px,transparent 5px);opacity:0.8;"></div>
+        </div>
+        <div class="card-score-ann">
+          <span>0%</span>
+          <span>|25</span>
+          <span style="color:var(--yellow)">▲55%</span>
+          <span>|75</span>
+          <span>100%</span>
+        </div>
+      </div>
+      <div class="card-ann-arrow">
+        <span>LAST SCORE:</span>
+        <span class="dash-line"></span>
+        <span style="color:var(--yellow)">55%</span>
+        <span class="dot" style="color:var(--yellow)">◀</span>
+        <span style="color:var(--yellow);font-size:7px;">⚠ INCOMPLETE</span>
+      </div>
+      <div class="card-status-row" style="margin-top:14px;">
+        <div class="status-badge status-progress">STATUS: IN_PROGRESS ~</div>
+        <button class="card-btn" style="border-color:var(--yellow);color:var(--yellow);position:relative;">
+          ПРОДОВЖИТИ
+          <div class="card-btn-ann" style="color:var(--yellow)">EXECUTE: resumeQuiz(21)</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- CARD 4 — LOCKED -->
+    <div class="quiz-card" style="opacity:0.65;">
+      <div class="corner-tr"></div>
+      <div class="corner-bl-mark"></div>
+      <div class="corner-br-mark"></div>
+      <div class="card-comp-label" style="border-color:rgba(232,244,253,0.3);color:rgba(232,244,253,0.4);">COMPONENT: QUIZ_CARD_v2.1</div>
+
+      <div class="card-topic-num">TOPIC 22 OF 30 &nbsp;//&nbsp; SEC-3.5.4</div>
+      <div class="card-title" style="color:var(--white-dim);">Основна тригонометрична тотожність</div>
+      <div class="card-meta" style="color:rgba(232,244,253,0.3)">
+        <div class="card-meta-item">
+          <span>ПИТАНЬ</span>
+          <strong style="color:var(--white-dim)">12</strong>
+          <span style="font-size:7px;">MAX CAPACITY: 12</span>
+        </div>
+        <div class="card-meta-item">
+          <span>СКЛАДНІСТЬ</span>
+          <strong style="color:rgba(232,244,253,0.3)">● ● ● ● ●</strong>
+          <span style="font-size:7px;">LEVEL: 5/5</span>
+        </div>
+        <div class="card-meta-item">
+          <span>СПРОБ</span>
+          <strong style="color:var(--white-dim)">0</strong>
+          <span style="font-size:7px;">ATTEMPTS_LOG</span>
+        </div>
+      </div>
+      <div class="card-score-bar">
+        <div style="font-size:7px;color:rgba(79,195,247,0.3);letter-spacing:0.08em;margin-bottom:2px;">SCORE MEASUREMENT SCALE:</div>
+        <div class="card-score-bar-track">
+          <div class="card-score-bar-fill" style="width:0%"></div>
+        </div>
+        <div class="card-score-ann" style="color:rgba(79,195,247,0.3)">
+          <span>0%</span><span>|25</span><span>|50</span><span>|75</span><span>100%</span>
+        </div>
+      </div>
+      <div style="font-size:8px;color:rgba(232,244,253,0.35);letter-spacing:0.08em;margin-top:6px;">
+        ⚠ PREREQ: Complete T20 + T21 to unlock
+      </div>
+      <div class="card-status-row" style="margin-top:14px;">
+        <div class="status-badge status-locked">STATUS: LOCKED 🔒</div>
+        <button class="card-btn" style="border-color:rgba(79,195,247,0.2);color:rgba(79,195,247,0.3);cursor:not-allowed;">
+          ЗАБЛОКОВАНО
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /quiz-grid -->
+
+  <!-- Width annotation under cards -->
+  <div class="ann-h ann" style="margin-top:16px;margin-right:52px;">
+    <span>← CARD WIDTH: ~260px MIN // 4 COLUMNS // GAP: 28px</span>
+  </div>
+
+  <!-- ══════ SECTION BREAK ══════ -->
+  <div class="section-break mt24">
+    <span>══ SECTION 02 — CALL TO ACTION // REF: CTA-BLOCK ══</span>
+  </div>
+
+  <!-- CTA ROW -->
+  <div class="section-label">
+    <div class="slabel-box">[CTA BLOCK — НАСТУПНІ ДІЇ]</div>
+    <div class="slabel-ref">COMPONENT: ACTION_PANEL_v1.0 &nbsp;|&nbsp; 3 ACTIONS</div>
+  </div>
+
+  <div class="cta-row">
+    <div class="cta-card">
+      <div class="spec-tag">SPEC: CTA-01</div>
+      <div class="cta-title">▶ РЕКОМЕНДОВАНИЙ КВІЗ</div>
+      <div class="cta-desc">
+        SYSTEM RECOMMENDS: Topic 20<br>
+        // Тангенс і котангенс<br>
+        REASON: Last score 40% — below threshold<br>
+        PRIORITY: HIGH // URGENCY: !!!
+      </div>
+      <button class="cta-btn">ПОЧАТИ ЗАРАЗ</button>
+      <div class="cta-btn-label">EXECUTE FUNCTION: startQuiz(20, mode='recommended')</div>
+    </div>
+
+    <div class="cta-card">
+      <div class="spec-tag">SPEC: CTA-02</div>
+      <div class="cta-title">▶ ВИПАДКОВИЙ КВІЗ</div>
+      <div class="cta-desc">
+        RANDOMIZE_SEED: auto<br>
+        // Вибрати будь-яку тему<br>
+        FILTER: completed_topics=true<br>
+        MODE: PRACTICE // NO GRADE
+      </div>
+      <button class="cta-btn">ВИБРАТИ ВИПАДКОВО</button>
+      <div class="cta-btn-label">EXECUTE FUNCTION: randomQuiz(filter='all')</div>
+    </div>
+
+    <div class="cta-card" style="border-color:var(--yellow);">
+      <div class="spec-tag" style="border-color:var(--yellow);color:var(--yellow);">SPEC: CTA-03</div>
+      <div class="cta-title" style="color:var(--yellow);">▶ ЩОДЕННИЙ ВИКЛИК</div>
+      <div class="cta-desc">
+        DATE: 2026-04-03 // CHALLENGE_ID: 492<br>
+        // Мікс з 5 питань різних тем<br>
+        STREAK_BONUS: ACTIVE 🔥<br>
+        TIME_LIMIT: 10:00 MINUTES
+      </div>
+      <button class="cta-btn" style="border-color:var(--yellow);color:var(--yellow);">ВЗЯТИ ВИКЛИК</button>
+      <div class="cta-btn-label" style="color:var(--yellow);">EXECUTE FUNCTION: dailyChallenge(streak=7)</div>
+    </div>
+  </div>
+
+  <!-- ══════ SECTION BREAK ══════ -->
+  <div class="section-break mt24">
+    <span>══ SECTION 03 — ACHIEVEMENTS // REF: ACH-BLOCK ══</span>
+  </div>
+
+  <!-- ACHIEVEMENTS -->
+  <div class="section-label">
+    <div class="slabel-box">[ДОСЯГНЕННЯ УЧНЯ]</div>
+    <div class="slabel-ref">EARNED: 3/8 &nbsp;|&nbsp; COMPONENT: ACHIEVEMENT_SEAL_v1.0</div>
+  </div>
+  <div class="ann" style="margin-bottom:12px;">↓ NOTE: BADGES RENDERED AS TECHNICAL APPROVAL STAMPS // SHAPE: CIRCULAR // BORDER: DOUBLE</div>
+
+  <div class="achievements-grid">
+
+    <div class="achievement crosshair-box">
+      <div class="ach-stamp">
+        <div class="ach-stamp-icon">⚡</div>
+        <div class="ach-stamp-text">EARNED</div>
+      </div>
+      <div class="ach-body">
+        <div class="ach-ref">ACH-001 // EARNED: 2026-03-10</div>
+        <div class="ach-title">ПЕРШИЙ СТАРТ</div>
+        <div class="ach-desc">
+          TRIGGER: first_quiz_completed<br>
+          CONDITION: score > 0%<br>
+          // Завершив перший квіз
+        </div>
+      </div>
+      <div class="ach-approved">APPROVED ✓</div>
+    </div>
+
+    <div class="achievement crosshair-box">
+      <div class="ach-stamp">
+        <div class="ach-stamp-icon">🔥</div>
+        <div class="ach-stamp-text">EARNED</div>
+      </div>
+      <div class="ach-body">
+        <div class="ach-ref">ACH-007 // EARNED: 2026-03-28</div>
+        <div class="ach-title">СЕРІЯ 7 ДНІВ</div>
+        <div class="ach-desc">
+          TRIGGER: streak_days >= 7<br>
+          CURRENT_STREAK: 7 days<br>
+          // 7 днів поспіль активності
+        </div>
+      </div>
+      <div class="ach-approved">APPROVED ✓</div>
+    </div>
+
+    <div class="achievement crosshair-box">
+      <div class="ach-stamp" style="border-color:var(--yellow);">
+        <div class="ach-stamp-icon" style="font-size:16px;">★★★</div>
+        <div class="ach-stamp-text" style="color:var(--yellow)">EARNED</div>
+      </div>
+      <div class="ach-body">
+        <div class="ach-ref" style="color:var(--yellow)">ACH-012 // EARNED: 2026-04-01</div>
+        <div class="ach-title">ВІДМІННИЦЯ</div>
+        <div class="ach-desc">
+          TRIGGER: avg_score >= 75%<br>
+          CURRENT_AVG: 76% ✓<br>
+          // Середній бал понад 75%
+        </div>
+      </div>
+      <div class="ach-approved" style="border-color:var(--yellow);color:var(--yellow);">CERTIFIED ★</div>
+    </div>
+
+  </div>
+
+  <!-- Next achievement hint -->
+  <div style="margin-top:16px;border:1px dashed rgba(79,195,247,0.2);padding:10px 16px;background:rgba(13,30,56,0.4);">
+    <div class="ann" style="color:var(--cyan-dim);margin-bottom:6px;">NEXT ACHIEVEMENT UNLOCK (PROGRESS TRACKING):</div>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:8px;letter-spacing:0.08em;color:var(--white-dim);">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="opacity:0.3;font-size:16px;">🏆</div>
+        <div>
+          <div style="color:var(--cyan-dim)">ACH-015: ПОЛОВИНА ШЛЯХУ</div>
+          <div>PROGRESS: 18/20 topics &nbsp;<span style="color:var(--yellow)">▓▓▓▓▓▓▓▓▓░ 90%</span></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="opacity:0.3;font-size:16px;">💎</div>
+        <div>
+          <div style="color:var(--cyan-dim)">ACH-020: ПОСТІЙНА СЕРІЯ 14D</div>
+          <div>PROGRESS: 7/14 days &nbsp;<span style="color:var(--yellow)">▓▓▓▓▓░░░░░ 50%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ SECTION BREAK ══════ -->
+  <div class="section-break mt24">
+    <span>══ END OF DOCUMENT // EOF_CATALOG_VIEW ══</span>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;font-size:8px;color:var(--cyan-dim);letter-spacing:0.1em;margin-top:8px;padding-bottom:60px;">
+    <span>DOCUMENT: CATALOG_VIEW_v2.1 &nbsp;//&nbsp; STUDENT: USR-0042 &nbsp;//&nbsp; RENDER_TIME: 42ms</span>
+    <span>© 2026 ALGEBRA QUIZ PLATFORM &nbsp;·&nbsp; UA_MATH_CURRICULUM &nbsp;·&nbsp; GRADE_10</span>
+  </div>
+
+</div><!-- /main -->
+
+<!-- COMPASS ROSE (fixed bottom-left) -->
+<div class="compass-rose">
+  <svg viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="35" cy="35" r="32" stroke="#4fc3f7" stroke-width="0.7" opacity="0.4"/>
+    <circle cx="35" cy="35" r="26" stroke="#4fc3f7" stroke-width="0.5" opacity="0.3"/>
+    <circle cx="35" cy="35" r="4" stroke="#4fc3f7" stroke-width="1" opacity="0.6"/>
+    <!-- Cardinal directions -->
+    <line x1="35" y1="3" x2="35" y2="31" stroke="#4fc3f7" stroke-width="0.7" opacity="0.5"/>
+    <line x1="35" y1="39" x2="35" y2="67" stroke="#4fc3f7" stroke-width="0.7" opacity="0.5"/>
+    <line x1="3" y1="35" x2="31" y2="35" stroke="#4fc3f7" stroke-width="0.7" opacity="0.5"/>
+    <line x1="39" y1="35" x2="67" y2="35" stroke="#4fc3f7" stroke-width="0.7" opacity="0.5"/>
+    <!-- N arrow -->
+    <polygon points="35,5 32,18 35,15 38,18" fill="#4fc3f7" opacity="0.7"/>
+    <polygon points="35,65 32,52 35,55 38,52" fill="#4fc3f7" opacity="0.3"/>
+    <!-- Diagonal lines -->
+    <line x1="12" y1="12" x2="27" y2="27" stroke="#4fc3f7" stroke-width="0.4" opacity="0.2"/>
+    <line x1="58" y1="12" x2="43" y2="27" stroke="#4fc3f7" stroke-width="0.4" opacity="0.2"/>
+    <line x1="12" y1="58" x2="27" y2="43" stroke="#4fc3f7" stroke-width="0.4" opacity="0.2"/>
+    <line x1="58" y1="58" x2="43" y2="43" stroke="#4fc3f7" stroke-width="0.4" opacity="0.2"/>
+    <text x="33" y="11" fill="#4fc3f7" font-size="5" font-family="Share Tech Mono, monospace" opacity="0.6">N</text>
+    <text x="33" y="67" fill="#4fc3f7" font-size="5" font-family="Share Tech Mono, monospace" opacity="0.4">S</text>
+    <text x="4" y="37" fill="#4fc3f7" font-size="5" font-family="Share Tech Mono, monospace" opacity="0.4">W</text>
+    <text x="61" y="37" fill="#4fc3f7" font-size="5" font-family="Share Tech Mono, monospace" opacity="0.4">E</text>
+    <!-- Tick marks on outer circle -->
+    <circle cx="35" cy="3" r="1" fill="#4fc3f7" opacity="0.5"/>
+    <circle cx="35" cy="67" r="1" fill="#4fc3f7" opacity="0.3"/>
+    <circle cx="3" cy="35" r="1" fill="#4fc3f7" opacity="0.3"/>
+    <circle cx="67" cy="35" r="1" fill="#4fc3f7" opacity="0.3"/>
+  </svg>
+</div>
+
+<!-- TITLE BLOCK (fixed bottom-right, architectural style) -->
+<div class="title-block">
+  <div class="tb-header">TITLE BLOCK — PROJECT INFO</div>
+  <div class="tb-row">
+    <div class="tb-key">PROJECT</div>
+    <div class="tb-val">ALGEBRA QUIZ</div>
+  </div>
+  <div class="tb-row">
+    <div class="tb-key">VIEW</div>
+    <div class="tb-val">CATALOG v2.1</div>
+  </div>
+  <div class="tb-row">
+    <div class="tb-key">STUDENT</div>
+    <div class="tb-val">ОЛЕНА П.</div>
+  </div>
+  <div class="tb-row">
+    <div class="tb-key">DATE</div>
+    <div class="tb-val">2026-04-03</div>
+  </div>
+  <div class="tb-row">
+    <div class="tb-key">SCALE</div>
+    <div class="tb-val">1:1 (CSS PX)</div>
+  </div>
+  <div class="tb-row">
+    <div class="tb-key">REV</div>
+    <div class="tb-val">B // APPROVED</div>
+  </div>
+  <div class="tb-row">
+    <div class="tb-key">DRWN BY</div>
+    <div class="tb-val">AI_DESIGN_SYS</div>
+  </div>
+</div>
+
+</body>
+</html>
