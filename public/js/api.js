@@ -1,126 +1,90 @@
-// API module for saving/loading quiz results
-// Uses GitHub Contents API — results stored in results.json on 'data' branch
-
+// API module — results stored in PostgreSQL via backend API
 const API = {
-  REPO: 'brobots-school-ua/algebra-quiz',
-  BRANCH: 'data',
-  FILE: 'results.json',
-  // Token assembled at runtime to avoid push protection
-  _t: ['github_pat','_11B3ONJEQ0NsbC97xAm767','_8wav96prRdkT9qzE4SxfnaVM1i','FVz1qwv2ApljxeZ94IRDCMRFYLaQXOqfO'],
-  get TOKEN() { return this._t.join(''); },
+  // URL бекенду на VPS (змінити на реальний домен після деплою)
+  BASE_URL: 'https://ТВІЙ_ДОМЕН',
   TEACHER_PASSWORD: 'math2024',
 
-  _headers() {
-    return {
-      'Authorization': `Bearer ${this.TOKEN}`,
-      'Content-Type': 'application/json',
-      'Accept': 'application/vnd.github+json'
-    };
+  _headers(teacher = false) {
+    const h = { 'Content-Type': 'application/json' };
+    if (teacher) h['x-teacher-password'] = this.TEACHER_PASSWORD;
+    return h;
   },
 
-  // UTF-8 safe base64 decode
-  _b64decode(str) {
-    const binary = atob(str.replace(/\n/g, ''));
-    const bytes = new Uint8Array(binary.length);
-    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-    return new TextDecoder().decode(bytes);
-  },
-
-  // UTF-8 safe base64 encode
-  _b64encode(str) {
-    const bytes = new TextEncoder().encode(str);
-    let binary = '';
-    bytes.forEach(b => binary += String.fromCharCode(b));
-    return btoa(binary);
-  },
-
-  // Get file content and SHA (needed for updates)
-  async _getFile() {
-    const url = `https://api.github.com/repos/${this.REPO}/contents/${this.FILE}?ref=${this.BRANCH}`;
-    const res = await fetch(url, { headers: this._headers() });
-    if (!res.ok) return { content: [], sha: null };
-    const data = await res.json();
-    const decoded = this._b64decode(data.content);
-    return { content: JSON.parse(decoded), sha: data.sha };
-  },
-
-  // Save (update) file
-  async _putFile(content, sha) {
-    const url = `https://api.github.com/repos/${this.REPO}/contents/${this.FILE}`;
-    const encoded = this._b64encode(JSON.stringify(content, null, 2));
-    const body = {
-      message: `Quiz result: ${new Date().toISOString()}`,
-      content: encoded,
-      branch: this.BRANCH
-    };
-    if (sha) body.sha = sha;
-    const res = await fetch(url, {
-      method: 'PUT',
-      headers: this._headers(),
-      body: JSON.stringify(body)
-    });
-    return res.ok;
-  },
-
-  // Save a quiz result
+  // Save a quiz result (called by students after completing quiz)
   async saveResult(data) {
     const result = {
-      id: Date.now(),
       name: data.name,
       email: data.email || '',
       picture: data.picture || '',
+      quizId: data.quizId || 'unknown',
+      quizTitle: data.quizTitle || 'Квіз',
       score: data.score,
       total: data.total,
       percentage: Math.round((data.score / data.total) * 100),
-      quizId: data.quizId || 'unknown',
-      quizTitle: data.quizTitle || 'Квіз',
       mode: data.mode || 'exam',
-      answers: data.answers,
-      timeSpent: data.timeSpent,
-      date: new Date().toISOString()
+      timeSpent: data.timeSpent || null,
+      answers: data.answers || null,
     };
 
     try {
-      const { content: results, sha } = await this._getFile();
-      results.push(result);
-      const ok = await this._putFile(results, sha);
-      if (!ok) throw new Error('PUT failed');
-      return { success: true };
+      const res = await fetch(`${this.BASE_URL}/api/results`, {
+        method: 'POST',
+        headers: this._headers(),
+        body: JSON.stringify(result)
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await res.json();
     } catch (e) {
       console.error('Failed to save result:', e);
       // Fallback: save to localStorage
       const local = JSON.parse(localStorage.getItem('quiz_results_local') || '[]');
-      local.push(result);
+      local.push({ ...result, id: Date.now(), date: new Date().toISOString() });
       localStorage.setItem('quiz_results_local', JSON.stringify(local));
       return { error: e.message };
     }
   },
 
-  // Get all results
+  // Get all results (teacher dashboard)
   async getResults() {
     try {
-      const { content } = await this._getFile();
+      const res = await fetch(`${this.BASE_URL}/api/results`, {
+        headers: this._headers(true)
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const remote = await res.json();
       // Merge with any localStorage fallback results
       const local = JSON.parse(localStorage.getItem('quiz_results_local') || '[]');
-      const all = [...content, ...local];
-      // Deduplicate by id
-      const seen = new Set();
-      return all.filter(r => {
-        if (seen.has(r.id)) return false;
-        seen.add(r.id);
-        return true;
-      });
+      const seen = new Set(remote.map(r => r.id));
+      return [...remote, ...local.filter(r => !seen.has(r.id))];
     } catch (e) {
       console.error('Failed to load results:', e);
       return JSON.parse(localStorage.getItem('quiz_results_local') || '[]');
     }
   },
 
-  // Clear all results
+  // Get results for a specific student by email
+  async getResultsByEmail(email) {
+    try {
+      const res = await fetch(`${this.BASE_URL}/api/results/my?email=${encodeURIComponent(email)}`, {
+        headers: this._headers()
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await res.json();
+    } catch (e) {
+      console.error('Failed to load student results:', e);
+      const local = JSON.parse(localStorage.getItem('quiz_results_local') || '[]');
+      return local.filter(r => r.email && r.email.toLowerCase() === email.toLowerCase());
+    }
+  },
+
+  // Clear all results (teacher only)
   async clearResults() {
     try {
-      const { sha } = await this._getFile();
-      await this._putFile([], sha);
+      const res = await fetch(`${this.BASE_URL}/api/results`, {
+        method: 'DELETE',
+        headers: this._headers(true)
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       localStorage.removeItem('quiz_results_local');
       return { success: true };
     } catch (e) {
@@ -128,13 +92,7 @@ const API = {
     }
   },
 
-  // Get results for a specific student by email
-  async getResultsByEmail(email) {
-    const all = await this.getResults();
-    return all.filter(r => r.email && r.email.toLowerCase() === email.toLowerCase());
-  },
-
-  // Check teacher password
+  // Check teacher password (local check)
   checkPassword(password) {
     return password === this.TEACHER_PASSWORD;
   }
