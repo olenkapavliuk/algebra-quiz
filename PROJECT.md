@@ -7,8 +7,8 @@
 
 **Поточний стан:** реалізовано 38 квізів (380+ питань) по всіх 5 розділах програми. Каталог тем, KaTeX формули, 3 типи питань, рандомізація, коти-меми, теоретичний блок, захист результатів паролем. Задеплоєно на GitHub Pages.
 
-**Посилання для учнів:** https://brobots-school-ua.github.io/algebra-quiz/
-**Результати (вчитель):** https://brobots-school-ua.github.io/algebra-quiz/results.html (пароль: `math2024`)
+**Посилання для учнів:** https://olenkapavliuk.github.io/algebra-quiz/
+**Результати (вчитель):** https://olenkapavliuk.github.io/algebra-quiz/results.html (пароль: `math2024`)
 
 ---
 
@@ -224,8 +224,8 @@
 8. ~~Задеплоїти на GitHub Pages~~ ✅
 9. ~~Отримати постійне посилання для учнів~~ ✅
 
-**Посилання для учнів:** https://brobots-school-ua.github.io/algebra-quiz/
-**Результати (вчитель):** https://brobots-school-ua.github.io/algebra-quiz/results.html (пароль: `math2024`)
+**Посилання для учнів:** https://olenkapavliuk.github.io/algebra-quiz/
+**Результати (вчитель):** https://olenkapavliuk.github.io/algebra-quiz/results.html (пароль: `math2024`)
 
 ### Фаза 2 — Розширення контенту ✅ ВИКОНАНО
 6. ~~Додати квізи для Розділів 1, 2, 4, 5~~ ✅ (30 квізів загалом)
@@ -284,9 +284,9 @@
 
 | Що | Посилання |
 |----|----------|
-| **Квіз для учнів** | https://brobots-school-ua.github.io/algebra-quiz/ |
-| **Результати (вчитель)** | https://brobots-school-ua.github.io/algebra-quiz/results.html |
-| **GitHub репо** | https://github.com/brobots-school-ua/algebra-quiz |
+| **Квіз для учнів** | https://olenkapavliuk.github.io/algebra-quiz/ |
+| **Результати (вчитель)** | https://olenkapavliuk.github.io/algebra-quiz/results.html |
+| **GitHub репо** | https://github.com/olenkapavliuk/algebra-quiz |
 
 - **Хостинг:** GitHub Pages (безкоштовно, без обмежень, не засинає)
 - **Збереження результатів:** JSONBlob.com (хмарне сховище, безкоштовно)
@@ -312,5 +312,5 @@
 | Стилі | Вбудований CSS | Tailwind CSS |
 | Деплой | GitHub Pages ✅ | VPS + Docker (якщо буде) |
 | Формули | KaTeX (CDN) ✅ | KaTeX ✅ |
-| GitHub | `brobots-school-ua/algebra-quiz` ✅ | Автодеплой з main |
+| GitHub | `olenkapavliuk/algebra-quiz ✅ | Автодеплой з main |
 | Пароль вчителя | `math2024` | Повноцінна авторизація |
